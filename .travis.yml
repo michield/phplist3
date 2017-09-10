@@ -8,8 +8,8 @@ dist: trusty
 sudo: false
 
 before_script:
-  - apt-get update > /dev/null
-  - apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl
+  - sudo apt-get update > /dev/null
+  - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl
   - sed -i -e "s,/var/www/html,$(pwd)/public_html,g" /etc/apache2/sites-available/000-default.conf
   - sed -i -e "/DocumentRoot/i\ServerName phplist.dev" /etc/apache2/sites-available/000-default.conf
   - echo "127.0.0.1 phplist.dev" | sudo tee -a /etc/hosts
