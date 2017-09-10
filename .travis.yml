@@ -16,13 +16,14 @@ before_script:
   - sudo sed -i -e "s,DocumentRoot.*,DocumentRoot $(pwd)/public_html,g" /etc/apache2/sites-available/000-default.conf
   - sudo sed -i -e "/DocumentRoot/i\ServerName phplist.dev" /etc/apache2/sites-available/000-default.conf
   - sudo sed -i -e "/DocumentRoot/i\DirectoryIndex index.php" /etc/apache2/sites-available/000-default.conf
-  - sudo sed -i -e '/DocumentRoot/i\
-     <Directory \/>\
-        Options Indexes FollowSymLinks\
-        AllowOverride None\
-        Require all granted\
-     <\/Directory>\
-     ' /etc/apache2/sites-available/000-default.conf
+#  - sudo sed -i -e '/DocumentRoot/i\
+#     <Directory \/>\
+#        Options Indexes FollowSymLinks\
+#        AllowOverride None\
+#        Require all granted\
+#     <\/Directory>\
+#     ' /etc/apache2/sites-available/000-default.conf
+  - sudo sed -i -e 's,Require all denied,Require all granted,g' /etc/apache2/apache2.conf
   - sudo cat /etc/apache2/sites-available/000-default.conf
   - echo "127.0.0.1 phplist.dev" | sudo tee -a /etc/hosts
   - sudo /etc/init.d/apache2 restart
