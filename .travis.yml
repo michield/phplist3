@@ -25,6 +25,7 @@ before_script:
 #     ' /etc/apache2/sites-available/000-default.conf
   - sudo sed -i -e 's,Require all denied,Require all granted,g' /etc/apache2/apache2.conf
   - sudo cat /etc/apache2/sites-available/000-default.conf
+  - sudo cat /etc/apache2/apache2.conf
   - echo "127.0.0.1 phplist.dev" | sudo tee -a /etc/hosts
   - sudo /etc/init.d/apache2 restart
   # Configure Behat
