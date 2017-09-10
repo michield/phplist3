@@ -36,7 +36,7 @@ script:
 after_failure:
   - echo "Failures detected. Outputing additional logs:"
   - ls -l /etc/apache2/sites-available/
-  - cat /etc/apache2/apache2.conf
-  - cat /etc/apache2/sites-available/000-default.conf
-  - cat /var/log/apache2/error.log
-  - cat /var/log/mysql/error.log
+  - sudo cat /etc/apache2/apache2.conf
+  - sudo cat /etc/apache2/sites-available/000-default.conf
+  - sudo cat /var/log/apache2/error.log
+  - sudo cat /var/log/mysql/error.log
