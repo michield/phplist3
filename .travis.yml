@@ -2,26 +2,19 @@
 # whitelist
 language: php
 php:
-  - 7.1
-  - 7.0
   - 5.6
-  - 5.5
-  - 5.4
-  - 5.3
 
-dist: precise
+dist: trusty
+sudo: false
 
 before_script:
-  - sudo apt-get update > /dev/null
-  - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl
-  # Set a custom vhost
-  - sudo sed -i -e "s,/var/www,$(pwd)/public_html,g" /etc/apache2/sites-available/default
-  - sudo sed -i -e "/DocumentRoot/i\ServerName phplist.dev" /etc/apache2/sites-available/default
+  - sed -i -e "s,/var/www/html,$(pwd)/public_html,g" /etc/apache2/sites-available/000-default.conf
+  - sed -i -e "/DocumentRoot/i\ServerName phplist.dev" /etc/apache2/sites-available/000-default.conf
   - echo "127.0.0.1 phplist.dev" | sudo tee -a /etc/hosts
-  - sudo /etc/init.d/apache2 restart
+  - /etc/init.d/apache2 restart
   # Configure Behat
-  - sudo cp -f tests/travis-ci/behat.yml behat.yml
-  - sudo cp -f tests/travis-ci/config.php public_html/lists/config/config.php
+  - cp -f tests/travis-ci/behat.yml behat.yml
+  - cp -f tests/travis-ci/config.php public_html/lists/config/config.php
   # Setup composer
   - composer self-update
   - composer install --prefer-dist
@@ -40,8 +33,8 @@ script:
 
 after_failure:
   - echo "Failures detected. Outputing additional logs:"
-  - sudo ls -l /etc/apache2/sites-available/
-  - sudo cat /etc/apache2/apache2.conf
-  - sudo cat /etc/apache2/sites-available/000-default.conf
-  - sudo cat /var/log/apache2/error.log
-  - sudo cat /var/log/mysql/error.log
+  - ls -l /etc/apache2/sites-available/
+  - cat /etc/apache2/apache2.conf
+  - cat /etc/apache2/sites-available/000-default.conf
+  - cat /var/log/apache2/error.log
+  - cat /var/log/mysql/error.log
