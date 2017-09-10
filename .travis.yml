@@ -30,15 +30,15 @@ before_script:
   - mysql -e 'create database phplistdb;'
 
 script:
-  - vendor/bin/phpLint ./public_html
+#  - vendor/bin/phpLint ./public_html
   - vendor/bin/behat
 
 after_failure:
   - echo "Failures detected. Outputing additional logs:"
   - ls -l /etc/apache2/sites-available/
-  - ls -l /home/travis/build/michield/phplist3/public_html
-  - ls -l /home/travis/build/michield/phplist3/public_html/lists/
-  - ls -l /home/travis/build/michield/phplist3/public_html/lists/admin/
+  - ls -l /home/travis/build/
+  - ls -l /home/travis/build/michield
+  - ls -l /home/travis/build/michield/phplist3
   - sudo cat /etc/apache2/apache2.conf
   - sudo cat /etc/apache2/sites-available/000-default.conf
   - sudo cat /var/log/apache2/error.log
