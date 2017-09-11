@@ -33,6 +33,7 @@ before_script:
   - sudo cat /etc/apache2/apache2.conf
   - echo "127.0.0.1 phplist.dev" | sudo tee -a /etc/hosts
   - sudo /etc/init.d/apache2 restart
+  - sudo ls -l /home
   # Configure Behat
   - cp -f tests/travis-ci/behat.yml behat.yml
   - cp -f tests/travis-ci/config.php public_html/lists/config/config.php
