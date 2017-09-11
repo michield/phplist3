@@ -13,7 +13,7 @@ services:
 notifications:
   webhooks:
     urls:
-      - $NOTIFICATIONURL
+      - $NOTIFY_URL
 
 before_script:
   - sudo apt-get update > /dev/null
