@@ -1,68 +1,50 @@
-# Configuration file for running the test suite. Results will be at https://travis-ci.org/phpList/phplist3
-# whitelist
 language: php
 php:
-  - 5.6
-
+- 5.6
 dist: trusty
 sudo: false
-
 services:
-  - mysql
-
+- mysql
 notifications:
-  irc: "chat.freenode.net#phplist"
-  webhooks: https://chat.phplist.com/hooks/6ynms7t39bgfmbah4amg6qo1sh
-  slack: phplist:wDLojEEoZ0Sw0iTqpRzw6wsd
-#    urls:
-#      - $NOTIFY_URL
-#      - https://chat.phplist.com/hooks/6ynms7t39bgfmbah4amg6qo1sh
-
+  irc: chat.freenode.net#phplist
+  slack:
+    matrix:
+    - phplist:wDLojEEoZ0Sw0iTqpRzw6wsd
+    rooms:
+      secure: SeQsLIDlv8JExgrNRZ0q5leSwpbe6ca5SaXklGh9gdq6UeCPt2zQhR3vKdcMUnIeX+Yo2u5ZModPTKimIYYkUUAf57exvC9+8wfd74Zr/SX2w2CetwIO9XzwOgJImI+zGsyUHOt6LEusi5uy6wiff8ND2iZK9KWqUiupWIypBxST9ShhPDERGB45hFkZs8fmPJX6os3gbB6Ox3DtLXmpOtXFm0VzmExdclCZO9WDzACXc39I9CnuWKAEcg4PpI1viXqSyWEKuyPQPjoGkdDMb59lVVVwtDmYbaX22xLim7dhnGgpXtNZBo8oWRl6K+NFNLmLkVsnxaOgeFpAEUvsUEdBN1dFlXnmcNnatr1QftBtk/uZHjHcZuBiZOZ5I0VwzmtI0xLdWda7s7LGCQy1KYQ1khn5hui5xGDK8iOKKrKH4lMDgl5Yq9TdMuJqp3E9+hkN/vy0O96+64KiuefAkshK6fKa533O/4+keYPHAfoAUSv/G8b4IkSwQifqaVLnCY8AgwdqrdYYEcXANvnVExRmkGnCAfxVdNt3Mo9/A+7o4FPPxhjd1eS5Nr17/5tjCJb55HVz3/muWQa1nXrpE8MieAKYZ5YJ8J4vYi9W5E7eg8j3TYEeum5nTc8XSfuoWXU7X0zx2+B3TDmTSD8Ex+NFanNTA6U6P//clVoo+6s=
 before_script:
-  - sudo apt-get update > /dev/null
-  - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl
-  - sudo sed -i -e "s,DocumentRoot.*,DocumentRoot $(pwd)/public_html,g" /etc/apache2/sites-available/000-default.conf
-  - sudo sed -i -e "/DocumentRoot/i\ServerName phplist.dev" /etc/apache2/sites-available/000-default.conf
-  - sudo sed -i -e "/DocumentRoot/i\DirectoryIndex index.php" /etc/apache2/sites-available/000-default.conf
-#  - sudo sed -i -e '/DocumentRoot/i\
-#     <Directory \/>\
-#        Options Indexes FollowSymLinks\
-#        AllowOverride None\
-#        Require all granted\
-#     <\/Directory>\
-#     ' /etc/apache2/sites-available/000-default.conf
-  - sudo sed -i -e 's,Require all denied,Require all granted,g' /etc/apache2/apache2.conf
-  - sudo cat /etc/apache2/sites-available/000-default.conf
-  - sudo cat /etc/apache2/apache2.conf
-  - echo "127.0.0.1 phplist.dev" | sudo tee -a /etc/hosts
-  - sudo /etc/init.d/apache2 restart
-  - sudo ls -l /home
-  # Configure Behat
-  - cp -f tests/travis-ci/behat.yml behat.yml
-  - cp -f tests/travis-ci/config.php public_html/lists/config/config.php
-  # Setup composer
-  - composer self-update
-  - composer install --prefer-dist
-  - cd vendor/bin && ln -s ../njoannidi/php-lint-bash/phpLint && cd ../../
-  - ls -l vendor/bin
-  # Install Trevelin theme
-  - cd public_html/lists/admin/ui/ && wget https://github.com/phpList/phplist-ui-bootlist/archive/master.tar.gz && tar -xzf master.tar.gz && mv phplist-ui-bootlist-master phplist-ui-bootlist && rm master.tar.gz && cd ../../../../
-
-  # Set MySQL configuration and create the database.
-  - mysql -e 'SET GLOBAL wait_timeout = 5400;'
-  - mysql -e 'create database phplistdb;'
-
+- sudo apt-get update > /dev/null
+- sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql
+  php5-intl
+- sudo sed -i -e "s,DocumentRoot.*,DocumentRoot $(pwd)/public_html,g" /etc/apache2/sites-available/000-default.conf
+- sudo sed -i -e "/DocumentRoot/i\ServerName phplist.dev" /etc/apache2/sites-available/000-default.conf
+- sudo sed -i -e "/DocumentRoot/i\DirectoryIndex index.php" /etc/apache2/sites-available/000-default.conf
+- sudo sed -i -e 's,Require all denied,Require all granted,g' /etc/apache2/apache2.conf
+- sudo cat /etc/apache2/sites-available/000-default.conf
+- sudo cat /etc/apache2/apache2.conf
+- echo "127.0.0.1 phplist.dev" | sudo tee -a /etc/hosts
+- sudo /etc/init.d/apache2 restart
+- sudo ls -l /home
+- cp -f tests/travis-ci/behat.yml behat.yml
+- cp -f tests/travis-ci/config.php public_html/lists/config/config.php
+- composer self-update
+- composer install --prefer-dist
+- cd vendor/bin && ln -s ../njoannidi/php-lint-bash/phpLint && cd ../../
+- ls -l vendor/bin
+- cd public_html/lists/admin/ui/ && wget https://github.com/phpList/phplist-ui-bootlist/archive/master.tar.gz
+  && tar -xzf master.tar.gz && mv phplist-ui-bootlist-master phplist-ui-bootlist &&
+  rm master.tar.gz && cd ../../../../
+- mysql -e 'SET GLOBAL wait_timeout = 5400;'
+- mysql -e 'create database phplistdb;'
 script:
-#  - vendor/bin/phpLint ./public_html
-  - vendor/bin/behat
-
+- vendor/bin/behat
 after_failure:
-  - echo "Failures detected. Outputing additional logs:"
-  - ls -l /etc/apache2/sites-available/
-  - ls -l /home/travis/build/
-  - ls -l /home/travis/build/michield
-  - ls -l /home/travis/build/michield/phplist3
-  - sudo cat /etc/apache2/apache2.conf
-  - sudo cat /etc/apache2/sites-available/000-default.conf
-  - sudo cat /var/log/apache2/error.log
-  - sudo cat /var/log/mysql/error.log
+- echo "Failures detected. Outputing additional logs:"
+- ls -l /etc/apache2/sites-available/
+- ls -l /home/travis/build/
+- ls -l /home/travis/build/michield
+- ls -l /home/travis/build/michield/phplist3
+- sudo cat /etc/apache2/apache2.conf
+- sudo cat /etc/apache2/sites-available/000-default.conf
+- sudo cat /var/log/apache2/error.log
+- sudo cat /var/log/mysql/error.log
