@@ -12,7 +12,7 @@ services:
 
 notifications:
   slack: phplist:wDLojEEoZ0Sw0iTqpRzw6wsd
-  webhooks: $NOTIFY_URL
+  webhooks: https://chat.phplist.com/hooks/6ynms7t39bgfmbah4amg6qo1sh
 #    urls:
 #      - $NOTIFY_URL
 #      - https://chat.phplist.com/hooks/6ynms7t39bgfmbah4amg6qo1sh
