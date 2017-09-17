@@ -8,8 +8,6 @@ services:
 notifications:
   irc: chat.freenode.net#phplist
   slack:
-    matrix:
-    - phplist:wDLojEEoZ0Sw0iTqpRzw6wsd
     rooms:
       secure: SeQsLIDlv8JExgrNRZ0q5leSwpbe6ca5SaXklGh9gdq6UeCPt2zQhR3vKdcMUnIeX+Yo2u5ZModPTKimIYYkUUAf57exvC9+8wfd74Zr/SX2w2CetwIO9XzwOgJImI+zGsyUHOt6LEusi5uy6wiff8ND2iZK9KWqUiupWIypBxST9ShhPDERGB45hFkZs8fmPJX6os3gbB6Ox3DtLXmpOtXFm0VzmExdclCZO9WDzACXc39I9CnuWKAEcg4PpI1viXqSyWEKuyPQPjoGkdDMb59lVVVwtDmYbaX22xLim7dhnGgpXtNZBo8oWRl6K+NFNLmLkVsnxaOgeFpAEUvsUEdBN1dFlXnmcNnatr1QftBtk/uZHjHcZuBiZOZ5I0VwzmtI0xLdWda7s7LGCQy1KYQ1khn5hui5xGDK8iOKKrKH4lMDgl5Yq9TdMuJqp3E9+hkN/vy0O96+64KiuefAkshK6fKa533O/4+keYPHAfoAUSv/G8b4IkSwQifqaVLnCY8AgwdqrdYYEcXANvnVExRmkGnCAfxVdNt3Mo9/A+7o4FPPxhjd1eS5Nr17/5tjCJb55HVz3/muWQa1nXrpE8MieAKYZ5YJ8J4vYi9W5E7eg8j3TYEeum5nTc8XSfuoWXU7X0zx2+B3TDmTSD8Ex+NFanNTA6U6P//clVoo+6s=
 before_script:
