@@ -1,10 +1,28 @@
 language: php
-php:
-- 5.6
-dist: trusty
-sudo: false
-services:
-- mysql
+
+cache:
+    directories:
+      - "$HOME/.composer/cache"
+
+matrix:
+    include:
+        - php: '5.4'
+          env: BROWSER=goutte
+        - php: '5.5'
+          env: BROWSER=goutte
+        - php: '5.6'
+          env: BROWSER=goutte
+        - php: '7.0'
+          env: BROWSER=goutte
+        - php: '7.1'
+          env: BROWSER=goutte
+        - php: '7.1'
+          env: BROWSER=chrome
+        - php: '7.2'
+          env: BROWSER=goutte
+        - php: '7.2'
+          env: BROWSER=chrome
+
 notifications:
   irc: chat.freenode.net#phplist
   slack:
