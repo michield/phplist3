@@ -109,11 +109,16 @@ if (isset($GLOBALS['design'])) {
 }
 
 if (!isset($GLOBALS['ui']) || !is_dir(dirname(__FILE__).'/ui/'.$GLOBALS['ui'])) {
-    //# prefer dressprow over orange
-    if (is_dir(dirname(__FILE__).'/ui/dressprow')) {
+    if (is_dir(dirname(__FILE__).'/ui/phplist-ui-bootlist')) {
+        $GLOBALS['ui'] = 'phplist-ui-bootlist';
+    } elseif (is_dir(dirname(__FILE__).'/ui/dressprow')) {
         $GLOBALS['ui'] = 'dressprow';
-    } else {
+    } elseif (is_dir(dirname(__FILE__).'/ui/default')) {
         $GLOBALS['ui'] = 'default';
+    } else {
+        ## pick the first available (this should really only be in dev mode)
+        $themes = glob(dirname(__FILE__).'/ui/*',GLOB_ONLYDIR);
+        $GLOBALS['ui'] = basename($themes[0]);
     }
 }
 if (!is_file(dirname(__FILE__).'/ui/'.$GLOBALS['ui'].'/pagetop.php')) {
@@ -258,7 +263,9 @@ if (!defined('SHOW_UNSUBSCRIBELINK')) {
 if (!defined('SHOW_SUBSCRIBELINK')) {
     define('SHOW_SUBSCRIBELINK', true);
 }
-
+if (!defined('UNSUBSCRIBE_CONFIRMATION')) {
+    define('UNSUBSCRIBE_CONFIRMATION', true);
+}
 if (ASKFORPASSWORD && defined('ENCRYPTPASSWORD') && ENCRYPTPASSWORD) {
     //#https://mantis.phplist.com/view.php?id=16787
     // passwords are encrypted, so we need to stick to md5 to keep working
@@ -289,10 +296,10 @@ if (!defined('ENCRYPTION_ALGO')) {
     }
 }
 if (!defined('HASH_ALGO')) {
-	// keep previous hashalg. @@TODO force an update of hash method, many may still be on md5. 
-	if (defined('ENCRYPTION_ALGO')) {
+    // keep previous hashalg. @@TODO force an update of hash method, many may still be on md5.
+    if (defined('ENCRYPTION_ALGO')) {
         define('HASH_ALGO', ENCRYPTION_ALGO);
-	} elseif (function_exists('hash_algos') && in_array('sha256', hash_algos())) {
+    } elseif (function_exists('hash_algos') && in_array('sha256', hash_algos())) {
         define('HASH_ALGO', 'sha256');
     } else {
         define('HASH_ALGO', 'md5');
@@ -527,6 +534,9 @@ if (!defined('MAX_PROCESS_MESSAGE')) {
 if (!defined('ALLOW_DELETEBOUNCE')) {
     define('ALLOW_DELETEBOUNCE', 1);
 }
+if (!defined('REPORT_DELETED_BOUNCES')) {
+    define('REPORT_DELETED_BOUNCES', 0);
+}
 if (!defined('MESSAGE_SENDSTATUS_INACTIVETHRESHOLD')) {
     define('MESSAGE_SENDSTATUS_INACTIVETHRESHOLD', 120);
 }
@@ -583,6 +593,12 @@ if (!defined('PHPMAILER_SECURE')) {
 }
 if (!defined('PHPMAILER_SMTP_DEBUG')) {
     define('PHPMAILER_SMTP_DEBUG', 0);
+}
+if (!defined('POP_BEFORE_SMTP')) {
+    define('POP_BEFORE_SMTP', '');
+}
+if (!defined('POPBEFORESMTP_DEBUG')) {
+    define('POPBEFORESMTP_DEBUG', '');
 }
 if (!defined('USERSPAGE_MAX')) {
     define('USERSPAGE_MAX', 1000);
@@ -741,9 +757,6 @@ if (!isset($GLOBALS['admin_auth_module'])) {
 // unset the default admin_auth_module, to use the plugin version
 if ($GLOBALS['admin_auth_module'] == 'phplist_auth.inc') {
     $GLOBALS['admin_auth_module'] = '';
-}
-if (!isset($GLOBALS['require_login'])) {
-    $GLOBALS['require_login'] = 1;
 }
 if (!isset($GLOBALS['noteditableconfig'])) {
     $GLOBALS['noteditableconfig'] = array();

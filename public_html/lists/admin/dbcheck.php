@@ -12,7 +12,7 @@ $pass = true;
 
 $ls = new WebblerListing(s('Database structure'));
 $ls->setElementHeading(s('Table'));
-while (list($table, $tablename) = each($GLOBALS['tables'])) {
+foreach ($GLOBALS['tables'] as $table => $tablename) {
     $createlink = '';
     $indexes = $uniques = $engine = $category = '';
 
@@ -103,6 +103,13 @@ while (list($table, $tablename) = each($GLOBALS['tables'])) {
 echo $ls->display();
 if ($pass) {
     cl_output('PASS');
+    $dbversion = getConfig('version');
+    if (empty($dbversion)) {
+        SaveConfig('version', VERSION, 0);
+        if (defined('RELEASEDATE')) {
+            SaveConfig('releaseDBversion', RELEASEDATE, 0);
+        }
+    }
 } else {
     cl_output('FAIL');
 }

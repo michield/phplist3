@@ -100,6 +100,7 @@ function deleteUser($id)
     Sql_Query(sprintf('delete from %s where user = %d', $tables['user_message_bounce'], $id));
     Sql_Query(sprintf('delete from %s where user = %d', $tables['user_message_forward'], $id));
     Sql_Query(sprintf('delete from %s where id = %d', $tables['user'], $id));
+    Sql_Query(sprintf('delete from %s where userid= %d', $tables['user_message_view'],$id));
 
     if (Sql_table_exists('user_group')) {
         Sql_Query(sprintf('delete from user_group where userid = %d', $id), 1);
@@ -1247,7 +1248,7 @@ function saveUserAttribute($userid, $attid, $data)
 function saveUserByID($userid, $data)
 {
     dbg("Saving user by id $userid");
-    while (list($key, $val) = each($data)) {
+    foreach ($data as $key => $val) {
         if (preg_match("/^attribute(\d+)/", $key, $regs)) {
             $attid = $regs[1];
         } else {
@@ -1267,7 +1268,7 @@ function saveUser($loginname, $data)
     $id_req = Sql_Fetch_Row_Query("select id from user where email = \"$loginname\"");
     if ($id_req[0]) {
         $userid = $id_req[0];
-        while (list($key, $val) = each($data)) {
+        foreach ($data as $key => $val) {
             if (preg_match("/^attribute(\d+)/", $key, $regs)) {
                 $attid = $regs[1];
             }
@@ -1385,7 +1386,7 @@ function saveUserData($username, $fields)
 
     dbg('Checking required fields');
     reset($required_fields);
-    while (list($index, $field) = each($required_fields)) {
+    foreach ($required_fields as $index => $field) {
         $type = $fields[$field]['type'];
         // dbg("$field of type $type");
         if ($type != 'userfield' && $type != '') { //## @@@ need to check why type is not set

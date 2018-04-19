@@ -88,7 +88,7 @@ if ($dbversion == VERSION && !$force) {
     ignore_user_abort(1);
     // rename tables if we are using the prefix
     include dirname(__FILE__).'/structure.php';
-    while (list($table, $value) = each($DBstruct)) {
+    foreach ($DBstruct as $table => $value) {
         set_time_limit(500);
         if (isset($table_prefix)) {
             if (Sql_Table_exists($table) && !Sql_Table_Exists($tables[$table])) {
@@ -296,6 +296,11 @@ if ($dbversion == VERSION && !$force) {
 
     if (!Sql_Table_Exists($tables['admin_password_request'])) {
         createTable('admin_password_request');
+    }
+
+    if (!Sql_Table_exists($GLOBALS['tables']['user_message_view'])) {
+        cl_output(s('Creating new table "user_message_view"'));
+        createTable('user_message_view');
     }
 
     //# longblobs are better at mixing character encoding. We don't know the encoding of anything we may want to store in cache

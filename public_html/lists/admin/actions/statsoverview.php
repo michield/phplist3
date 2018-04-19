@@ -1,5 +1,5 @@
 <?php
-// print '<p>'.$GLOBALS['I18N']->get('Select Message to view').'</p>';
+// print '<p>'.s('Select Message to view').'</p>';
 verifyCsrfGetToken();
 
 if (isset($_GET['id'])) {
@@ -29,7 +29,7 @@ switch ($access) {
             $allow = Sql_Fetch_Row_query(sprintf('select owner from %s where id = %d %s', $GLOBALS['tables']['message'],
                 $id, $ownership));
             if ($allow[0] != $_SESSION['logindetails']['id']) {
-                $status .= $GLOBALS['I18N']->get('You do not have access to this page');
+                $status .= s('You do not have access to this page');
 
                 return;
             }
@@ -41,7 +41,7 @@ switch ($access) {
     case 'none':
     default:
         $ownership = ' and msg.id = 0';
-        $status .= $GLOBALS['I18N']->get('You do not have access to this page');
+        $status .= s('You do not have access to this page');
 
         return;
         break;
@@ -59,8 +59,8 @@ if ($download) {
 }
 
 if (empty($start)) {
-    $status .= '<div class="actions">'.PageLinkButton('pageaction&action=statsoverview&dl=true',
-            $GLOBALS['I18N']->get('Download as CSV file')).'</div>';
+    $status .= '<div class="actions pull-right">'.PageLinkButton('pageaction&action=statsoverview&dl=true',
+            s('Download as CSV file')).'</div><div class="clearfix"></div>';
 }
 if (!empty($_SESSION['LoadDelay'])) {
     sleep($_SESSION['LoadDelay']);
@@ -87,7 +87,7 @@ if ($total > 10) {
 }
 
 if (!Sql_Affected_Rows()) {
-    $status .= '<p class="information">'.$GLOBALS['I18N']->get('There are currently no campaigns to view').'</p>';
+    $status .= '<p class="information">'.s('There are currently no campaigns to view').'</p>';
 }
 
 $ls = new WebblerListing('');
@@ -95,42 +95,52 @@ $ls->usePanel($paging);
 while ($row = Sql_Fetch_Array($req)) {
     //  $element = '<!--'.$row['messageid'].'-->'.shortenTextDisplay($row['subject'],30);
     $messagedata = loadMessageData($row['messageid']);
+
     if ($messagedata['subject'] != $messagedata['campaigntitle']) {
-        $element = '<!--'.$row['messageid'].'-->'.stripslashes($messagedata['campaigntitle']).'<br/><strong>'.shortenTextDisplay($messagedata['subject'],
-                30).'</strong>';
+        $element = '<!--'.$row['messageid'].'-->'
+        .'<strong>'.shortenTextDisplay($messagedata['campaigntitle'], 30).'</strong>';
     } else {
-        $element = '<!--'.$row['messageid'].'-->'.shortenTextDisplay($messagedata['subject'], 30);
+        $element = '<!--'.$row['messageid'].'-->'
+        .shortenTextDisplay($messagedata['subject'], 30);
     }
 
     $fwded = Sql_Fetch_Row_Query(sprintf('select count(id) from %s where message = %d',
-        $GLOBALS['tables']['user_message_forward'], $row['messageid']));
+    $GLOBALS['tables']['user_message_forward'], $row['messageid']));
     $views = Sql_Fetch_Row_Query(sprintf('select count(viewed) from %s where messageid = %d 
 	       and status = "sent"',
-        $GLOBALS['tables']['usermessage'], $row['messageid']));
+    $GLOBALS['tables']['usermessage'], $row['messageid']));
     $totls = Sql_Fetch_Row_Query(sprintf('select count(status) from %s where messageid = %d 
 	       and status = "sent"',
-        $GLOBALS['tables']['usermessage'], $row['messageid']));
-
-    $ls->addElement($element,
-        PageURL2('statsoverview&amp;id='.$row['messageid'])); //,PageURL2('message&amp;id='.$row['messageid']));
-    $ls->setElementHeading($GLOBALS['I18N']->get('Campaign'));
-    $ls->setClass($element, 'row1');
-    //   $ls->addColumn($element,$GLOBALS['I18N']->get('owner'),$row['owner']);
-    $ls->addColumn($element, $GLOBALS['I18N']->get('sent'), $totls[0]);
-    $ls->addColumn($element, $GLOBALS['I18N']->get('bncs'), $row['bounced']);
-    $ls->addColumn($element, $GLOBALS['I18N']->get('fwds'), sprintf('%d', $fwded[0]));
-    $ls->addColumn($element, $GLOBALS['I18N']->get('views'), $views[0],
-        $views[0] ? PageURL2('mviews&amp;id='.$row['messageid']) : '');
-    $perc = sprintf('%0.2f', ($views[0] / ($totls[0] - $row['bounced']) * 100));
+    $GLOBALS['tables']['usermessage'], $row['messageid']));
 
     $totalclicked = Sql_Fetch_Row_Query(sprintf('select count(distinct userid) from %s where messageid = %d',
-        $GLOBALS['tables']['linktrack_uml_click'], $row['messageid']));
-    $ls->addColumn($element, $GLOBALS['I18N']->get('Unique Clicks'), $totalclicked[0],
-        $totalclicked[0] ? PageURL2('mclicks&id='.$row['messageid']) : '');
+    $GLOBALS['tables']['linktrack_uml_click'], $row['messageid']));
 
-    $ls->addRow($element, '',
-        "<div class='content listingsmall fright gray'>".$GLOBALS['I18N']->get('rate').': '.$perc.' %'.'</div>'.
-        "<div class='content listingsmall fright gray'>".$GLOBALS['I18N']->get('date').': '.$row['sent'].'</div>');
+    $percentBouncedFormatted = $percentViewedFormatted = $percentClickedFormatted = '';
+    if ($row['bounced'] > 0) {
+        $percentBouncedFormatted = ' ('.sprintf('%0.2f', ($row['bounced'] / $totls[0] * 100)).' %)';
+    }
+    if ($views[0] > 0) {
+        $percentViewedFormatted = ' ('.sprintf('%0.2f', ($views[0] / ($totls[0] - $row['bounced']) * 100)).' %)';
+    }
+    if ($totalclicked[0] > 0) {
+        $percentClickedFormatted = ' ('.sprintf('%0.2f', ($totalclicked[0] / ($totls[0] - $row['bounced']) * 100)).' %)';
+    }
+
+    $ls->setElementHeading(s('Campaign'));
+    $ls->addElement($element,
+        PageURL2('statsoverview&amp;id='.$row['messageid'])); //,PageURL2('message&amp;id='.$row['messageid']));
+    $ls->setClass($element, 'row1');
+    //   $ls->addColumn($element,s('owner'),$row['owner']);
+    $ls->addColumn($element, s('date'), $row['sent']);
+    $ls->addColumn($element, s('sent'), number_format((int)$totls[0]));
+    $ls->addColumn($element, s('bncs').Help("bounces"), number_format((int)$row['bounced']).$percentBouncedFormatted);
+    $ls->addColumn($element, s('fwds').Help("forwards"), number_format((int)$fwded[0]));
+    $ls->addColumn($element, s('Unique views').Help("uniqueviews"), number_format((int)$views[0]).$percentViewedFormatted,
+    $views[0] ? PageURL2('mviews&amp;id='.$row['messageid']) : '');
+
+    $ls->addColumn($element, s('Unique Clicks').Help("uniqueclicks"), number_format((int)$totalclicked[0]).$percentClickedFormatted,
+        $totalclicked[0] ? PageURL2('mclicks&id='.$row['messageid']) : '');
 }
 //# needs reviewing
 if (false && $addcomparison) {
@@ -138,11 +148,11 @@ if (false && $addcomparison) {
         $GLOBALS['tables']['usermessage']));
     $viewed = Sql_Fetch_Array_Query(sprintf('select count(viewed) as viewed from %s um where um.status = "sent"',
         $GLOBALS['tables']['usermessage']));
-    $overall = $GLOBALS['I18N']->get('Comparison to other admins');
+    $overall = s('Comparison to other admins');
     $ls->addElement($overall);
-    $ls->addColumn($overall, $GLOBALS['I18N']->get('views'), $viewed['viewed']);
+    $ls->addColumn($overall, s('views'), $viewed['viewed']);
     $perc = sprintf('%0.2f', ($viewed['viewed'] / $total['total'] * 100));
-    $ls->addColumn($overall, $GLOBALS['I18N']->get('rate'), $perc.' %');
+    $ls->addColumn($overall, s('rate'), $perc.' %');
 }
 if ($download) {
     ob_end_clean();

@@ -160,7 +160,7 @@ if (!empty($_POST['import'])) {
     if ($test_import) {
         echo $GLOBALS['I18N']->get('Test output: If the output looks ok, go Back to resubmit for real').'<br/><br/>';
         $i = 1;
-        while (list($email, $data) = each($user_list)) {
+        foreach ($user_list as $email => $data) {
             $email = trim($email);
             if (strlen($email) > 4) {
                 echo "<br/><b>$email</b><br/>";
@@ -190,7 +190,7 @@ if (!empty($_POST['import'])) {
         $some = 0;
 
         if (is_array($user_list)) {
-            while (list($email, $data) = each($user_list)) {
+            foreach ($user_list as $email => $data) {
                 if (strlen($email) > 4) {
                     $loginname = $data['loginname'];
                     if (!$loginname && $email) {
@@ -297,7 +297,7 @@ if (!empty($_POST['import'])) {
 } else {
     echo formStart('enctype="multipart/form-data" name="import" class="importadminDo" ') ?>
     <?php
-    if ($GLOBALS['require_login'] && !isSuperUser()) {
+    if (!isSuperUser()) {
         $access = accessLevel('importadmin');
         if ($access == 'owner') {
             $subselect = ' where owner = '.$_SESSION['logindetails']['id'];

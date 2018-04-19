@@ -23,7 +23,6 @@ if (isset($_REQUEST['id'])) {
 
 function getTemplateImages($content)
 {
-    $html_images = array();
     $image_types = array(
         'gif'  => 'image/gif',
         'jpg'  => 'image/jpeg',
@@ -35,20 +34,10 @@ function getTemplateImages($content)
         'tiff' => 'image/tiff',
         'swf'  => 'application/x-shockwave-flash',
     );
-    // Build the list of image extensions
-    while (list($key) = each($image_types)) {
-        $extensions[] = $key;
-    }
-    preg_match_all('/"([^"]+\.('.implode('|', $extensions).'))"/Ui', stripslashes($content), $images);
-    while (list($key, $val) = each($images[1])) {
-        if (isset($html_images[$val])) {
-            ++$html_images[$val];
-        } else {
-            $html_images[$val] = 1;
-        }
-    }
+    $regexp = sprintf('/"([^"]+\.(%s))"/Ui', implode('|', array_keys($image_types)));
+    preg_match_all($regexp, stripslashes($content), $images);
 
-    return $html_images;
+    return array_count_values($images[1]);
 }
 
 function getTemplateLinks($content)
@@ -74,7 +63,7 @@ if (!empty($_POST['action']) && $_POST['action'] == 'addimages') {
         if (count($images)) {
             include 'class.image.inc';
             $image = new imageUpload();
-            while (list($key, $val) = each($images)) {
+            foreach ($images as $key => $val) {
                 // printf('Image name: <b>%s</b> (%d times used)<br />',$key,$val);
                 $image->uploadImage($key, $id);
             }
@@ -154,7 +143,7 @@ if (!empty($_POST['action']) && $_POST['action'] == 'addimages') {
 
         //# ##17419 don't prompt for remote images that exist
         $missingImages = array();
-        while (list($key, $val) = each($images)) {
+        foreach ($images as $key => $val) {
             $key = trim($key);
             if (preg_match('~^https?://~i', $key)) {
                 $imageFound = testUrl($key);
@@ -175,7 +164,7 @@ if (!empty($_POST['action']) && $_POST['action'] == 'addimages') {
             echo '<input type="hidden" name="id" value="'.$id.'" />';
             ksort($images);
             reset($images);
-            while (list($key, $val) = each($images)) {
+            foreach ($images as $key => $val) {
                 $key = trim($key);
                 if (preg_match('~^https?://~i', $key)) {
                     $missingImage = true;
@@ -280,11 +269,11 @@ if ($id) {
 ?>
 
 <p class="information"><?php echo $msg ?></p>
-<?php echo '<p class="button">'.PageLink2('templates', $GLOBALS['I18N']->get('List of Templates')).'</p>'; ?>
+<?php echo '<p class="button pull-right">'.PageLink2('templates', $GLOBALS['I18N']->get('List of Templates')).'</p><div class="clearfix"></div>'; ?>
 
 <?php echo formStart(' enctype="multipart/form-data" class="template2" ') ?>
 <input type="hidden" name="id" value="<?php echo $id ?>"/>
-<div class="panel">
+<div class="panel"><div class="content">
     <table class="templateForm">
         <tr>
 
@@ -347,7 +336,7 @@ if ($id) {
                                    value="<?php echo $GLOBALS['I18N']->get('Save Changes') ?>"/></td>
         </tr>
     </table>
-</div>
+</div></div>
 <?php $sendtest_content = sprintf('<div class="sendTest" id="sendTest">
     ' .$sendtestresult.'
     <input class="submit" type="submit" name="sendtest" value="%s"/>  %s: 

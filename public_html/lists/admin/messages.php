@@ -19,7 +19,7 @@ $messageSortOptions = array(
     'sentdesc'    => s('Sent').' - '.s('Descending'),
 );
 
-if (!$GLOBALS['require_login'] || $_SESSION['logindetails']['superuser'] || $access == 'all') {
+if ($access == 'all') {
     $ownerselect_and = '';
     $ownerselect_where = '';
 } else {
@@ -293,7 +293,7 @@ if (!empty($_SESSION['messagefilter'])) {
 }
 
 //## Query messages from db
-if ($GLOBALS['require_login'] && !$_SESSION['logindetails']['superuser'] || $access != 'all') {
+if ($access != 'all') {
     $where[] = ' owner = '.$_SESSION['logindetails']['id'];
 }
 $whereClause = ' where '.implode(' and ', $where);
@@ -421,24 +421,36 @@ if ($total) {
             foreach ($viewStats as $key => $value) {
                 $viewStatsFormatted[$key] = number_format($value);
             }
-
-            $resultStats = '<table class="messagesendstats">
-      <thead>
-        <tr>
-          <th colspan="2">Statistics</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr><td>' .s('Viewed').'</td><td>'.$viewStatsFormatted['views'].'</td></tr>
-          <tr><td>' .s('Unique Views').'</td><td>'.$viewStatsFormatted['uniqueViews'].'</td></tr>';
+            $resultStats = '
+    <table class="messagesendstats">
+        <thead>
+            <tr>
+                <th colspan="2">Statistics</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>' .s('Total views').'</td>
+                <td>'.(!empty($viewStats['views']) ? PageLink2('mviews&id='.$msg['id'], $viewStatsFormatted['views']) : '0').'</td>
+            </tr>
+            <tr>
+                <td>' .s('Unique Views').'</td>
+                <td>'.(!empty($viewStats['uniqueViews']) ? PageLink2('mviews&id='.$msg['id'], $viewStatsFormatted['uniqueViews']) : '0').'</td>
+            </tr>';
             if ($clicks[0]) {
                 $resultStats .= '
-                <tr><td>' .s('Total Clicks').'</td><td>'.$viewStatsFormatted['clicks'].'</td></tr>';
+            <tr>
+                <td>'.s('Total clicks').'</td>
+                <td>'. (!empty($viewStats['clicks']) ? PageLink2('mclicks&id='.$msg['id'], $viewStatsFormatted['clicks']): '0').'</td>
+            </tr>';
             }
             $resultStats .= '
-            <tr><td>' .s('Bounced').'</td><td>'.$viewStatsFormatted['bounces'].'</td></tr>
-      </tbody>
-  </table>';
+            <tr>
+                <td>' .s('Bounced').'</td>
+                <td>'.(!empty($viewStats['bounces']) ? PageLink2('bounces&id='.$msg['id'],$viewStatsFormatted['bounces']): '0').'</td>
+            </tr>
+        </tbody>
+    </table>';
 
 //      $ls->addColumn($listingelement,s('Results'),$resultStats);
 

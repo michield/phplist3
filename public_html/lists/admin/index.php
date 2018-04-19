@@ -125,6 +125,10 @@ if (!empty($_SESSION['hasconf']) || Sql_Table_exists($tables['config'], 1)) {
     //}
 }
 
+if (isset($_REQUEST['resettheme'])) {
+    SetCookie ( 'preferredTheme','');
+}
+
 if (isset($_REQUEST['settheme']) && !empty($_REQUEST['settheme']) && is_array($THEMES[$_REQUEST['settheme']])) {
     $settheme = preg_replace('/[^\w_-]+/', '', strip_tags($_REQUEST['settheme']));
     $GLOBALS['ui'] = $_REQUEST['settheme'];
@@ -177,6 +181,7 @@ if (isset($GLOBALS['pageheader'])) {
     }
 }
 
+$GLOBALS['require_login'] = 1; ## this is no longer configurable and should never have been
 if ($GLOBALS['commandline']) {
     if (!isset($_SERVER['USER']) && count($GLOBALS['commandline_users'])) {
         clineError('USER environment variable is not defined, cannot do access check. Please make sure USER is defined.');
@@ -263,7 +268,7 @@ if (!$GLOBALS['admin_auth_module']) {
     } else {
         $num = Sql_Query("select * from {$tables['admin']}");
         if (!Sql_Affected_Rows()) {
-            $GLOBALS['require_login'] = 0;
+            $msg = s('Login not available. Create an account first.');
         }
     }
 } elseif (!Sql_Table_exists($GLOBALS['tables']['config'])) {
@@ -292,7 +297,7 @@ if (!empty($GLOBALS['require_login'])) {
         require __DIR__.'/phpListAdminAuthentication.php';
         $GLOBALS['admin_auth'] = new phpListAdminAuthentication();
     }
-    if ((!isset($_SESSION['adminloggedin']) || !$_SESSION['adminloggedin']) && isset($_REQUEST['login']) && isset($_REQUEST['password']) && !empty($_REQUEST['password'])) {
+    if ((!isset($_SESSION['adminloggedin']) || !$_SESSION['adminloggedin']) && isset($_REQUEST['login']) && isset($_REQUEST['password'])) {
         $loginresult = $GLOBALS['admin_auth']->validateLogin($_REQUEST['login'], $_REQUEST['password']);
         if (!$loginresult[0]) {
             $_SESSION['adminloggedin'] = '';
@@ -470,7 +475,7 @@ if (!$ajax) {
 }
 echo '<div class="hidden">'.PageLink2('home', s('Main page')).'</div>';
 
-if ($GLOBALS['require_login'] && $page != 'login') {
+if ($page != 'login') {
     if ($page == 'logout') {
         $greeting = $GLOBALS['I18N']->get('goodbye');
     } else {
@@ -501,7 +506,7 @@ if (!$GLOBALS['commandline']) {
 
 if (!$ajax && $page != 'login') {
     if (strpos(VERSION, 'dev') && !TEST) {
-        if ($GLOBALS['developer_email']) {
+        if (!empty($GLOBALS['developer_email'])) {
             Info('Running DEV version. All emails will be sent to '.$GLOBALS['developer_email']);
         } else {
             Info('Running DEV version, but developer email is not set');

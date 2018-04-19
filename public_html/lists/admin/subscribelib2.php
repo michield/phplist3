@@ -241,7 +241,7 @@ if (isset($_POST['subscribe']) && is_email($_POST['email']) && $listsok && $allt
     $subscriptions = array(); //# used to keep track of which admins to alert
 
     if (isset($_POST['list']) && is_array($_POST['list'])) {
-        while (list($key, $val) = each($_POST['list'])) {
+        foreach ($_POST['list'] as $key => $val) {
             if ($val == 'signup') {
                 $key = sprintf('%d', $key);
                 if (!empty($key)) {
@@ -355,7 +355,7 @@ if (isset($_POST['subscribe']) && is_email($_POST['email']) && $listsok && $allt
     $user_att = getUserAttributeValues($email);
 
     if (count($user_att)) {
-        while (list($att_name, $att_value) = each($user_att)) {
+        foreach ($user_att as $att_name => $att_value) {
             $thankyoupage = str_ireplace('['.$att_name.']', $att_value, $thankyoupage);
         }
     }
@@ -521,7 +521,7 @@ if (isset($_POST['subscribe']) && is_email($_POST['email']) && $listsok && $allt
 
     $lists = '';
     if (is_array($_POST['list'])) {
-        while (list($key, $val) = each($_POST['list'])) {
+        foreach ($_POST['list'] as $key => $val) {
             if ($val == 'signup') {
                 $result = Sql_query(sprintf('replace into %s (userid,listid,entered) values(%d,%d,now())',$GLOBALS['tables']['listuser'],$userid,$key));
 //        $lists .= "  * ".$_POST["listname"][$key]."\n";
@@ -819,7 +819,7 @@ function ListAttributes($attributes, $attributedata, $htmlchoice = 0, $userid = 
     if (!isset($_GET['page']) || (isset($_GET['page']) && $_GET['page'] != 'import1')) {
         $html = sprintf('
   <tr><td><div class="required"><label for="email">%s *</label></div></td>
-  <td class="attributeinput"><input type=text name=email value="%s" size="%d" id="email" />
+  <td class="attributeinput"><input type=text name=email required="required" placeholder="%s" size="%d" id="email" />
   <script language="Javascript" type="text/javascript">addFieldToCheck("email","%s");</script></td></tr>',
             $GLOBALS['strEmail'], htmlspecialchars($email), $textlinewidth, $GLOBALS['strEmail']);
     }
@@ -831,7 +831,7 @@ function ListAttributes($attributes, $attributedata, $htmlchoice = 0, $userid = 
         }
         $html .= sprintf('
   <tr><td><div class="required"><label for="confirm">%s *</label></div></td>
-  <td class="attributeinput"><input type=text name=emailconfirm value="%s" size="%d" id="confirm" />
+  <td class="attributeinput"><input type=text name=emailconfirm required="required" value="%s" size="%d" id="confirm" />
   <script language="Javascript" type="text/javascript">addFieldToCheck("emailconfirm","%s");</script></td></tr>',
             $GLOBALS['strConfirmEmail'], htmlspecialchars(stripslashes($_REQUEST['emailconfirm'])), $textlinewidth,
             $GLOBALS['strConfirmEmail']);

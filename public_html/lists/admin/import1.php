@@ -136,9 +136,11 @@ if (isset($_REQUEST['import'])) {
 
     // View test output of emails
     if ($test_import) {
-        echo $GLOBALS['I18N']->get('Test output:').':<br/>'.$GLOBALS['I18N']->get('There should only be ONE email per line.').'<br/>'.$GLOBALS['I18N']->get('If the output looks ok, go').' <a href="javascript:history.go(-1)">'.$GLOBALS['I18N']->get('back').'</a>'.$GLOBALS['I18N']->get(' to resubmit for real').'<br/><br/>';
+        echo '<p>'.$GLOBALS['I18N']->get('There should only be ONE email per line.').' '.$GLOBALS['I18N']->get('If the output looks ok, go').' <a href="javascript:history.go(-1)">'.$GLOBALS['I18N']->get('back').'</a> '.$GLOBALS['I18N']->get('to resubmit for real').'.</p>
+        <p><strong>'.$GLOBALS['I18N']->get('Test output:').'</strong></p>
+        <hr/>';
         $i = 1;
-        while (list($email, $data) = each($user_list)) {
+        foreach ($user_list as $email => $data) {
             $email = trim($email);
             if (strlen($email) > 4) {
                 echo "<b>$email</b><br/>";
@@ -172,7 +174,7 @@ if (isset($_REQUEST['import'])) {
 } else {
     echo FormStart(' enctype="multipart/form-data" name="import"');
 
-    if ($GLOBALS['require_login'] && !isSuperUser()) {
+    if ( !isSuperUser()) {
         $access = accessLevel('import1');
         switch ($access) {
             case 'owner':

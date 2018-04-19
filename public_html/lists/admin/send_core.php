@@ -658,7 +658,7 @@ if (!$done) {
             }
             $messagedata['fromfield'] = $defaultFrom;
 
-            if (!isSuperUser() && USE_ADMIN_DETAILS_FOR_MESSAGES && is_object($GLOBALS['admin_auth']) && $GLOBALS['require_login']) {
+            if (!isSuperUser() && USE_ADMIN_DETAILS_FOR_MESSAGES && is_object($GLOBALS['admin_auth'])) {
                 $adminemail = $GLOBALS['admin_auth']->adminEmail($_SESSION['logindetails']['id']);
                 if (!empty($adminemail)) {
                     $messagedata['fromfield'] = $GLOBALS['admin_auth']->adminName($_SESSION['logindetails']['id']).' '.$adminemail;
@@ -990,9 +990,14 @@ date('H:i, l j F Y', strtotime($currentTime[0])) . '</span>' . '</div>';
 
     // Display the HTML for the "Send Test" button, and the input field for the email addresses
     $sendtest_content = '<div class="sendTest" id="sendTest">
-    ' .$sendtestresult.'
-    <input class="submit" type="submit" name="sendtest" value="' .s('Send Test').'" /> '.Help('sendtest').' '.s('to email address(es)').':'.
-        '<input type="text" name="testtarget" size="40" value="'.$messagedata['testtarget'].'"/><br />'.s('(comma separate addresses - all must be existing subscribers)').'
+    ' .$sendtestresult.Help('sendtest').' <b>'.s('to email address(es)').':</b><br />'.
+    	'<p><i>&nbsp; '.s('(comma separate addresses - all must be existing subscribers)').'</i></p>'.
+        '<div class="input-group">
+        	<input type="text" name="testtarget" size="40" value="'.$messagedata['testtarget'].'" class="form-control" />
+        	<span class="input-group-btn">
+			    <input class="submit btn btn-primary" type="submit" name="sendtest" value="' .s('Send Test').'" /> 
+			 </span>
+        </div>
     </div>';
 
     // notification of progress of message sending

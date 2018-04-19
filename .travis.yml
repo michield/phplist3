@@ -18,10 +18,15 @@ matrix:
           env: BROWSER=goutte
         - php: '7.1'
           env: BROWSER=chrome
-        - php: '7.2'
-          env: BROWSER=goutte
-        - php: '7.2'
-          env: BROWSER=chrome
+
+notifications:
+  slack:
+    rooms:
+      secure: "LegKwsGSAQDcqUGA8Jg90XUWfhnmho5U+RXKpuRfAT4L5Z8j761AVGIwTrUWw8gnxeGccr3smTWahm+GYuwMvg8YDxcygPuVn3U+fus0qgqAnfkQLmMl4vSdkZfO1GTc7YkyLAJcmwdDeUgXr94gQ4qvmsTSk8E0gzIstdfFiOU="
+  on_success: change
+  on_failure: always
+
+before_install:
 
 notifications:
   irc: chat.freenode.net#phplist
@@ -55,14 +60,16 @@ before_script:
 - mysql -e 'SET GLOBAL wait_timeout = 5400;'
 - mysql -e 'create database phplistdb;'
 script:
-- vendor/bin/behat
+  # check syntax
+  - ./vendor/bin/phpLint ./public_html
+
+  # run setup feature first to create database
+  - ./vendor/bin/behat -fprogress -p $BROWSER --strict --tags=@first-run
+
+  # run all feature except @first-run
+  - ./vendor/bin/behat -fprogress -p $BROWSER --strict --tags="~@first-run && ~@wip"
+addons:
+  chrome: stable
+
 after_failure:
-- echo "Failures detected. Outputing additional logs:"
-- ls -l /etc/apache2/sites-available/
-- ls -l /home/travis/build/
-- ls -l /home/travis/build/michield
-- ls -l /home/travis/build/michield/phplist3
-- sudo cat /etc/apache2/apache2.conf
-- sudo cat /etc/apache2/sites-available/000-default.conf
-- sudo cat /var/log/apache2/error.log
-- sudo cat /var/log/mysql/error.log
+  - IMGUR_CLIENT_ID=bec050c54e1bb52 ./bin/imgur-uploader.sh build/screenshot/*.png

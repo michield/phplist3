@@ -60,6 +60,12 @@ class phplistPlugin
     public $authProvider = false;
 
     /**
+     * The priority of this plugin.
+     * phplist will activate() plugins in descending priority order
+     */
+    public $priority = 10;
+
+    /**
      * Holds tablename -> real table mapping
      */
     public $tables = array();
@@ -207,6 +213,18 @@ class phplistPlugin
     public function upgrade($previous)
     {
         return true;
+    }
+
+    /**
+     * Allows a plugin to override the default check for a new version.
+     *
+     * @param array $pluginDetails
+     *
+     * @returns string|false|null new version, or false if update not available, or null to use the default update check
+     *
+     */
+    public function checkForUpdate(array $pluginDetails)
+    {
     }
 
     /**

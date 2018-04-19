@@ -130,7 +130,7 @@ if (count($THEMES) > 1 && THEME_SWITCH) {
     unset($themeNames['phpList Default']);
 
     $default_config['UITheme'] = array(
-        'value'       => $_SESSION['ui'],
+        'value'       => isset($_SESSION['ui']) ? $_SESSION['ui'] : '',
         'values'      => array_flip($themeNames),
         'description' => s('Theme for phpList'),
         'type'        => 'select',
@@ -304,6 +304,8 @@ if (!TEST && REGISTER) {
 // number of users to show per page if there are more
 define('MAX_USER_PP', 50);
 define('MAX_MSG_PP', 5);
+// Used by e.g. mviews.php
+define('MAX_OPENS_PP', 20);
 
 function formStart($additional = '')
 {
@@ -468,7 +470,7 @@ function Error($msg, $documentationURL = '')
     ++$GLOBALS['mail_error_count'];
     if (is_array($_POST) && count($_POST)) {
         $GLOBALS['mail_error'] .= "\nPost vars:\n";
-        while (list($key, $val) = each($_POST)) {
+        foreach ($_POST as $key => $val) {
             if ($key != 'password') {
                 if (is_array($val)) {
                     $GLOBALS['mail_error'] .= $key.'='.serialize($val)."\n";
@@ -859,7 +861,7 @@ function contextMenu()
     //   $GLOBALS["context_menu"]["bouncemgt"] = '';
     // }
 
-    if ($GLOBALS['require_login'] && (!isset($_SESSION['adminloggedin']) || !$_SESSION['adminloggedin'])) {
+    if (!isset($_SESSION['adminloggedin']) || !$_SESSION['adminloggedin']) {
         return '<ul class="contextmenu">'.$spb.PageLink2('home',
             $GLOBALS['I18N']->get('Main Page')).'<br />'.$spe.$spb.PageLink2('about',
             $GLOBALS['I18N']->get('about').' phplist').'<br />'.$spe.'</ul>';
@@ -1141,7 +1143,7 @@ function PageLink2($name, $desc = '', $url = '', $no_plugin = false, $title = ''
         $desc = $name;
     }
     if (empty($title)) {
-        $title = $GLOBALS['I18N']->pageTitleHover($name);
+        $title = $GLOBALS['I18N']->pageTitleHover($page);
         if (empty($title)) {
             $title = $desc;
         }
@@ -1786,7 +1788,7 @@ function delimited($data)
 {
     $delimitedData = '';
     reset($data);
-    while (list($key, $val) = each($data)) {
+    foreach ($data as $key => $val) {
         $delimitedData .= $key.'KEYVALSEP'.$val.'ITEMSEP';
     }
     $length = strlen($delimitedData);
@@ -2042,7 +2044,7 @@ function phplist_shutdown()
             .$GLOBALS['mail_error'];
         $message .= "\n==== debugging information\n\nSERVER Vars\n";
         if (is_array($_SERVER)) {
-            while (list($key, $val) = each($_SERVER)) {
+            foreach ($_SERVER as $key => $val) {
                 if (stripos($key, 'password') === false) {
                     $message .= $key.'='.serialize($val)."\n";
                 }
@@ -2092,24 +2094,21 @@ function secs2time($secs)
     $mins = (int) ($secs / 60);
     $secs = (int) ($secs % 60);
 
-    $res = '';
-    if ($years) {
-        $res .= $years.' '.$GLOBALS['I18N']->get('years');
-    }
-    if ($days) {
-        $res .= ' '.$days.' '.$GLOBALS['I18N']->get('days');
-    }
-    if ($hours) {
-        $res .= ' '.$hours.' '.$GLOBALS['I18N']->get('hours');
-    }
-    if ($mins) {
-        $res .= ' '.$mins.' '.$GLOBALS['I18N']->get('mins');
-    }
-    if ($secs) {
-        $res .= ' '.sprintf('%02d', $secs).' '.$GLOBALS['I18N']->get('secs');
+    $format = compact('years', 'days', 'hours', 'mins');
+
+    $output = '';
+
+    foreach($format as $unit => $value) {
+        if ($value > 0) {
+              $output .= ' '.$value.' '.s($unit);
+        }
     }
 
-    return $res;
+    if ($secs) {
+        $output .= ' '.sprintf('%02d', $secs).' '.s('secs');
+    }
+
+    return $output;
 }
 
 function listPlaceHolders()
@@ -2172,7 +2171,7 @@ function printarray($array)
     if (!is_array($array)) {
         return;
     }
-    while (list($key, $value) = each($array)) {
+    foreach ($array as $key => $value) {
         if (is_array($value)) {
             echo $key.'(array):<blockquote>';
             printarray($value); //recursief!!

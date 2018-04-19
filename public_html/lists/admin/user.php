@@ -108,7 +108,7 @@ if (!empty($_POST['change']) && ($access == 'owner' || $access == 'all')) {
         $old_listmembership[$row['listid']] = listName($row['listid']);
     }
 
-    while (list($key, $val) = each($struct)) {
+    foreach ($struct as $key => $val) {
         if (is_array($val)) {
             if (isset($val[1]) && strpos($val[1], ':')) {
                 list($a, $b) = explode(':', $val[1]);
@@ -172,7 +172,7 @@ if (!empty($_POST['change']) && ($access == 'owner' || $access == 'all')) {
     }
 
     if (isset($_POST['cbattribute']) && is_array($_POST['cbattribute'])) {
-        while (list($key, $val) = each($_POST['cbattribute'])) {
+        foreach ($_POST['cbattribute'] as $key => $val) {
             if (isset($_POST['attribute'][$key]) && $_POST['attribute'][$key] == 'on') {
                 Sql_Query(sprintf('replace into %s (userid,attributeid,value)
          values(%d,%d,"on")', $tables['user_attribute'], $id, $key));
@@ -184,7 +184,7 @@ if (!empty($_POST['change']) && ($access == 'owner' || $access == 'all')) {
     }
 
     if (isset($_POST['cbgroup']) && is_array($_POST['cbgroup'])) {
-        while (list($key, $val) = each($_POST['cbgroup'])) {
+        foreach ($_POST['cbgroup'] as $key => $val) {
             $field = 'cbgroup'.$val;
             if (isset($_POST[$field]) && is_array($_POST[$field])) {
                 $newval = array();
@@ -268,17 +268,36 @@ if (!empty($_POST['change']) && ($access == 'owner' || $access == 'all')) {
 if (isset($delete) && $delete && $access != 'view') {
     verifyCsrfGetToken();
     // delete the index in delete
-    $_SESSION['action_result'] = s('Deleting')." $delete ..\n";
+    $_SESSION['action_result'] = s('Deleting').' '.s('Subscriber').' '.s('ID')." $delete ..\n";
     if ($require_login && !isSuperUser()) {
-        $lists = Sql_query("SELECT listid FROM {$tables['listuser']},{$tables['list']} where userid = ".$delete." and $tables[listuser].listid = $tables[list].id $subselect ");
+        // If the user does not permission to permanently delete, delete 
+        // subscriptoins instead
+
+        // Get all lists subscriber is a member of
+        $lists = Sql_query("
+            SELECT 
+                listid 
+            FROM 
+                {$tables['listuser']},{$tables['list']} 
+            WHERE 
+                userid = ".$delete." 
+                AND $tables[listuser].listid = $tables[list].id 
+                $subselect 
+        ");
         while ($lst = Sql_fetch_array($lists)) {
-            Sql_query("delete from {$tables['listuser']} where userid = $delete and listid = $lst[0]");
+            Sql_query("
+                DELETE FROM 
+                    {$tables['listuser']} 
+                WHERE 
+                    userid = $delete 
+                    AND listid = $lst[0]
+            ");
         }
     } else {
-        //# this action is no longer visible, but can stay here.
+        // permanently delete subscriber
         deleteUser($delete);
     }
-    $_SESSION['action_result'] .= '..'.s('Done')."\n";
+    $_SESSION['action_result'] .= s('Done')."\n";
     Redirect('user');
 }
 
@@ -358,9 +377,12 @@ echo '<input type="hidden" name="returnpage" value="'.$returnpage.'" /><input ty
 reset($struct);
 
 $userdetailsHTML = $mailinglistsHTML = '';
+if (isBlackListed($user['email'])) {
+    $userdetailsHTML .= '<h3 class="alert-info">'.s('Subscriber is blacklisted. No emails will be sent to this email address.').'</h3>';
+}
 $userdetailsHTML .= '<table class="userAdd" border="1">';
 
-while (list($key, $val) = each($struct)) {
+foreach ($struct as $key => $val) {
     @list($a, $b) = explode(':', $val[1]);
 
     if (!isset($user[$key])) {
@@ -466,10 +488,6 @@ if ($access != 'view') {
     $userdetailsHTML .= '<tr><td colspan="2" class="bgwhite"><input class="submit" type="submit" name="change" value="'.$GLOBALS['I18N']->get('Save Changes').'" /></td></tr>';
 }
 $userdetailsHTML .= '</table>';
-
-if (isBlackListed($user['email'])) {
-    $userdetailsHTML .= '<h3>'.s('Subscriber is blacklisted. No emails will be sent to this email address.').'</h3>';
-}
 
 $mailinglistsHTML .= '<h3>'.$GLOBALS['I18N']->get('Mailinglist membership').':</h3>';
 // a dummy entry, to make the array show up in POST even if all checkboxes are unchecked

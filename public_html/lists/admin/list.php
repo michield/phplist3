@@ -86,33 +86,33 @@ switch ($access) {
         break;
 }
 
-echo '<div class="actions">';
-echo PageLinkButton('catlists', $I18N->get('Categorise lists'));
+echo '<div class="row"><div class="actions col-xs-12">';
+echo '<span class="pull-left">'.PageLinkButton('catlists', $I18N->get('Categorise lists')).'</span>';
 $canaddlist = false;
-if ($GLOBALS['require_login'] && !isSuperUser()) {
+if ( !isSuperUser()) {
     $numlists = Sql_Fetch_Row_query("select count(*) from {$tables['list']} where owner = ".$_SESSION['logindetails']['id']);
     if ($numlists[0] < MAXLIST) {
-        echo PageLinkButton('editlist', $GLOBALS['I18N']->get('Add a list'));
+        echo '<span class="pull-right">'.PageLinkButton('editlist', s('Add a list')).'</span>';
         $canaddlist = true;
     }
 } else {
-    echo PageLinkButton('editlist', $GLOBALS['I18N']->get('Add a list'));
+    echo '<span class="pull-right">'.PageLinkButton('editlist', s('Add a list')).'</span>';
     $canaddlist = true;
 }
-echo '</div>';
+echo '</div></div>';
 
 if (isset($_GET['delete'])) {
     verifyCsrfGetToken();
     $delete = sprintf('%d', $_GET['delete']);
     // delete the index in delete
-    $actionresult = $GLOBALS['I18N']->get('Deleting').' '.$GLOBALS['I18N']->get('list')." $delete ..\n";
+    $actionresult = s('Deleting').' '.s('list')." $delete ..\n";
     $result = Sql_query(sprintf('delete from '.$tables['list'].' where id = %d %s', $delete, $subselect_and));
     $done = Sql_Affected_Rows();
     if ($done) {
         $result = Sql_query('delete from '.$tables['listuser']." where listid = $delete");
         $result = Sql_query('delete from '.$tables['listmessage']." where listid = $delete");
     }
-    $actionresult .= '..'.$GLOBALS['I18N']->get('Done')."<br /><hr /><br />\n";
+    $actionresult .= '..'.s('Done')."<br /><hr /><br />\n";
     $_SESSION['action_result'] = $actionresult;
     Redirect('list');
 
@@ -164,7 +164,7 @@ if (count($aListCategories)) {
     foreach ($aListCategories as $category) {
         $category = trim($category);
         if ($category == '') {
-            $category = $GLOBALS['I18N']->get('Uncategorised');
+            $category = s('Uncategorised');
         }
 
         $tabs->addTab($category, $baseurl.'&amp;tab='.urlencode($category));
@@ -192,7 +192,7 @@ if ($total == 0 && count($aListCategories) && $current == '' && empty($_GET['tab
     }
 }
 
-echo '<p class="total">'.$total.' '.$GLOBALS['I18N']->get('Lists').'</p>';
+//echo '<p class="total">'.$total.' '.s('Lists').'</p>';
 if ($total > 30 && empty($_SESSION['showalllists'])) {
     $paging = simplePaging('list', $s, $total, 10, '&nbsp;');
     $limit = " limit $s,10";
@@ -203,7 +203,7 @@ if ($total > 30 && empty($_SESSION['showalllists'])) {
 $result = Sql_query('select * from '.$tables['list'].' '.$subselect.' order by listorder '.$limit);
 $numlists = Sql_Affected_Rows($result);
 
-$ls = new WebblerListing(s('Lists'));
+$ls = new WebblerListing($total.' '.s('Lists'));
 $ls->usePanel($paging);
 
 /* Always Show a "list" of all subscribers
@@ -216,29 +216,23 @@ if (SHOW_LIST_OFALL_SUBSCRIBERS && isSuperUser()) {
     $membersDisplay = listMemberCounts(0);
     $desc = s('All subscribers');
 
-    $element = '<!-- '.$row['id'].'-->'.s('All subscribers');
+    $element = '<!-- '.$row['id'].'-->'.s('All subscribers').Help('allsubscribers.php');
     $ls->addElement($element);
     $ls->setClass($element, 'rows row1');
     $ls->addColumn($element,
-        $GLOBALS['I18N']->get('Members'),
-        '<div style="display:inline-block;text-align:right;width:50%;float:left;">'.$membersDisplay.'</div><span class="view" style="text-align:left;display:inline-block;float:right;width:48%;"><a class="button " href="./?page=members&id=all" title="'.$GLOBALS['I18N']->get('View Members').'">'.$GLOBALS['I18N']->get('View Members').'</a></span>');
-
-    $deletebutton = new ConfirmButton(
-        s('This is a system list. You cannot delete it.'),
-        PageURL2('list'),
-        s('delete this list'));
+        s('Members'),
+        '<div style="display:inline-block;text-align:right;width:50%;float:left;">'.$membersDisplay.'</div><span class="view" style="text-align:left;display:inline-block;float:right;width:48%;"><a class="button " href="./?page=members&id=all" title="'.s('View Members').'">'.s('View Members').'</a></span>');
 
     $ls->addRow($element, '',
-        '<span class="edit-list"><a class="button" href="?page=editlist" title=""></a></span>'.'<span class="send-list">'.PageLinkButton('send&new=1&list=all',
-            $GLOBALS['I18N']->get('send'), '', '', s('start a new campaign targetting all lists')).'</span>'.
-        '<span class="add_member">'.PageLink2('import', s('Add Members')).'</span>'.
-        '<span class="delete">'.$deletebutton->show().'</span>', '', '', 'actions nodrag');
+        '<span class="send-list">'.PageLinkButton('send&new=1&list=all',
+            s('send'), '', '', s('start a new campaign targetting all lists')).'</span>'.
+        '<span class="add_member">'.PageLink2('import', s('Add Members')).'</span>', '', '', 'actions nodrag');
     $some = 1;
 }
 
 if ($numlists > 15) {
     Info(s('You seem to have quite a lot of lists, do you want to organise them in categories? ').' '.PageLinkButton('catlists',
-            $GLOBALS['I18N']->get('Great idea!')));
+            s('Great idea!')));
 
     /* @@TODO add paging when there are loads of lists, because otherwise the page is very slow
      * $limit = ' limit 50';
@@ -264,32 +258,22 @@ while ($row = Sql_fetch_array($result)) {
     $element = '<!-- '.
     $row['id'].'-->'.'<a href="./?page=members&id='.
     $row['id'].'" title="'.
-    $GLOBALS['I18N']->get('View Members').'">'.
+    s('View Members').'">'.
     stripslashes(cleanListName($row['name']).'</a>');
 
     $ls->addElement($element);
     $ls->setClass($element, 'rows row1');
     $ls->addColumn($element,
-        $GLOBALS['I18N']->get('Members'),
-        '<div style="display:inline-block;text-align:right;width:50%;float:left;">'.$membersDisplay.'</div><span class="view" style="text-align:left;display:inline-block;float:right;width:48%;"><a class="button " href="./?page=members&id='.$row['id'].'" title="'.$GLOBALS['I18N']->get('View Members').'">'.$GLOBALS['I18N']->get('View Members').'</a></span>');
+        s('Members'),
+        '<div style="display:inline-block;text-align:right;width:50%;float:left;">'.$membersDisplay.'</div><span class="view" style="text-align:left;display:inline-block;float:right;width:48%;"><a class="button " href="./?page=members&id='.$row['id'].'" title="'.s('View Members').'">'.s('View Members').'</a></span>');
 
     $ls->addColumn($element,
-        $GLOBALS['I18N']->get('Public'),
+        s('Public').Help('publiclist'),
         sprintf('<input type="checkbox" name="active[%d]" value="1" %s %s />', $row['id'],
             $row['active'] ? 'checked="checked"' : '',
             listUsedInSubscribePage($row['id']) ? ' disabled="disabled" ' : ''));
-    /*  $owner = adminName($row['owner']);
-      if (!empty($owner)) {
-        $ls->addColumn($element,
-          $GLOBALS['I18N']->get('Owner'),$GLOBALS['require_login'] ? adminName($row['owner']):$GLOBALS['I18N']->get('n/a'));
-      }
-      if (trim($desc) != '') {
-        $ls->addRow($element,
-          $GLOBALS['I18N']->get('Description'),$desc);
-      }
-      */
     $ls->addColumn($element,
-        $GLOBALS['I18N']->get('Order'),
+        s('Order'),
         sprintf('<input type="text" name="listorder[%d]" value="%d" size="3" class="listorder" />', $row['id'],
             $row['listorder']));
 
@@ -299,35 +283,35 @@ while ($row = Sql_fetch_array($result)) {
         s('delete this list'));
 
     $ls->addRow($element, '',
-        '<span class="edit-list"><a class="button" href="?page=editlist&amp;id='.$row['id'].'" title="'.$GLOBALS['I18N']->get('Edit this list').'"></a></span>'.'<span class="send-list">'.PageLinkButton('send&new=1&list='.$row['id'],
-            $GLOBALS['I18N']->get('send'), '', '',
-            $GLOBALS['I18N']->get('start a new campaign targetting this list')).'</span>'.
+        '<span class="edit-list"><a class="button" href="?page=editlist&amp;id='.$row['id'].'" title="'.s('Edit this list').'"></a></span>'.'<span class="send-list">'.PageLinkButton('send&new=1&list='.$row['id'],
+            s('send'), '', '',
+            s('start a new campaign targetting this list')).'</span>'.
         '<span class="add_member">'.PageLinkDialogOnly('importsimple&list='.$row['id'],
             s('Add Members')).'</span>'.
         '<span class="delete">'.$deletebutton->show().'</span>', '', '', 'actions nodrag');
 
     $some = 1;
 }
-$ls->addSubmitButton('update', $GLOBALS['I18N']->get('Save Changes'));
+$ls->addSubmitButton('update', s('Save Changes'));
 
 if (!$some) {
-    echo $GLOBALS['I18N']->get('No lists, use Add List to add one');
+    echo s('No lists, use Add List to add one');
 } else {
     echo $ls->display('', 'draggable');
 }
 /*
   echo '<table class="x" border="0">
       <tr>
-        <td>'.$GLOBALS['I18N']->get('No').'</td>
-        <td>'.$GLOBALS['I18N']->get('Name').'</td>
-        <td>'.$GLOBALS['I18N']->get('Order').'</td>
-        <td>'.$GLOBALS['I18N']->get('Functions').'</td>
-        <td>'.$GLOBALS['I18N']->get('Active').'</td>
-        <td>'.$GLOBALS['I18N']->get('Owner').'</td>
+        <td>'.s('No').'</td>
+        <td>'.s('Name').'</td>
+        <td>'.s('Order').'</td>
+        <td>'.s('Functions').'</td>
+        <td>'.s('Active').'</td>
+        <td>'.s('Owner').'</td>
         <td>'.$html . '
     <tr>
         <td colspan="6" align="center">
-        <input type="submit" name="update" value="'.$GLOBALS['I18N']->get('Save Changes').'"></td>
+        <input type="submit" name="update" value="'.s('Save Changes').'"></td>
       </tr>
     </table>';
 }
@@ -335,10 +319,10 @@ if (!$some) {
 ?>
 
 </form>
-<p>
+<p class="hidden-lg hidden-md hidden-sm hidden-xs">
     <?php
     if ($canaddlist) {
-        echo PageLinkButton('editlist', $GLOBALS['I18N']->get('Add a list'));
+        echo PageLinkButton('editlist', s('Add a list'));
     }
     ?>
 </p>
