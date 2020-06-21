@@ -334,8 +334,7 @@ msgstr ""
 "Prohlížet, upravovat a přidávat listy, ke kterým se odběratelé můžou "
 "registrovat"
 
-#: public_html/lists/admin/home.php:138
-#: public_html/lists/admin/import4.php:114
+#: public_html/lists/admin/home.php:138 public_html/lists/admin/import4.php:114
 #: public_html/lists/admin/users.php:399
 msgid "users"
 msgstr "Uživatelé"
@@ -344,8 +343,7 @@ msgstr "Uživatelé"
 msgid "List all Users"
 msgstr "List všech uživatelů"
 
-#: public_html/lists/admin/home.php:145
-#: public_html/lists/admin/import1.php:233
+#: public_html/lists/admin/home.php:145 public_html/lists/admin/import1.php:233
 msgid "import"
 msgstr "importovat"
 
@@ -459,8 +457,7 @@ msgstr "šablony"
 msgid "Configure Templates"
 msgstr "Nastavit šablonu"
 
-#: public_html/lists/admin/home.php:268
-#: public_html/lists/admin/import3.php:161
+#: public_html/lists/admin/home.php:268 public_html/lists/admin/import3.php:161
 #: public_html/lists/admin/import3.php:376
 msgid "messages"
 msgstr "Zprávy"
@@ -478,8 +475,7 @@ msgstr "Procesní fronta"
 msgid "Process the Message Queue"
 msgstr "Spustit frontu zpráv"
 
-#: public_html/lists/admin/home.php:280
-#: public_html/lists/admin/connect.php:494
+#: public_html/lists/admin/home.php:280 public_html/lists/admin/connect.php:494
 msgid "warning"
 msgstr "varování"
 
@@ -511,8 +507,7 @@ msgstr ""
 msgid "bounces"
 msgstr "nedoručeno"
 
-#: public_html/lists/admin/home.php:294
-#: public_html/lists/admin/bouncemgt.php:9
+#: public_html/lists/admin/home.php:294 public_html/lists/admin/bouncemgt.php:9
 msgid "View Bounces"
 msgstr "Zobrazit nedoručené"
 
@@ -599,8 +594,8 @@ msgstr "Odhadovaný čas"
 #: public_html/lists/admin/actions/msgstatus.php:72
 #: public_html/lists/admin/userhistory.php:105
 #: public_html/lists/admin/uclicks.php:120
-#: public_html/lists/admin/mviews.php:89
-#: public_html/lists/admin/mviews.php:195 public_html/databasestructure.php:63
+#: public_html/lists/admin/mviews.php:89 public_html/lists/admin/mviews.php:195
+#: public_html/databasestructure.php:63
 msgid "sent"
 msgstr "odeslat"
 
@@ -671,9 +666,9 @@ msgstr "Všechny veřejné listy"
 msgid "Add a list"
 msgstr "Přidat list"
 
-#: public_html/lists/admin/connect.php:1253
-#: public_html/lists/admin/list.php:88 public_html/lists/admin/list.php:98
-#: public_html/lists/admin/list.php:120 public_html/lists/admin/list.php:128
+#: public_html/lists/admin/connect.php:1253 public_html/lists/admin/list.php:88
+#: public_html/lists/admin/list.php:98 public_html/lists/admin/list.php:120
+#: public_html/lists/admin/list.php:128
 msgid "Uncategorised"
 msgstr "Nezařazeno"
 
@@ -947,8 +942,7 @@ msgstr "Při instalaci zásuvného modulu došlo k chybě"
 #: public_html/lists/admin/usercheck.php:45
 #: public_html/lists/admin/import2.php:50
 #: public_html/lists/admin/import2.php:376
-#: public_html/lists/admin/import3.php:287
-#: public_html/lists/admin/user.php:336
+#: public_html/lists/admin/import3.php:287 public_html/lists/admin/user.php:336
 #: public_html/lists/admin/initialise.php:66
 msgid "Continue"
 msgstr "Pokračovat"
@@ -1269,8 +1263,8 @@ msgstr "nepřehlásit k odběru"
 #: public_html/lists/admin/userclicks.php:41
 #: public_html/lists/admin/mclicks.php:20
 #: public_html/lists/admin/mclicks.php:32
-#: public_html/lists/admin/uclicks.php:26
-#: public_html/lists/admin/mviews.php:26 public_html/lists/admin/mviews.php:39
+#: public_html/lists/admin/uclicks.php:26 public_html/lists/admin/mviews.php:26
+#: public_html/lists/admin/mviews.php:39
 msgid "You do not have access to this page"
 msgstr "Nemáte přístup na tuhle stránku"
 
@@ -1278,8 +1272,7 @@ msgstr "Nemáte přístup na tuhle stránku"
 #: public_html/lists/admin/mclicks.php:100
 #: public_html/lists/admin/domainstats.php:35
 #: public_html/lists/admin/uclicks.php:66
-#: public_html/lists/admin/uclicks.php:75
-#: public_html/lists/admin/mviews.php:55
+#: public_html/lists/admin/uclicks.php:75 public_html/lists/admin/mviews.php:55
 #: public_html/lists/admin/mviews.php:126
 msgid "Download as CSV file"
 msgstr "Stáhnout jako CSV soubor"
@@ -1300,8 +1293,7 @@ msgstr ""
 
 #: public_html/lists/admin/statsoverview.php:107
 #: public_html/lists/admin/statsoverview.php:122
-#: public_html/lists/admin/mviews.php:91
-#: public_html/lists/admin/mviews.php:105
+#: public_html/lists/admin/mviews.php:91 public_html/lists/admin/mviews.php:105
 #: public_html/lists/admin/mviews.php:199
 msgid "views"
 msgstr "zobrazení"
@@ -1321,8 +1313,7 @@ msgstr ""
 
 #: public_html/lists/admin/statsoverview.php:113
 #: public_html/lists/admin/statsoverview.php:124
-#: public_html/lists/admin/mviews.php:93
-#: public_html/lists/admin/mviews.php:107
+#: public_html/lists/admin/mviews.php:93 public_html/lists/admin/mviews.php:107
 #, fuzzy
 msgid "rate"
 msgstr "datum"
@@ -1426,7 +1417,6 @@ msgid "Error sending message %d (%d/%d) to %s (%s) "
 msgstr ""
 
 #: public_html/lists/admin/sendemaillib.php:1003
-#, php-format
 #, fuzzy, php-format
 msgid "Size of HTML email: %s "
 msgstr "Velikost textového email: %s"
@@ -1498,8 +1488,7 @@ msgid "Campaign %d suspended for too many errors with attachments"
 msgstr ""
 
 #: public_html/lists/admin/import4.php:4 public_html/lists/admin/import2.php:5
-#: public_html/lists/admin/import1.php:7
-#: public_html/lists/admin/import3.php:16
+#: public_html/lists/admin/import1.php:7 public_html/lists/admin/import3.php:16
 #: public_html/lists/admin/importsimple.php:9
 #: public_html/lists/admin/import.php:5
 msgid "import is not available"
@@ -2750,7 +2739,6 @@ msgid "subject"
 msgstr "Předmět"
 
 #: public_html/lists/admin/msgbounces.php:29
-#, php-format
 #, fuzzy, php-format
 msgid "Listing %s to %s"
 msgstr "Výpis od %d do 5d"
@@ -2843,7 +2831,6 @@ msgid "Removing %d from this list "
 msgstr ""
 
 #: public_html/lists/admin/members.php:257
-#, php-format
 #, fuzzy, php-format
 msgid "Listing subscriber %d to %d"
 msgstr "Výpis od %d do 5d"
@@ -2864,7 +2851,6 @@ msgid "unconfirmed"
 msgstr ""
 
 #: public_html/lists/admin/members.php:286
-#, php-format
 #, fuzzy, php-format
 msgid "%d subscribers"
 msgstr "Přihlásit k odběru"
@@ -2873,8 +2859,8 @@ msgstr "Přihlásit k odběru"
 msgid "Tag all users in this page"
 msgstr ""
 
-#: public_html/lists/admin/members.php:297
-#: public_html/lists/admin/list.php:191 public_html/lists/admin/list.php:251
+#: public_html/lists/admin/members.php:297 public_html/lists/admin/list.php:191
+#: public_html/lists/admin/list.php:251
 msgid "Members"
 msgstr ""
 
@@ -4070,8 +4056,8 @@ msgstr ""
 msgid "Mime Type"
 msgstr ""
 
-#: public_html/lists/admin/message.php:136
-#: public_html/databasestructure.php:33 public_html/databasestructure.php:94
+#: public_html/lists/admin/message.php:136 public_html/databasestructure.php:33
+#: public_html/databasestructure.php:94
 #, fuzzy
 msgid "Description"
 msgstr "popis"
@@ -4235,7 +4221,6 @@ msgid ""
 msgstr ""
 
 #: public_html/lists/admin/actions/import2.php:485
-#, php-format
 #, fuzzy, php-format
 msgid "%d emails succesfully imported to the database and added to %d lists."
 msgstr "úspěšně vloženo do databáze a přidáno"
@@ -4247,13 +4232,11 @@ msgstr ""
 
 #: public_html/lists/admin/actions/import2.php:488
 #: public_html/lists/admin/actions/import1.php:222
-#, php-format
 #, fuzzy, php-format
 msgid "%d emails already existed in the database"
 msgstr "Všechny emaily již existují v databázi."
 
 #: public_html/lists/admin/actions/import2.php:492
-#, php-format
 #, fuzzy, php-format
 msgid "%d Invalid Emails found."
 msgstr "Nalezeny neplatné e-maily."
@@ -4645,7 +4628,8 @@ msgstr ""
 
 #: public_html/lists/admin/actions/processqueue.php:655
 msgid "Error loading message, please check the eventlog for details"
-msgstr "Chyba při načítání zprávy, zkontrolujte log událostí pro více informací"
+msgstr ""
+"Chyba při načítání zprávy, zkontrolujte log událostí pro více informací"
 
 #: public_html/lists/admin/actions/processqueue.php:672
 #, fuzzy
@@ -5884,7 +5868,6 @@ msgid "Certified Secure by "
 msgstr "Bezpečnost garantována "
 
 #: public_html/lists/admin/about.php:15
-#, php-format
 #, fuzzy, php-format
 msgid "phpList is licensed with the %sGNU Affero Public License (AGPL)%s"
 msgstr "phpList je vydaný pod licencí %sGNU Public License (GPL)%s"
@@ -6124,8 +6107,7 @@ msgid "Admin added"
 msgstr "Administrátor přidán"
 
 #: public_html/lists/admin/admins.php:57 public_html/lists/admin/admins.php:74
-#: public_html/lists/admin/admins.php:79
-#: public_html/lists/admin/admins.php:102
+#: public_html/lists/admin/admins.php:79 public_html/lists/admin/admins.php:102
 msgid "Administrators"
 msgstr "Administrátoři"
 
@@ -6216,13 +6198,11 @@ msgstr "Odeslat kampaně"
 msgid "Change Settings"
 msgstr "Změnit nastavení"
 
-#: public_html/lists/admin/mclicks.php:57
-#: public_html/lists/admin/mviews.php:66
+#: public_html/lists/admin/mclicks.php:57 public_html/lists/admin/mviews.php:66
 msgid "There are currently no messages to view"
 msgstr "Nejsou zde žádné zprávy k zobrazení"
 
-#: public_html/lists/admin/mclicks.php:59
-#: public_html/lists/admin/mviews.php:69
+#: public_html/lists/admin/mclicks.php:59 public_html/lists/admin/mviews.php:69
 msgid "Available Messages"
 msgstr ""
 
@@ -6291,7 +6271,6 @@ msgid "%d new email addresses imported"
 msgstr ""
 
 #: public_html/lists/admin/importsimple.php:97
-#, php-format
 #, fuzzy, php-format
 msgid "%d email addresses already existed in the database"
 msgstr "Všechny emaily již existují v databázi."
@@ -6457,7 +6436,6 @@ msgid "Made subscriber %s unconfirmed"
 msgstr ""
 
 #: public_html/lists/admin/bounce.php:84
-#, php-format
 #, fuzzy, php-format
 msgid "Made subscriber %d to receive text"
 msgstr "Označit odběratele k obdržení HTML"
@@ -6868,7 +6846,6 @@ msgstr ""
 #: public_html/lists/admin/users.php:332 public_html/lists/admin/users.php:336
 #: public_html/lists/admin/mviews.php:150
 #: public_html/lists/admin/mviews.php:153
-#, php-format
 #, fuzzy, php-format
 msgid "Listing user %d to %d"
 msgstr "Výpis od %d do 5d"
@@ -6898,8 +6875,7 @@ msgstr ""
 msgid "Add a User"
 msgstr ""
 
-#: public_html/lists/admin/users.php:443
-#: public_html/lists/admin/uclicks.php:56
+#: public_html/lists/admin/users.php:443 public_html/lists/admin/uclicks.php:56
 msgid "msgs"
 msgstr ""
 
@@ -7761,7 +7737,6 @@ msgid "Invalid email"
 msgstr "Neplatný email"
 
 #: public_html/lists/admin/inc/userlib.php:435
-#, php-format
 #, fuzzy, php-format
 msgid "Removed from blacklist by %s"
 msgstr "Odstranit z blokovaných"
@@ -9441,13 +9416,12 @@ msgstr ""
 msgid "pagetitlehover:suppressionlist"
 msgstr ""
 
-#, php-format
-#, fuzzy, php-format
-#~ msgid "%s emails succesfully imported to the database and added to %d lists."
+#, fuzzy
+#~ msgid ""
+#~ "%s emails succesfully imported to the database and added to %d lists."
 #~ msgstr "úspěšně vloženo do databáze a přidáno"
 
-#, php-format
-#, fuzzy, php-format
+#, fuzzy
 #~ msgid "%s emails already existed in the database"
 #~ msgstr "Všechny emaily již existují v databázi."
 
@@ -9464,19 +9438,15 @@ msgstr ""
 #~ msgid "Documentation"
 #~ msgstr "Dokumentace"
 
-#, php-format
 #~ msgid "phpList is licensed with the %sGNU Public License (GPL)%s"
 #~ msgstr "phpList je vydaný pod licencí %sGNU Public License (GPL)%s"
 
-#, php-format
 #~ msgid "%d email imported"
 #~ msgstr "%d e-mailů importováno"
 
-#, php-format
 #~ msgid "%d duplicates"
 #~ msgstr "%d duplicit"
 
-#, php-format
 #~ msgid "%d invalidated"
 #~ msgstr "%d neplatných"
 

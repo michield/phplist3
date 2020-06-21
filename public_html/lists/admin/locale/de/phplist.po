@@ -225,7 +225,8 @@ msgstr ""
 
 #: public_html/lists/admin/home.php:11
 msgid "Your database is out of date, please make sure to upgrade"
-msgstr "Ihre Datenbankstruktur ist veraltet. Bitte führen Sie ein Update durch."
+msgstr ""
+"Ihre Datenbankstruktur ist veraltet. Bitte führen Sie ein Update durch."
 
 #: public_html/lists/admin/home.php:12 public_html/lists/admin/home.php:72
 msgid "Your version"
@@ -266,9 +267,9 @@ msgid ""
 "The new version may have fixed security issues,<br/>so it is recommended to "
 "upgrade as soon as possible"
 msgstr ""
-"Die neue Version k&ouml;nnte allf&auml;llige Sicherheitsm&auml;ngel "
-"beheben.<br/>Es empfiehlt sich deshalb, baldm&ouml;glichst ein Update "
-"durchzuf&uuml;hren."
+"Die neue Version k&ouml;nnte allf&auml;llige Sicherheitsm&auml;ngel beheben."
+"<br/>Es empfiehlt sich deshalb, baldm&ouml;glichst ein Update durchzuf&uuml;"
+"hren."
 
 #: public_html/lists/admin/home.php:73
 msgid "Latest version"
@@ -346,8 +347,7 @@ msgstr ""
 "Anzeigen, Bearbeiten und Hinzufügen von Listen, zu denen sich Ihre "
 "Abonnenten anmelden können"
 
-#: public_html/lists/admin/home.php:138
-#: public_html/lists/admin/import4.php:114
+#: public_html/lists/admin/home.php:138 public_html/lists/admin/import4.php:114
 #: public_html/lists/admin/users.php:399
 msgid "users"
 msgstr "Abonnenten"
@@ -356,8 +356,7 @@ msgstr "Abonnenten"
 msgid "List all Users"
 msgstr "Abonnenten verwalten"
 
-#: public_html/lists/admin/home.php:145
-#: public_html/lists/admin/import1.php:233
+#: public_html/lists/admin/home.php:145 public_html/lists/admin/import1.php:233
 msgid "import"
 msgstr "Importieren"
 
@@ -470,8 +469,7 @@ msgstr "Vorlagen"
 msgid "Configure Templates"
 msgstr "Vorlagen konfigurieren"
 
-#: public_html/lists/admin/home.php:268
-#: public_html/lists/admin/import3.php:161
+#: public_html/lists/admin/home.php:268 public_html/lists/admin/import3.php:161
 #: public_html/lists/admin/import3.php:376
 msgid "messages"
 msgstr "Mitteilungen"
@@ -489,8 +487,7 @@ msgstr "Warteschlange"
 msgid "Process the Message Queue"
 msgstr "Nachrichten-Warteschlange abarbeiten"
 
-#: public_html/lists/admin/home.php:280
-#: public_html/lists/admin/connect.php:494
+#: public_html/lists/admin/home.php:280 public_html/lists/admin/connect.php:494
 msgid "warning"
 msgstr "Achtung"
 
@@ -522,8 +519,7 @@ msgstr "Nicht zustellbare Mails abholen"
 msgid "bounces"
 msgstr "Retouren"
 
-#: public_html/lists/admin/home.php:294
-#: public_html/lists/admin/bouncemgt.php:9
+#: public_html/lists/admin/home.php:294 public_html/lists/admin/bouncemgt.php:9
 msgid "View Bounces"
 msgstr "Nicht zustellbare Mails verarbeiten"
 
@@ -609,8 +605,8 @@ msgstr "Verbleibend"
 #: public_html/lists/admin/actions/msgstatus.php:72
 #: public_html/lists/admin/userhistory.php:105
 #: public_html/lists/admin/uclicks.php:120
-#: public_html/lists/admin/mviews.php:89
-#: public_html/lists/admin/mviews.php:195 public_html/databasestructure.php:63
+#: public_html/lists/admin/mviews.php:89 public_html/lists/admin/mviews.php:195
+#: public_html/databasestructure.php:63
 msgid "sent"
 msgstr "Gesendet"
 
@@ -681,9 +677,9 @@ msgstr "Alle öffentlichen Listen"
 msgid "Add a list"
 msgstr "Neue Liste hinzufügen"
 
-#: public_html/lists/admin/connect.php:1253
-#: public_html/lists/admin/list.php:88 public_html/lists/admin/list.php:98
-#: public_html/lists/admin/list.php:120 public_html/lists/admin/list.php:128
+#: public_html/lists/admin/connect.php:1253 public_html/lists/admin/list.php:88
+#: public_html/lists/admin/list.php:98 public_html/lists/admin/list.php:120
+#: public_html/lists/admin/list.php:128
 msgid "Uncategorised"
 msgstr "Nicht kategorisiert"
 
@@ -873,7 +869,6 @@ msgstr "Anzeige von %d bis %d von %d "
 
 #: public_html/lists/admin/connect.php:2053
 #, php-format
-#, php-format, php-format
 msgid "Listing %d to %d"
 msgstr "Anzeige von %d bis %d"
 
@@ -963,8 +958,7 @@ msgstr "Fehler beim Installieren des Plugins"
 #: public_html/lists/admin/usercheck.php:45
 #: public_html/lists/admin/import2.php:50
 #: public_html/lists/admin/import2.php:376
-#: public_html/lists/admin/import3.php:287
-#: public_html/lists/admin/user.php:336
+#: public_html/lists/admin/import3.php:287 public_html/lists/admin/user.php:336
 #: public_html/lists/admin/initialise.php:66
 msgid "Continue"
 msgstr "Weiter"
@@ -1298,8 +1292,8 @@ msgstr "nicht abonnieren"
 #: public_html/lists/admin/userclicks.php:41
 #: public_html/lists/admin/mclicks.php:20
 #: public_html/lists/admin/mclicks.php:32
-#: public_html/lists/admin/uclicks.php:26
-#: public_html/lists/admin/mviews.php:26 public_html/lists/admin/mviews.php:39
+#: public_html/lists/admin/uclicks.php:26 public_html/lists/admin/mviews.php:26
+#: public_html/lists/admin/mviews.php:39
 msgid "You do not have access to this page"
 msgstr "Sie haben keine Zugriffsberechtigung f&uuml;r diese Seite."
 
@@ -1307,8 +1301,7 @@ msgstr "Sie haben keine Zugriffsberechtigung f&uuml;r diese Seite."
 #: public_html/lists/admin/mclicks.php:100
 #: public_html/lists/admin/domainstats.php:35
 #: public_html/lists/admin/uclicks.php:66
-#: public_html/lists/admin/uclicks.php:75
-#: public_html/lists/admin/mviews.php:55
+#: public_html/lists/admin/uclicks.php:75 public_html/lists/admin/mviews.php:55
 #: public_html/lists/admin/mviews.php:126
 msgid "Download as CSV file"
 msgstr "Als CSV-Datei herunterladen"
@@ -1328,8 +1321,7 @@ msgstr "Weiterleitungen"
 
 #: public_html/lists/admin/statsoverview.php:107
 #: public_html/lists/admin/statsoverview.php:122
-#: public_html/lists/admin/mviews.php:91
-#: public_html/lists/admin/mviews.php:105
+#: public_html/lists/admin/mviews.php:91 public_html/lists/admin/mviews.php:105
 #: public_html/lists/admin/mviews.php:199
 msgid "views"
 msgstr "Views"
@@ -1349,8 +1341,7 @@ msgstr "Klicks"
 
 #: public_html/lists/admin/statsoverview.php:113
 #: public_html/lists/admin/statsoverview.php:124
-#: public_html/lists/admin/mviews.php:93
-#: public_html/lists/admin/mviews.php:107
+#: public_html/lists/admin/mviews.php:93 public_html/lists/admin/mviews.php:107
 msgid "rate"
 msgstr "Rate"
 
@@ -1527,8 +1518,7 @@ msgid "Campaign %d suspended for too many errors with attachments"
 msgstr "Nachricht %d unterbrochen wegen Fehlern mit dem Anhang"
 
 #: public_html/lists/admin/import4.php:4 public_html/lists/admin/import2.php:5
-#: public_html/lists/admin/import1.php:7
-#: public_html/lists/admin/import3.php:16
+#: public_html/lists/admin/import1.php:7 public_html/lists/admin/import3.php:16
 #: public_html/lists/admin/importsimple.php:9
 #: public_html/lists/admin/import.php:5
 msgid "import is not available"
@@ -1583,7 +1573,8 @@ msgstr ""
 
 #: public_html/lists/admin/import4.php:80
 msgid "Copy lists from remote server (lists are matched by name)"
-msgstr "Listen vom Remote-Server kopieren (Listen werden nach Namen verglichen)"
+msgstr ""
+"Listen vom Remote-Server kopieren (Listen werden nach Namen verglichen)"
 
 #: public_html/lists/admin/import4.php:82
 msgid "Mark new users as HTML:"
@@ -1747,9 +1738,9 @@ msgid ""
 "To be written. In the meantime you can <a href=\"https://www.phplist.com/"
 "support\">visit the support section on the phpList website</a>"
 msgstr ""
-"Muss noch geschrieben werden. In der Zwischenzeit können Sie den <a href=\""
-"https://www.phplist.com/support\">Support-Bereich auf der phpList Website</a> "
-"besuchen"
+"Muss noch geschrieben werden. In der Zwischenzeit können Sie den <a href="
+"\"https://www.phplist.com/support\">Support-Bereich auf der phpList Website</"
+"a> besuchen"
 
 #: public_html/lists/admin/community.php:32
 msgid "Help out with phpList"
@@ -1760,9 +1751,9 @@ msgid ""
 "To be written. In the meantime you can <a href=\"https://www.phplist.com/"
 "developers\">visit the developers section on the phpList website</a>"
 msgstr ""
-"Muss geschrieben werden. In der Zwischenzeit können Sie <a href=\""
-"https://www.phplist.com/developers\">den Entwicklerbereich auf der phpList "
-"Website besuchen</a>"
+"Muss geschrieben werden. In der Zwischenzeit können Sie <a href=\"https://"
+"www.phplist.com/developers\">den Entwicklerbereich auf der phpList Website "
+"besuchen</a>"
 
 #: public_html/lists/admin/processbounces.php:9
 #: public_html/lists/admin/initlanguages.php:8
@@ -1774,8 +1765,8 @@ msgstr "Diese Seite kann nur aus der Kommandozeile heraus aufgerufen werden"
 #: public_html/lists/admin/actions/processqueue.php:8
 msgid "Remote processing of the queue is now handled with a processing secret"
 msgstr ""
-"Warteschlangenverarbeitung benötigt einen Verarbeitungs-Schlüssel ("
-"processing secret)"
+"Warteschlangenverarbeitung benötigt einen Verarbeitungs-Schlüssel "
+"(processing secret)"
 
 #: public_html/lists/admin/processbounces.php:23
 #: public_html/lists/admin/actions/processqueue.php:17
@@ -1895,7 +1886,6 @@ msgstr "Das Protokoll für Retouren wird nicht unterstützt"
 
 #: public_html/lists/admin/processbounces.php:491
 #, php-format
-#, php-format, php-format
 msgid "%d bounces to reprocess"
 msgstr "%d Retouren erneut zu verarbeiten"
 
@@ -2082,7 +2072,6 @@ msgstr "Alle Abonnenten als bestätigt markieren"
 
 #: public_html/lists/admin/reconcileusers.php:156
 #, php-format
-#, php-format, php-format
 msgid "Marking all subscribers on list %s confirmed"
 msgstr "Alle Abonnenten auf der Liste %s als bestätigt markieren"
 
@@ -2169,7 +2158,8 @@ msgstr "Abonnenten konnten nicht repariert werden"
 
 #: public_html/lists/admin/reconcileusers.php:315
 msgid "Marking subscribers with an invalid email as unconfirmed"
-msgstr "Alle Abonnenten mit ungültiger E-Mail-Adresse als unbestätigt markieren"
+msgstr ""
+"Alle Abonnenten mit ungültiger E-Mail-Adresse als unbestätigt markieren"
 
 #: public_html/lists/admin/reconcileusers.php:326
 msgid "subscribers updated"
@@ -2223,7 +2213,6 @@ msgstr "Alle Abonnenten markieren, dass sie Text erhalten"
 
 #: public_html/lists/admin/reconcileusers.php:452
 #, php-format
-#, php-format, php-format
 msgid "Mark all subscribers on list %s confirmed"
 msgstr "Alle Abonnenten der Liste %s als bestätigt markieren"
 
@@ -2768,8 +2757,8 @@ msgstr "Markieren, um die E-Mails auch zur Blacklist hinzuzufügen"
 #: public_html/lists/admin/massremove.php:55
 msgid "Paste the emails to remove in this box, and click continue"
 msgstr ""
-"Die E-Mail-Adressen, die gelöschtwerden sollen, hier einfügen und auf \""
-"Weiter\" klicken"
+"Die E-Mail-Adressen, die gelöschtwerden sollen, hier einfügen und auf "
+"\"Weiter\" klicken"
 
 #: public_html/lists/admin/subscribelib2.php:95
 msgid ""
@@ -2791,8 +2780,7 @@ msgid ""
 "     If there is an error, you will need to  add them manually.\n"
 "--------------------------------------------------------------------------------  "
 msgstr ""
-"-----------------------------------------------------------------------------"
-"--- \n"
+"-------------------------------------------------------------------------------- \n"
 "Das ist eine Benachrichtigung über eine mögliche Spam-Attacke auf Ihre "
 "phpList Anmelde-Seite.\n"
 "Die übermittelten Daten wurden unten kopiert, damit Sie prüfen können, ob "
@@ -2807,8 +2795,7 @@ msgstr ""
 "\n"
 "Dieser Abonnent wurde NICHT in die Datenbank eingefügt.\n"
 "Wenn das ein Fehler war, müssen Sie ihn manuell hinzufügen.\n"
-"-----------------------------------------------------------------------------"
-"---"
+"--------------------------------------------------------------------------------"
 
 #: public_html/lists/admin/subscribelib2.php:115
 msgid "phplist Spam blocked"
@@ -2939,7 +2926,6 @@ msgstr "Entferne %d von dieser Liste "
 
 #: public_html/lists/admin/members.php:257
 #, php-format
-#, php-format, php-format
 msgid "Listing subscriber %d to %d"
 msgstr "Zeige Abonnenten %d bis %d"
 
@@ -2959,7 +2945,6 @@ msgstr "unbestätigt"
 
 #: public_html/lists/admin/members.php:286
 #, php-format
-#, php-format, php-format
 msgid "%d subscribers"
 msgstr "%d Abonnenten"
 
@@ -2967,8 +2952,8 @@ msgstr "%d Abonnenten"
 msgid "Tag all users in this page"
 msgstr "Alle Abonnenten auf dieser Seite markieren"
 
-#: public_html/lists/admin/members.php:297
-#: public_html/lists/admin/list.php:191 public_html/lists/admin/list.php:251
+#: public_html/lists/admin/members.php:297 public_html/lists/admin/list.php:191
+#: public_html/lists/admin/list.php:251
 msgid "Members"
 msgstr "Abonnenten"
 
@@ -2990,8 +2975,8 @@ msgid ""
 "This will only process the users in this page that have the \"Tag\" checkbox "
 "checked"
 msgstr ""
-"Das wird nur jene Abonnenten verarbeiten, bei denen das Kästchen \"Markiert\""
-" aktiviert ist"
+"Das wird nur jene Abonnenten verarbeiten, bei denen das Kästchen \"Markiert"
+"\" aktiviert ist"
 
 #: public_html/lists/admin/members.php:350
 #: public_html/lists/admin/members.php:376
@@ -3151,8 +3136,8 @@ msgid ""
 "All done, %d emails processed, %d emails marked unconfirmed, %d emails "
 "blacklisted<br/>"
 msgstr ""
-"Alles erledigt, %d E-Mails wurden verarbeitet, %d als unbestätigt markiert, %"
-"d E-Mails auf die Blacklist gesetzt<br/>"
+"Alles erledigt, %d E-Mails wurden verarbeitet, %d als unbestätigt markiert, "
+"%d E-Mails auf die Blacklist gesetzt<br/>"
 
 #: public_html/lists/admin/suppressionlist.php:26
 msgid "Add more"
@@ -3792,7 +3777,6 @@ msgstr "Eine Webseite versenden - URL"
 
 #: public_html/lists/admin/send_core.php:702
 #, php-format
-#, php-format, php-format
 msgid "phpList operates in the time zone \"%s\""
 msgstr "phpList arbeitet in der Zeitzone \"%s\""
 
@@ -4179,8 +4163,8 @@ msgstr "Größe"
 msgid "Mime Type"
 msgstr "Mime-Typ"
 
-#: public_html/lists/admin/message.php:136
-#: public_html/databasestructure.php:33 public_html/databasestructure.php:94
+#: public_html/lists/admin/message.php:136 public_html/databasestructure.php:33
+#: public_html/databasestructure.php:94
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -4344,7 +4328,6 @@ msgstr ""
 
 #: public_html/lists/admin/actions/import2.php:485
 #, php-format
-#, php-format, php-format
 msgid "%d emails succesfully imported to the database and added to %d lists."
 msgstr ""
 "%d E-Mail-Adressen wurden erfolgreich in die Datenbank importiert und zu %d "
@@ -4358,7 +4341,6 @@ msgstr "%d E-Mail-Adressen wurden auf die Listen abonniert."
 #: public_html/lists/admin/actions/import2.php:488
 #: public_html/lists/admin/actions/import1.php:222
 #, php-format
-#, php-format, php-format
 msgid "%d emails already existed in the database"
 msgstr "%d E-Mail-Adressen existierten bereits in der Datenbank"
 
@@ -4394,7 +4376,6 @@ msgstr "Abonnenten-Daten wurden für %d Abonnenten aktualisiert"
 
 #: public_html/lists/admin/actions/import2.php:506
 #, php-format
-#, php-format, php-format
 msgid "%d emails were on the blacklist and have not been added to the lists"
 msgstr ""
 "%d E-Mail-Adressen waren auf der Blacklist und wurde nicht zu den Listen "
@@ -4402,7 +4383,6 @@ msgstr ""
 
 #: public_html/lists/admin/actions/import2.php:508
 #, php-format
-#, php-format, php-format
 msgid "%d subscribers were matched by foreign key, %d by email"
 msgstr ""
 "%d Abonnenten wurden aufgrund des Fremdschlüssels zugeordnet, %d aufgrund "
@@ -4788,13 +4768,11 @@ msgstr "Nachrichtenversand gestartet"
 
 #: public_html/lists/admin/actions/processqueue.php:673
 #, php-format
-#, php-format, php-format
 msgid "phplist has started sending the campaign with subject %s"
 msgstr "Versand gestartet für die Nachricht mit dem Betreff '%s'"
 
 #: public_html/lists/admin/actions/processqueue.php:674
 #, php-format
-#, php-format, php-format
 msgid "to view the progress of this campaign, go to http://%s"
 msgstr "Details zur laufenden Verarbeitung finden Sie hier: http://%s"
 
@@ -4877,15 +4855,15 @@ msgid ""
 "There have been more than 10 attempts to send to %s that have been blocked "
 "for domain throttling."
 msgstr ""
-"Mehr als 10 Sendeversuche an %s wurden blockiert wegen Domain-Beschränkung ("
-"Domain Throttling)"
+"Mehr als 10 Sendeversuche an %s wurden blockiert wegen Domain-Beschränkung "
+"(Domain Throttling)"
 
 #: public_html/lists/admin/actions/processqueue.php:1050
 #: public_html/lists/admin/actions/processqueue.php:1052
 msgid "Introducing extra delay to decrease throttle failures"
 msgstr ""
-"Benutze zusätzliche Verzögerung um Fehlschläge wegen Domain-Beschränkung ("
-"Domain Throttling) zu reduzieren."
+"Benutze zusätzliche Verzögerung um Fehlschläge wegen Domain-Beschränkung "
+"(Domain Throttling) zu reduzieren."
 
 #: public_html/lists/admin/actions/processqueue.php:1061
 #, php-format
@@ -4953,7 +4931,6 @@ msgstr "bereits versendet"
 
 #: public_html/lists/admin/actions/processqueue.php:1302
 #, php-format
-#, php-format, php-format
 msgid "Processed %d out of %d subscribers"
 msgstr "%d von %d Abonnenten verarbeitet"
 
@@ -4967,7 +4944,6 @@ msgstr "Nachrichtenversand beendet"
 
 #: public_html/lists/admin/actions/processqueue.php:1317
 #, php-format
-#, php-format, php-format
 msgid "phpList has finished sending the campaign with subject %s"
 msgstr "Versand der Nachricht mit Betreff %s abgeschlossen"
 
@@ -5037,7 +5013,6 @@ msgstr ""
 
 #: public_html/lists/admin/import2.php:31
 #, php-format
-#, php-format, php-format
 msgid ""
 "The temporary directory for uploading (%s) is not writable, so import will "
 "fail"
@@ -5132,7 +5107,8 @@ msgstr "Auswahl (Dropdown)"
 
 #: public_html/lists/admin/import2.php:377
 msgid "Please identify the target of the following unknown columns"
-msgstr "Bitte geben Sie das Ziel f&uuml;r die folgenden unbekannten Spalten an:"
+msgstr ""
+"Bitte geben Sie das Ziel f&uuml;r die folgenden unbekannten Spalten an:"
 
 #: public_html/lists/admin/import2.php:395
 msgid ""
@@ -5238,8 +5214,8 @@ msgstr ""
 "Synchronisierung einer externen Datenbank mit der phpList-Datenbank "
 "verwendet werden. Der \"Foreign Key\" (Fremdschlüssel)  hat Vorrang beim "
 "Abgleich mit einem bestehenden Abonnenten. Dies verlangsamt den "
-"Importierungsvorgang. Wenn Sie Gebrauch davon machen, sind Datensätze ohne E"
-"-Mail-Adresse erlaubt. Stattdessen wird eine \"ungültige E-Mail-Adresse\" "
+"Importierungsvorgang. Wenn Sie Gebrauch davon machen, sind Datensätze ohne E-"
+"Mail-Adresse erlaubt. Stattdessen wird eine \"ungültige E-Mail-Adresse\" "
 "erstellt. Sie können im Anschluss nach \"ungültigen E-Mail-Adressen\" "
 "suchen, um diese Einträge zu finden. Die maximale Länge für Fremdschlüssel "
 "beträgt 100 Zeichen. Warnung: Die Datei muss als Plain Text (Klartext) "
@@ -5297,8 +5273,8 @@ msgid ""
 "useful to find out whether the format of your file is correct. It will only "
 "show the first 50 records."
 msgstr ""
-"Wenn Sie \"Test-Durchlauf\" wählen, wird Ihnen eine Liste der analysierten E"
-"-Mail-Adressen angezeigt. Der Datenbank werden dabei keine Informationen "
+"Wenn Sie \"Test-Durchlauf\" wählen, wird Ihnen eine Liste der analysierten E-"
+"Mail-Adressen angezeigt. Der Datenbank werden dabei keine Informationen "
 "hinzugefügt. Dies ist hilfreich, wenn Sie herausfinden wollen, ob Ihre Datei "
 "im richtigen Format vorliegt. Es werden nur die ersten 50 Datensätze "
 "angezeigt."
@@ -5385,8 +5361,8 @@ msgid ""
 "precedence."
 msgstr ""
 "Wenn Sie \"Alte E-Mail-Adressen erhalten auswählen, wird bei Konflikte mit "
-"doppelten E-Mail-Adressen die alte E-Mail-Adresse erhalten und der neueren E"
-"-Mail-Adresse \"Duplikat\" hinzugefügt. Wenn Sie diese Option nicht wählen, "
+"doppelten E-Mail-Adressen die alte E-Mail-Adresse erhalten und der neueren E-"
+"Mail-Adresse \"Duplikat\" hinzugefügt. Wenn Sie diese Option nicht wählen, "
 "wird der alten E-Mail-Adresse \"Duplikat\" hinzugefügt und die neuere "
 "erhalten."
 
@@ -5631,10 +5607,10 @@ msgid ""
 "Please upload a plain text file only. You cannot use a spreadsheet. You can "
 "only upload a plain text file with one email address per line."
 msgstr ""
-"Bitte nur reine Text-Dateien hoch laden. Nur eine E-Mail-Adresse pro "
-"Zeile.Wenn Sie Listen aus Tabellenkalkulationsprogrammen wie MS-EXCEL "
-"verwenden wollen, dann müssen Sie diese zuerst als CSV-Datei mit TAB als "
-"Trennzeichen exportieren"
+"Bitte nur reine Text-Dateien hoch laden. Nur eine E-Mail-Adresse pro Zeile."
+"Wenn Sie Listen aus Tabellenkalkulationsprogrammen wie MS-EXCEL verwenden "
+"wollen, dann müssen Sie diese zuerst als CSV-Datei mit TAB als Trennzeichen "
+"exportieren"
 
 #: public_html/lists/admin/import1.php:81
 msgid "Cannot read file. It is not readable !"
@@ -5894,7 +5870,6 @@ msgstr "geändert von"
 
 #: public_html/lists/admin/user.php:250
 #, php-format
-#, php-format, php-format
 msgid "Subscribed to %s"
 msgstr "%s wurde abonniert"
 
@@ -5951,7 +5926,8 @@ msgstr "Aus der Blacklist entfernen"
 #: public_html/lists/admin/user.php:457
 msgid ""
 "Subscriber is blacklisted. No emails will be sent to this email address."
-msgstr "Abonnent ist gesperrt. An diese Adresse werden keine E-Mails versendet."
+msgstr ""
+"Abonnent ist gesperrt. An diese Adresse werden keine E-Mails versendet."
 
 #: public_html/lists/admin/user.php:460
 msgid "Mailinglist membership"
@@ -6142,7 +6118,6 @@ msgstr "Als sicher zertifiziert von "
 
 #: public_html/lists/admin/about.php:15
 #, php-format
-#, php-format, php-format
 msgid "phpList is licensed with the %sGNU Affero Public License (AGPL)%s"
 msgstr "phpList ist unter der %sGNU Affero Public License (AGPL)%s lizensiert"
 
@@ -6186,11 +6161,11 @@ msgid ""
 "href=\"http://translatehouse.org\" target=\"translatehouse\">Translate "
 "House</a>"
 msgstr ""
-"Die <a href=\"http://translate.phplist.com/\" target=\"translate\""
-">Übersetzungs-Site</a> läuft mit <a href=\"http://translate.sourceforge.net/"
-"\" target=\"pootle\">Pootle</a>, ein Open-Source Übersetzungswerkzeug, das "
-"von <a href=\"http://translatehouse.org\" target=\"translatehouse\">"
-"Translate House</a> zur Verfügung gestellt wird"
+"Die <a href=\"http://translate.phplist.com/\" target=\"translate"
+"\">Übersetzungs-Site</a> läuft mit <a href=\"http://translate.sourceforge."
+"net/\" target=\"pootle\">Pootle</a>, ein Open-Source Übersetzungswerkzeug, "
+"das von <a href=\"http://translatehouse.org\" target=\"translatehouse"
+"\">Translate House</a> zur Verfügung gestellt wird"
 
 #: public_html/lists/admin/about.php:43
 msgid "Acknowledgements"
@@ -6394,8 +6369,7 @@ msgid "Admin added"
 msgstr "Administrator hinzugef&uuml;gt"
 
 #: public_html/lists/admin/admins.php:57 public_html/lists/admin/admins.php:74
-#: public_html/lists/admin/admins.php:79
-#: public_html/lists/admin/admins.php:102
+#: public_html/lists/admin/admins.php:79 public_html/lists/admin/admins.php:102
 msgid "Administrators"
 msgstr "Administratoren"
 
@@ -6490,13 +6464,11 @@ msgstr "Nachrichten versenden"
 msgid "Change Settings"
 msgstr "Einstellungen ändern"
 
-#: public_html/lists/admin/mclicks.php:57
-#: public_html/lists/admin/mviews.php:66
+#: public_html/lists/admin/mclicks.php:57 public_html/lists/admin/mviews.php:66
 msgid "There are currently no messages to view"
 msgstr "Derzeit gibt es keine Nachrichten zur Ansicht"
 
-#: public_html/lists/admin/mclicks.php:59
-#: public_html/lists/admin/mviews.php:69
+#: public_html/lists/admin/mclicks.php:59 public_html/lists/admin/mviews.php:69
 msgid "Available Messages"
 msgstr "Verf&uuml;gbare Nachrichten"
 
@@ -6733,7 +6705,6 @@ msgstr "%s zum Retouren-Zähler für Abonnent %s hinzugefügt"
 
 #: public_html/lists/admin/bounce.php:78
 #, php-format
-#, php-format, php-format
 msgid "Made subscriber %s unconfirmed"
 msgstr "Empfänger %s als unbestätigt markieren"
 
@@ -7207,8 +7178,7 @@ msgstr "Abonnenten in CSV-Datei exportieren"
 msgid "Add a User"
 msgstr "Neuer Abonnent"
 
-#: public_html/lists/admin/users.php:443
-#: public_html/lists/admin/uclicks.php:56
+#: public_html/lists/admin/users.php:443 public_html/lists/admin/uclicks.php:56
 msgid "msgs"
 msgstr "Nachr."
 
@@ -8030,7 +8000,6 @@ msgstr "Neue Regel hinzufügen"
 
 #: public_html/lists/admin/bounces.php:8
 #, php-format
-#, php-format, php-format
 msgid "deleting bounce %d"
 msgstr "Lösche Retoure %d "
 
@@ -8199,8 +8168,8 @@ msgid ""
 "activate.      It will however, not catch every single bounce, so it will be "
 "necessary to add new rules over      time when new bounces come in."
 msgstr ""
-"Sie haben zur Zeit keine Regeln definiert. Sie können mit einem Klick auf \""
-"Generiere Retouren-Regeln\" aus den existierenden Retouren automatische "
+"Sie haben zur Zeit keine Regeln definiert. Sie können mit einem Klick auf "
+"\"Generiere Retouren-Regeln\" aus den existierenden Retouren automatische "
 "Regeln erstellen lassen. Dabei werden eine Menge Regeln erstellt, die Sie "
 "prüfen und aktivieren müssen. Es wird dennoch nicht jede Retoure treffen und "
 "es wird nötig sein, später weitere Regeln zu erstellen, wenn neue Retouren "
@@ -8261,8 +8230,8 @@ msgid ""
 "Please edit your config file and change \"mysql.inc\" to \"mysqli.inc\" to "
 "avoid future PHP incompatibility"
 msgstr ""
-"Bitte ändern Sie in Ihrer Konfigurationsdatei  (z.B. config.php) \"mysql."
-"inc\" zu \"mysqli.inc\", um zukünftige PHP-Inkompatibilität zu vermeiden."
+"Bitte ändern Sie in Ihrer Konfigurationsdatei  (z.B. config.php) \"mysql.inc"
+"\" zu \"mysqli.inc\", um zukünftige PHP-Inkompatibilität zu vermeiden."
 
 #: public_html/lists/admin/upgrade.php:46
 msgid ""
@@ -9687,17 +9656,15 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgid "cancel changes"
 #~ msgstr "Änderungen verwerfen"
 
-#, php-format
-#~ msgid "%s emails succesfully imported to the database and added to %d lists."
+#~ msgid ""
+#~ "%s emails succesfully imported to the database and added to %d lists."
 #~ msgstr ""
-#~ "%s E-Mail-Adressen wurden erfolgreich in die Datenbank importiert und zu %d "
-#~ "Listen hinzugef&uuml;gt."
+#~ "%s E-Mail-Adressen wurden erfolgreich in die Datenbank importiert und zu "
+#~ "%d Listen hinzugef&uuml;gt."
 
-#, php-format
 #~ msgid "%s emails already existed in the database"
 #~ msgstr "%s E-Mail-Adressen existierten bereits in der Datenbank."
 
-#, php-format
 #~ msgid "%s emails were on the blacklist and have not been added to the lists"
 #~ msgstr ""
 #~ "%s E-Mail-Adressen waren auf der Blacklist und wurde nicht zu den Listen "
@@ -9716,21 +9683,19 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgstr "Sende die (gleiche) Nachricht an (eine) weitere Liste(n)"
 
 #~ msgid ""
-#~ "<b>Note:</b> this message has already been sent to all lists. To resend it "
-#~ "to new users use the \"Requeue\" function."
+#~ "<b>Note:</b> this message has already been sent to all lists. To resend "
+#~ "it to new users use the \"Requeue\" function."
 #~ msgstr ""
-#~ "<b>Hinweis:</b> Diese Nachricht wurde bereits an alle Listen verschickt. Um "
-#~ "sie an neue Empfänger zu schicken, verwenden Sie die Funktion \"erneut "
+#~ "<b>Hinweis:</b> Diese Nachricht wurde bereits an alle Listen verschickt. "
+#~ "Um sie an neue Empfänger zu schicken, verwenden Sie die Funktion \"erneut "
 #~ "versenden\"."
 
-#, php-format
-#, php-format, php-format
 #~ msgid ""
-#~ "A process for this page is already running and it was still alive %s seconds "
-#~ "ago"
+#~ "A process for this page is already running and it was still alive %s "
+#~ "seconds ago"
 #~ msgstr ""
-#~ "Für diese Seite läuft bereits ein aktiver Prozess, der vor %s Sekunden noch "
-#~ "aktiv war."
+#~ "Für diese Seite läuft bereits ein aktiver Prozess, der vor %s Sekunden "
+#~ "noch aktiv war."
 
 #~ msgid "Delete will remove subscriber from the list"
 #~ msgstr "\"Löschen\" entfernt den Abonnenten von der Liste."
@@ -9779,7 +9744,8 @@ msgstr "pagetitlehover:suppressionlist"
 
 #~ msgid "To send your queue, you can now use the phpList Hosted service"
 #~ msgstr ""
-#~ "Um Ihre Liste zu senden können Sie den bei phpList gehosteten Dienst nutzen."
+#~ "Um Ihre Liste zu senden können Sie den bei phpList gehosteten Dienst "
+#~ "nutzen."
 
 #~ msgid "Click Details for a URL"
 #~ msgstr "Klick-Details f&uuml;r eine URL"
@@ -9787,7 +9753,6 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgid "Documentation"
 #~ msgstr "Dokumentation"
 
-#, php-format
 #~ msgid "phpList is licensed with the %sGNU Public License (GPL)%s"
 #~ msgstr "phpList ist unter der %sGNU Public License (GPL)%s lizensiert"
 
@@ -9800,7 +9765,6 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgid "email auto blacklisted for"
 #~ msgstr "E-Mail-Adresse wurde automatisch gesperrt wegen                "
 
-#, php-format
 #~ msgid "%s users in total"
 #~ msgstr "%s Abonnenten insgesamt"
 
@@ -9816,15 +9780,12 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgid "selectone"
 #~ msgstr "selectone"
 
-#, php-format
 #~ msgid "%d email imported"
 #~ msgstr "%d E-Mails importiert"
 
-#, php-format
 #~ msgid "%d duplicates"
 #~ msgstr "%d Duplikate"
 
-#, php-format
 #~ msgid "%d invalidated"
 #~ msgstr "%d wurde als ungültig markiert"
 
@@ -9853,12 +9814,13 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgstr "zu verarbeitende Nachricht(en)"
 
 #~ msgid ""
-#~ "Please leave this window open. You have batch processing enabled, so it will "
-#~ "reload several times to send the messages. Reports will be sent by email to"
+#~ "Please leave this window open. You have batch processing enabled, so it "
+#~ "will reload several times to send the messages. Reports will be sent by "
+#~ "email to"
 #~ msgstr ""
 #~ "Bitte lassen Sie dieses Fenster offen. Sie verwenden Stapelverarbeitung, "
-#~ "darum wird es mehrmals neu laden, um die Nachrichten zu senden. Der Bericht "
-#~ "wird per E-Mail gesendet an"
+#~ "darum wird es mehrmals neu laden, um die Nachrichten zu senden. Der "
+#~ "Bericht wird per E-Mail gesendet an"
 
 #~ msgid "Reports will be sent by email to"
 #~ msgstr "Berichte werden per E-Mail an folgende Adresse verschickt:"
@@ -9867,10 +9829,11 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgstr "Verbindung abgelehnt, prüfen Sie Host, User und Passwort"
 
 #~ msgid ""
-#~ "Please make sure to read the file README.security that can be found in the "
-#~ "zip file."
+#~ "Please make sure to read the file README.security that can be found in "
+#~ "the zip file."
 #~ msgstr ""
-#~ "Bitte lesen Sie die Datei README.security, die im ZIP-Archiv enthalten ist."
+#~ "Bitte lesen Sie die Datei README.security, die im ZIP-Archiv enthalten "
+#~ "ist."
 
 #~ msgid "Please make sure to"
 #~ msgstr "Bitte abonnieren Sie unseren"
@@ -9894,11 +9857,11 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgstr "Abonnenten anzeigen"
 
 #~ msgid ""
-#~ "Sorry, this help topic does not exist in your language. Below is the english "
-#~ "version."
+#~ "Sorry, this help topic does not exist in your language. Below is the "
+#~ "english version."
 #~ msgstr ""
-#~ "Dieses Hilfethema existiert in Ihrer Sprache leider nicht. Unten finden Sie "
-#~ "die englische Version."
+#~ "Dieses Hilfethema existiert in Ihrer Sprache leider nicht. Unten finden "
+#~ "Sie die englische Version."
 
 #~ msgid "Sorry, this help topic does not exist in your language."
 #~ msgstr "Dieses Hilfethema existiert in Ihrer Sprache leider nicht."
@@ -9941,8 +9904,8 @@ msgstr "pagetitlehover:suppressionlist"
 
 #~ msgid "unconfirm user and delete bounce"
 #~ msgstr ""
-#~ "Benutzer als unbest&auml;tigt kennzeichnen und unzustellbares Mail "
-#~ "l&ouml;schen"
+#~ "Benutzer als unbest&auml;tigt kennzeichnen und unzustellbares Mail l&ouml;"
+#~ "schen"
 
 #~ msgid "blacklist user and delete bounce"
 #~ msgstr "Benutzer auf Blacklist setzen und  unzustellbares Mail l&ouml;schen"
@@ -9961,8 +9924,7 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgid "invalid emails"
 #~ msgstr "ungültige E-Mails"
 
-#, php-format
-#, php-format, fuzzy
+#, fuzzy
 #~ msgid "phplist has finished sending the campaign with subject %s"
 #~ msgstr "Versand der Nachricht mit Betreff %s abgeschlossen"
 
@@ -10031,11 +9993,9 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgid "than is currently allowed per batch"
 #~ msgstr "als derzeit pro Batch erlaubt sind."
 
-#, php-format
 #~ msgid "successful password request from %s for %s"
 #~ msgstr "Erfolgreiche Passwort-Anforderung von %s f&uuml;r %s"
 
-#, php-format
 #~ msgid "failed password request from %s for %s"
 #~ msgstr "Fehlgeschlagene Passwort-Anforderung von %s f&uuml;r %s"
 
@@ -10043,12 +10003,12 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgstr "Martin Sauter"
 
 #~ msgid ""
-#~ "Test output:There should only be ONE email per line.If the output looks ok, "
-#~ "go Back to resubmit for real"
+#~ "Test output:There should only be ONE email per line.If the output looks "
+#~ "ok, go Back to resubmit for real"
 #~ msgstr ""
-#~ "Test-Durchlauf<br/>Es sollte nur 1 E-Mail-Adresse pro Zeile zu sehen "
-#~ "sein.<br/>  Wenn die Ausgabe korrekt ist, dann klicken Sie <a "
-#~ "href=\"javascript:history.go(-1)\">zur&uuml;ck</a> f&uuml;r einen echten "
+#~ "Test-Durchlauf<br/>Es sollte nur 1 E-Mail-Adresse pro Zeile zu sehen sein."
+#~ "<br/>  Wenn die Ausgabe korrekt ist, dann klicken Sie <a href="
+#~ "\"javascript:history.go(-1)\">zur&uuml;ck</a> f&uuml;r einen echten "
 #~ "Import.<br /><br />"
 
 #~ msgid "All the emails already exist in the database"
@@ -10069,11 +10029,9 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgid "users processed"
 #~ msgstr "Empf�ger bearbeitet"
 
-#, php-format
 #~ msgid "User data was updated for %d users"
 #~ msgstr "Die Daten von %d Benutzern wurden aktualisiert."
 
-#, php-format
 #~ msgid "%d users were matched by foreign key, %d by email"
 #~ msgstr ""
 #~ "%d Benutzer wurden aufgrund eines Fremdschl&uuml;ssels zugewiesen, %d "
@@ -10084,8 +10042,8 @@ msgstr "pagetitlehover:suppressionlist"
 
 #~ msgid "are you sure you want to delete this user from the blacklist"
 #~ msgstr ""
-#~ "Sind Sie sicher, dass Sie diesen Abonnenten von der Blacklist l&ouml;schen "
-#~ "wollen"
+#~ "Sind Sie sicher, dass Sie diesen Abonnenten von der Blacklist l&ouml;"
+#~ "schen wollen"
 
 #~ msgid "it should only be done with explicit permission from this user"
 #~ msgstr ""
@@ -10152,7 +10110,8 @@ msgstr "pagetitlehover:suppressionlist"
 
 #~ msgid "Creating UniqID for all users who do not have one"
 #~ msgstr ""
-#~ "Erzeuge eindeutige ID f&uuml;r alle Abonnenten, welche keine solche besitzen"
+#~ "Erzeuge eindeutige ID f&uuml;r alle Abonnenten, welche keine solche "
+#~ "besitzen"
 
 #~ msgid "Marking all users to receive HTML"
 #~ msgstr "Mail-Format f&uuml;r alle Abonnenten auf HTML gesetzt"
@@ -10179,7 +10138,8 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgstr "Unbest&auml;tigte Abonnenten l&ouml;schen mit Anmeldedatum von"
 
 #~ msgid "Trying to fix users with an invalid email"
-#~ msgstr "Versuche Abonnenten mit ung&uuml;ltiger E-Mail-Adresse zu korrigieren"
+#~ msgstr ""
+#~ "Versuche Abonnenten mit ung&uuml;ltiger E-Mail-Adresse zu korrigieren"
 
 #~ msgid "Users fixed"
 #~ msgstr "Abonnenten bereinigt"
@@ -10195,7 +10155,8 @@ msgstr "pagetitlehover:suppressionlist"
 
 #~ msgid "Marking users with an invalid email as unconfirmed"
 #~ msgstr ""
-#~ "Markiere Abonnenten mit ung&uuml;ltiger E-Mail-Adresse als unbest&auml;tigt"
+#~ "Markiere Abonnenten mit ung&uuml;ltiger E-Mail-Adresse als unbest&auml;"
+#~ "tigt"
 
 #~ msgid "Users updated"
 #~ msgstr "Abonnenten aktualisiert"
@@ -10206,12 +10167,16 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgid "To delete all users with more than"
 #~ msgstr "Alle Abonnenten mit mehr als "
 
-#~ msgid "Note: this will use the total count of bounces on a user, not consecutive bounces"
+#~ msgid ""
+#~ "Note: this will use the total count of bounces on a user, not consecutive "
+#~ "bounces"
 #~ msgstr ""
 #~ "Hinweis: Obiger Wert meint die Gesamtzahl der unzustellbaren Mails eines "
-#~ "Abonnenten, nicht die Anzahl der aufeinanderfolgenden unzustellbaren Mails."
+#~ "Abonnenten, nicht die Anzahl der aufeinanderfolgenden unzustellbaren "
+#~ "Mails."
 
-#~ msgid "To delete users who signed up and have not confirmed their subscription"
+#~ msgid ""
+#~ "To delete users who signed up and have not confirmed their subscription"
 #~ msgstr ""
 #~ "Abonnenten l&ouml;schen, welche Ihr Abonnement nicht best&auml;tigt haben"
 
@@ -10306,8 +10271,7 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgid "resend verification email"
 #~ msgstr "Best&auml;tigungsanfrage senden"
 
-#, php-format
-#, php-format, fuzzy
+#, fuzzy
 #~ msgid "%d users apply"
 #~ msgstr "Keine Abonnenten gefunden"
 
@@ -10318,8 +10282,7 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgid "is"
 #~ msgstr "ist"
 
-#, php-format
-#, php-format, fuzzy
+#, fuzzy
 #~ msgid "%d to process"
 #~ msgstr "Empfänger"
 
@@ -10330,11 +10293,14 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgid "seconds ago"
 #~ msgstr "Sekunden zuvor"
 
-#~ msgid "No default permissions have been defined, please create default permissions first, by creating one dummy admin and assigning the default permissions to this admin"
+#~ msgid ""
+#~ "No default permissions have been defined, please create default "
+#~ "permissions first, by creating one dummy admin and assigning the default "
+#~ "permissions to this admin"
 #~ msgstr ""
-#~ "Es wurden keine Standard-Zugriffsrechte definiert.\tBitte legen Sie zuerst "
-#~ "die Standard-Zugriffsrechte fest, indem Sie einen Dummy-Administrator "
-#~ "anlegen und ihm die Standard-Zugriffsrechte zuweisen."
+#~ "Es wurden keine Standard-Zugriffsrechte definiert.\tBitte legen Sie "
+#~ "zuerst die Standard-Zugriffsrechte fest, indem Sie einen Dummy-"
+#~ "Administrator anlegen und ihm die Standard-Zugriffsrechte zuweisen."
 
 #~ msgid "PHPList Users"
 #~ msgstr "PHPList Benutzer"
@@ -10368,7 +10334,8 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgid "Reload required"
 #~ msgstr "Reload erforderlich"
 
-#~ msgid "It is safe to click your stop button now, report will be sent by email to"
+#~ msgid ""
+#~ "It is safe to click your stop button now, report will be sent by email to"
 #~ msgstr ""
 #~ "Sie können nun problemlos den Stop-Button anklicken. Der Bericht wird per "
 #~ "E-Mail an folgende Adresse verschickt:"
@@ -10380,7 +10347,6 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgid "Terms updated"
 #~ msgstr "Abonnenten aktualisiert"
 
-#, php-format
 #~ msgid "User added to list %s"
 #~ msgstr "Abonnent zu Liste %s hinzugef&uuml;gt."
 
@@ -10401,8 +10367,8 @@ msgstr "pagetitlehover:suppressionlist"
 
 #~ msgid "User is blacklisted. No emails will be sent to this user"
 #~ msgstr ""
-#~ "Der Abonnent steht auf der Blacklist. An seine Adresse werden keinerlei "
-#~ "E-Mails verschickt."
+#~ "Der Abonnent steht auf der Blacklist. An seine Adresse werden keinerlei E-"
+#~ "Mails verschickt."
 
 #~ msgid "bl l"
 #~ msgstr "Blacklist"
@@ -10471,9 +10437,12 @@ msgstr "pagetitlehover:suppressionlist"
 
 #~ msgid "noaccess"
 #~ msgstr ""
-#~ "Diese Nachricht existiert nicht, oder Sie haben keine Zugriffsberechtigung."
+#~ "Diese Nachricht existiert nicht, oder Sie haben keine "
+#~ "Zugriffsberechtigung."
 
-#~ msgid "To resend the request for confirmation to users who signed up and have not confirmed their subscription"
+#~ msgid ""
+#~ "To resend the request for confirmation to users who signed up and have "
+#~ "not confirmed their subscription"
 #~ msgstr ""
 #~ "Best&auml;tigungsanfrage erneut senden an alle Abonnenten, welche ihr "
 #~ "Abonnement nicht nicht best&auml;tigt haben"
@@ -10483,14 +10452,19 @@ msgstr "pagetitlehover:suppressionlist"
 #~ "Text, welcher am Anfang der normalen Best&auml;tigungsanfrage "
 #~ "hinzugef&uuml;gt wird"
 
-#~ msgid " Sorry to bother you: we are cleaning up our database and  it appears that you have previously signed up to our mailinglists  and not confirmed your subscription.  We would like to give you the opportunity to re-confirm your  subscription. The instructions on how to confirm are below.   "
+#~ msgid ""
+#~ " Sorry to bother you: we are cleaning up our database and  it appears "
+#~ "that you have previously signed up to our mailinglists  and not confirmed "
+#~ "your subscription.  We would like to give you the opportunity to re-"
+#~ "confirm your  subscription. The instructions on how to confirm are "
+#~ "below.   "
 #~ msgstr ""
 #~ "Guten Tag     Bitte entschuldigen Sie die St&ouml;rung. Wir bereinigen "
-#~ "unsere Datenbank und sind dabei auf Ihre Adresse gestossen. Es scheint, dass "
-#~ "Sie einmal einen unserer Newsletters abonniert haben, aber Ihr Abonnement "
-#~ "nie best&auml;tigt haben.   Wir m&ouml;chten Ihnen nochmals die Gelegenheit "
-#~ "geben, Ihr Abonnement zu best&auml;tigen. Die Vorgehensweise ist nachfolgend "
-#~ "beschrieben.  "
+#~ "unsere Datenbank und sind dabei auf Ihre Adresse gestossen. Es scheint, "
+#~ "dass Sie einmal einen unserer Newsletters abonniert haben, aber Ihr "
+#~ "Abonnement nie best&auml;tigt haben.   Wir m&ouml;chten Ihnen nochmals "
+#~ "die Gelegenheit geben, Ihr Abonnement zu best&auml;tigen. Die "
+#~ "Vorgehensweise ist nachfolgend beschrieben.  "
 
 #, fuzzy
 #~ msgid "Existing Users"
@@ -10555,7 +10529,12 @@ msgstr "pagetitlehover:suppressionlist"
 #~ msgstr "liegt nach"
 
 #~ msgid "buggywithie"
-#~ msgstr "Achtung: Diese Funktion funktioniert nicht einwandfrei im Microsoft Internet Explorer.\nEs wird empfohlen, Mozilla, Firefox oder Opera als Browser zu benutzen.\nAls Alternative deaktivieren Sie STACKED_ATTRIBUTE_SELECTION in Ihrer Konfigurationsdatei."
+#~ msgstr ""
+#~ "Achtung: Diese Funktion funktioniert nicht einwandfrei im Microsoft "
+#~ "Internet Explorer.\n"
+#~ "Es wird empfohlen, Mozilla, Firefox oder Opera als Browser zu benutzen.\n"
+#~ "Als Alternative deaktivieren Sie STACKED_ATTRIBUTE_SELECTION in Ihrer "
+#~ "Konfigurationsdatei."
 
 #~ msgid "Users apply"
 #~ msgstr "betroffene Abonnenten"

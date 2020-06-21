@@ -132,7 +132,6 @@ msgstr "Select another list"
 
 #: public_html/lists/admin/listbounces.php:83
 #, php-format
-#, php-format, php-format
 msgid "%d bounces to list %s"
 msgstr "%d bounces to list %s"
 
@@ -338,8 +337,7 @@ msgstr "Manage lists"
 msgid "View, edit and add lists, that your subscribers can sign up to"
 msgstr "View, edit and add lists, that your subscribers can sign up to"
 
-#: public_html/lists/admin/home.php:138
-#: public_html/lists/admin/import4.php:114
+#: public_html/lists/admin/home.php:138 public_html/lists/admin/import4.php:114
 #: public_html/lists/admin/users.php:399
 msgid "users"
 msgstr "Subscribers"
@@ -348,8 +346,7 @@ msgstr "Subscribers"
 msgid "List all Users"
 msgstr "List all subscribers"
 
-#: public_html/lists/admin/home.php:145
-#: public_html/lists/admin/import1.php:233
+#: public_html/lists/admin/home.php:145 public_html/lists/admin/import1.php:233
 msgid "import"
 msgstr "Import"
 
@@ -462,8 +459,7 @@ msgstr "templates"
 msgid "Configure Templates"
 msgstr "Configure templates"
 
-#: public_html/lists/admin/home.php:268
-#: public_html/lists/admin/import3.php:161
+#: public_html/lists/admin/home.php:268 public_html/lists/admin/import3.php:161
 #: public_html/lists/admin/import3.php:376
 msgid "messages"
 msgstr "Messages"
@@ -481,8 +477,7 @@ msgstr "process queue"
 msgid "Process the Message Queue"
 msgstr "Process the Queue"
 
-#: public_html/lists/admin/home.php:280
-#: public_html/lists/admin/connect.php:494
+#: public_html/lists/admin/home.php:280 public_html/lists/admin/connect.php:494
 msgid "warning"
 msgstr "Warning"
 
@@ -513,8 +508,7 @@ msgstr "Process Bounces"
 msgid "bounces"
 msgstr "bounces"
 
-#: public_html/lists/admin/home.php:294
-#: public_html/lists/admin/bouncemgt.php:9
+#: public_html/lists/admin/home.php:294 public_html/lists/admin/bouncemgt.php:9
 msgid "View Bounces"
 msgstr "View Bounces"
 
@@ -600,8 +594,8 @@ msgstr "ETA"
 #: public_html/lists/admin/actions/msgstatus.php:72
 #: public_html/lists/admin/userhistory.php:105
 #: public_html/lists/admin/uclicks.php:120
-#: public_html/lists/admin/mviews.php:89
-#: public_html/lists/admin/mviews.php:195 public_html/databasestructure.php:63
+#: public_html/lists/admin/mviews.php:89 public_html/lists/admin/mviews.php:195
+#: public_html/databasestructure.php:63
 msgid "sent"
 msgstr "sent"
 
@@ -672,9 +666,9 @@ msgstr "All Public Lists"
 msgid "Add a list"
 msgstr "Add a list"
 
-#: public_html/lists/admin/connect.php:1253
-#: public_html/lists/admin/list.php:88 public_html/lists/admin/list.php:98
-#: public_html/lists/admin/list.php:120 public_html/lists/admin/list.php:128
+#: public_html/lists/admin/connect.php:1253 public_html/lists/admin/list.php:88
+#: public_html/lists/admin/list.php:98 public_html/lists/admin/list.php:120
+#: public_html/lists/admin/list.php:128
 msgid "Uncategorised"
 msgstr "Uncategorised"
 
@@ -864,7 +858,6 @@ msgstr "Listing %d to %d of %d"
 
 #: public_html/lists/admin/connect.php:2053
 #, php-format
-#, php-format, php-format
 msgid "Listing %d to %d"
 msgstr "Listing %d to %d"
 
@@ -949,8 +942,7 @@ msgstr "Error installing plugin"
 #: public_html/lists/admin/usercheck.php:45
 #: public_html/lists/admin/import2.php:50
 #: public_html/lists/admin/import2.php:376
-#: public_html/lists/admin/import3.php:287
-#: public_html/lists/admin/user.php:336
+#: public_html/lists/admin/import3.php:287 public_html/lists/admin/user.php:336
 #: public_html/lists/admin/initialise.php:66
 msgid "Continue"
 msgstr "Continue"
@@ -1278,8 +1270,8 @@ msgstr "Do not subscribe"
 #: public_html/lists/admin/userclicks.php:41
 #: public_html/lists/admin/mclicks.php:20
 #: public_html/lists/admin/mclicks.php:32
-#: public_html/lists/admin/uclicks.php:26
-#: public_html/lists/admin/mviews.php:26 public_html/lists/admin/mviews.php:39
+#: public_html/lists/admin/uclicks.php:26 public_html/lists/admin/mviews.php:26
+#: public_html/lists/admin/mviews.php:39
 msgid "You do not have access to this page"
 msgstr "You do not have access to this page"
 
@@ -1287,8 +1279,7 @@ msgstr "You do not have access to this page"
 #: public_html/lists/admin/mclicks.php:100
 #: public_html/lists/admin/domainstats.php:35
 #: public_html/lists/admin/uclicks.php:66
-#: public_html/lists/admin/uclicks.php:75
-#: public_html/lists/admin/mviews.php:55
+#: public_html/lists/admin/uclicks.php:75 public_html/lists/admin/mviews.php:55
 #: public_html/lists/admin/mviews.php:126
 msgid "Download as CSV file"
 msgstr "Download as CSV file"
@@ -1308,8 +1299,7 @@ msgstr "fwds"
 
 #: public_html/lists/admin/statsoverview.php:107
 #: public_html/lists/admin/statsoverview.php:122
-#: public_html/lists/admin/mviews.php:91
-#: public_html/lists/admin/mviews.php:105
+#: public_html/lists/admin/mviews.php:91 public_html/lists/admin/mviews.php:105
 #: public_html/lists/admin/mviews.php:199
 msgid "views"
 msgstr "views"
@@ -1329,8 +1319,7 @@ msgstr "clicks"
 
 #: public_html/lists/admin/statsoverview.php:113
 #: public_html/lists/admin/statsoverview.php:124
-#: public_html/lists/admin/mviews.php:93
-#: public_html/lists/admin/mviews.php:107
+#: public_html/lists/admin/mviews.php:93 public_html/lists/admin/mviews.php:107
 msgid "rate"
 msgstr "rate"
 
@@ -1507,8 +1496,7 @@ msgid "Campaign %d suspended for too many errors with attachments"
 msgstr "Campaign %d suspended for too many errors with attachments"
 
 #: public_html/lists/admin/import4.php:4 public_html/lists/admin/import2.php:5
-#: public_html/lists/admin/import1.php:7
-#: public_html/lists/admin/import3.php:16
+#: public_html/lists/admin/import1.php:7 public_html/lists/admin/import3.php:16
 #: public_html/lists/admin/importsimple.php:9
 #: public_html/lists/admin/import.php:5
 msgid "import is not available"
@@ -1864,7 +1852,6 @@ msgstr "bounce_protocol not supported"
 
 #: public_html/lists/admin/processbounces.php:491
 #, php-format
-#, php-format, php-format
 msgid "%d bounces to reprocess"
 msgstr "%d bounces to reprocess"
 
@@ -2666,8 +2653,8 @@ msgid ""
 "Your PHP settings do not allow this functionality. Please set "
 "\"allow_url_fopen\" in your php.ini to be \"on\" to continue."
 msgstr ""
-"Your PHP settings do not allow this functionality. Please set \""
-"allow_url_fopen\" in your php.ini to be \"on\" to continue."
+"Your PHP settings do not allow this functionality. Please set "
+"\"allow_url_fopen\" in your php.ini to be \"on\" to continue."
 
 #: public_html/lists/admin/hostedprocessqueuesetup.php:59
 msgid "API key from phpList.com"
@@ -2737,8 +2724,7 @@ msgid ""
 "--------------------------------------------------------------------------------  "
 msgstr ""
 "\n"
-"-----------------------------------------------------------------------------"
-"-- \n"
+"------------------------------------------------------------------------------- \n"
 "This is a notification of a possible spam attack to your phplist subscribe "
 "page.\n"
 "The data submitted has been copied below, so you can check whether this was "
@@ -2753,8 +2739,7 @@ msgstr ""
 "This subscriber has not been added to the database.\n"
 "If there is an error, you will need to  add them manually\n"
 "\n"
-" ----------------------------------------------------------------------------"
-"----  \n"
+" --------------------------------------------------------------------------------  \n"
 
 #: public_html/lists/admin/subscribelib2.php:115
 msgid "phplist Spam blocked"
@@ -2882,7 +2867,6 @@ msgstr "Removing %d from this list "
 
 #: public_html/lists/admin/members.php:257
 #, php-format
-#, php-format, php-format
 msgid "Listing subscriber %d to %d"
 msgstr "Listing subscriber %d to %d"
 
@@ -2902,7 +2886,6 @@ msgstr "unconfirmed"
 
 #: public_html/lists/admin/members.php:286
 #, php-format
-#, php-format, php-format
 msgid "%d subscribers"
 msgstr "%d subscribers"
 
@@ -2910,8 +2893,8 @@ msgstr "%d subscribers"
 msgid "Tag all users in this page"
 msgstr "Tag all subscribers in this page"
 
-#: public_html/lists/admin/members.php:297
-#: public_html/lists/admin/list.php:191 public_html/lists/admin/list.php:251
+#: public_html/lists/admin/members.php:297 public_html/lists/admin/list.php:191
+#: public_html/lists/admin/list.php:251
 msgid "Members"
 msgstr "Members"
 
@@ -3536,8 +3519,8 @@ msgid ""
 "You should not paste the results of a test message back into the editor<br/"
 ">This will break the click-track statistics, and overload the server."
 msgstr ""
-"You should not paste the results of a test message back into the editor<br/>"
-"This will break the click-track statistics, and overload the server."
+"You should not paste the results of a test message back into the editor<br/"
+">This will break the click-track statistics, and overload the server."
 
 #: public_html/lists/admin/send_core.php:188
 msgid ""
@@ -4109,8 +4092,8 @@ msgstr "Size"
 msgid "Mime Type"
 msgstr "Mime Type"
 
-#: public_html/lists/admin/message.php:136
-#: public_html/databasestructure.php:33 public_html/databasestructure.php:94
+#: public_html/lists/admin/message.php:136 public_html/databasestructure.php:33
+#: public_html/databasestructure.php:94
 msgid "Description"
 msgstr "Description"
 
@@ -4275,7 +4258,6 @@ msgstr ""
 
 #: public_html/lists/admin/actions/import2.php:485
 #, php-format
-#, php-format, php-format
 msgid "%d emails succesfully imported to the database and added to %d lists."
 msgstr "%d emails succesfully imported to the database and added to %d lists."
 
@@ -4320,7 +4302,6 @@ msgstr "Subscriber data was updated for %d subscribers"
 
 #: public_html/lists/admin/actions/import2.php:506
 #, php-format
-#, php-format, php-format
 msgid "%d emails were on the blacklist and have not been added to the lists"
 msgstr "%d emails were on the blacklist and have not been added to the lists"
 
@@ -4457,13 +4438,11 @@ msgstr ""
 
 #: public_html/lists/admin/actions/export.php:61
 #, php-format
-#, php-format, php-format
 msgid "phpList Export on %s from %s to %s (%s).csv"
 msgstr "phpList subscribers on %s from %s to %s (%s).csv"
 
 #: public_html/lists/admin/actions/export.php:63
 #, php-format
-#, php-format, php-format
 msgid "phpList Export from %s to %s (%s).csv"
 msgstr "phpList subscribers from %s to %s (%s).csv"
 
@@ -4542,7 +4521,6 @@ msgstr "%d failed (will retry later)"
 
 #: public_html/lists/admin/actions/processqueue.php:258
 #, php-format
-#, php-format, php-format
 msgid "%d emails unconfirmed (not sent)"
 msgstr "%d emails unconfirmed (not sent)"
 
@@ -4704,13 +4682,11 @@ msgstr "Campaign started"
 
 #: public_html/lists/admin/actions/processqueue.php:673
 #, php-format
-#, php-format, php-format
 msgid "phplist has started sending the campaign with subject %s"
 msgstr "phplist has started sending the campaign with subject %s"
 
 #: public_html/lists/admin/actions/processqueue.php:674
 #, php-format
-#, php-format, php-format
 msgid "to view the progress of this campaign, go to http://%s"
 msgstr "to view the progress of this campaign, go to http://%s"
 
@@ -5039,8 +5015,8 @@ msgid ""
 "Cannot find column with email, you need to map at least one column to \"Email"
 "\""
 msgstr ""
-"Cannot find column with email, you need to map at least one column to \""
-"Email\""
+"Cannot find column with email, you need to map at least one column to \"Email"
+"\""
 
 #: public_html/lists/admin/import2.php:399
 msgid "Summary"
@@ -6038,8 +6014,8 @@ msgid ""
 "The translations are provided by the phpList community (that includes "
 "you :-) )"
 msgstr ""
-"The translations are provided by the phpList community (that includes you :-)"
-" )"
+"The translations are provided by the phpList community (that includes "
+"you :-) )"
 
 #: public_html/lists/admin/about.php:42
 msgid ""
@@ -6049,8 +6025,8 @@ msgid ""
 "href=\"http://translatehouse.org\" target=\"translatehouse\">Translate "
 "House</a>"
 msgstr ""
-"The <a href=\"http://translate.phplist.com/\" target=\"translate\">"
-"translation site</a> runs <a href=\"http://translate.sourceforge.net/\" "
+"The <a href=\"http://translate.phplist.com/\" target=\"translate"
+"\">translation site</a> runs <a href=\"http://translate.sourceforge.net/\" "
 "target=\"pootle\">Pootle</a> an Open Source translation tool, provided by <a "
 "href=\"http://translatehouse.org\" target=\"translatehouse\">Translate "
 "House</a>"
@@ -6256,8 +6232,7 @@ msgid "Admin added"
 msgstr "Admin added"
 
 #: public_html/lists/admin/admins.php:57 public_html/lists/admin/admins.php:74
-#: public_html/lists/admin/admins.php:79
-#: public_html/lists/admin/admins.php:102
+#: public_html/lists/admin/admins.php:79 public_html/lists/admin/admins.php:102
 msgid "Administrators"
 msgstr "Administrators"
 
@@ -6350,13 +6325,11 @@ msgstr "Send campaigns"
 msgid "Change Settings"
 msgstr "Change settings"
 
-#: public_html/lists/admin/mclicks.php:57
-#: public_html/lists/admin/mviews.php:66
+#: public_html/lists/admin/mclicks.php:57 public_html/lists/admin/mviews.php:66
 msgid "There are currently no messages to view"
 msgstr "There are currently no campaigns to view"
 
-#: public_html/lists/admin/mclicks.php:59
-#: public_html/lists/admin/mviews.php:69
+#: public_html/lists/admin/mclicks.php:59 public_html/lists/admin/mviews.php:69
 msgid "Available Messages"
 msgstr "Available campaigns"
 
@@ -6593,19 +6566,16 @@ msgstr "Made subscriber %s unconfirmed"
 
 #: public_html/lists/admin/bounce.php:84
 #, php-format
-#, php-format, php-format
 msgid "Made subscriber %d to receive text"
 msgstr "Made subscriber %d to receive text"
 
 #: public_html/lists/admin/bounce.php:89
 #, php-format
-#, php-format, php-format
 msgid "Deleted subscriber %d"
 msgstr "Deleted subscriber %d"
 
 #: public_html/lists/admin/bounce.php:93
 #, php-format
-#, php-format, php-format
 msgid "Deleting bounce %d .. "
 msgstr "Deleting bounce %d  .. "
 
@@ -7049,8 +7019,7 @@ msgstr "Download all subscribers in a CSV file"
 msgid "Add a User"
 msgstr "Add a subscriber"
 
-#: public_html/lists/admin/users.php:443
-#: public_html/lists/admin/uclicks.php:56
+#: public_html/lists/admin/users.php:443 public_html/lists/admin/uclicks.php:56
 msgid "msgs"
 msgstr "msgs"
 
@@ -7458,10 +7427,10 @@ msgid ""
 "Word Document.   "
 msgstr ""
 "   The file you upload will need to contain the administrators you want to "
-"add to the system. The columns need to have the following headers: "
-"<b>email</b>, <b>loginname</b>, <b>password</b>. Any other columns will be "
-"added as admin attributes.  <b>Warning</b>: the file needs to be plain text. "
-"Do not upload binary files like a Word Document.   "
+"add to the system. The columns need to have the following headers: <b>email</"
+"b>, <b>loginname</b>, <b>password</b>. Any other columns will be added as "
+"admin attributes.  <b>Warning</b>: the file needs to be plain text. Do not "
+"upload binary files like a Word Document.   "
 
 #: public_html/lists/admin/importadmin.php:318
 msgid ""
@@ -7850,7 +7819,6 @@ msgstr "add a new rule"
 
 #: public_html/lists/admin/bounces.php:8
 #, php-format
-#, php-format, php-format
 msgid "deleting bounce %d"
 msgstr "deleting bounce %d"
 
@@ -8787,7 +8755,8 @@ msgstr "ID in forward table"
 
 #: public_html/databasestructure.php:171
 msgid "Number of times this link has been sent to subscribers for this message"
-msgstr "Number of times this link has been sent to subscribers for this message"
+msgstr ""
+"Number of times this link has been sent to subscribers for this message"
 
 #: public_html/databasestructure.php:173 public_html/databasestructure.php:181
 msgid "Number of clicks from HTML emails"
@@ -9507,17 +9476,17 @@ msgstr "Suppression List"
 #~ msgid "Plugin can not be enabled, because it fails a dependency check - "
 #~ msgstr "Plugin can not be enabled, because it fails a dependency check - "
 
-#, php-format
-#~ msgid "%s emails succesfully imported to the database and added to %d lists."
-#~ msgstr "%s emails succesfully imported to the database and added to %d lists."
+#~ msgid ""
+#~ "%s emails succesfully imported to the database and added to %d lists."
+#~ msgstr ""
+#~ "%s emails succesfully imported to the database and added to %d lists."
 
-#, php-format
 #~ msgid "%s emails already existed in the database"
 #~ msgstr "%s emails already existed in the database"
 
-#, php-format
 #~ msgid "%s emails were on the blacklist and have not been added to the lists"
-#~ msgstr "%s emails were on the blacklist and have not been added to the lists"
+#~ msgstr ""
+#~ "%s emails were on the blacklist and have not been added to the lists"
 
 #~ msgid "List for testing."
 #~ msgstr "List for testing."
@@ -9532,20 +9501,18 @@ msgstr "Suppression List"
 #~ msgstr "Send this (same) message to (a) new list(s)"
 
 #~ msgid ""
-#~ "<b>Note:</b> this message has already been sent to all lists. To resend it "
-#~ "to new users use the \"Requeue\" function."
+#~ "<b>Note:</b> this message has already been sent to all lists. To resend "
+#~ "it to new users use the \"Requeue\" function."
 #~ msgstr ""
-#~ "<b>Note:</b> this message has already been sent to all lists. To resend it "
-#~ "to new subscribers use the \"requeue\" function."
+#~ "<b>Note:</b> this message has already been sent to all lists. To resend "
+#~ "it to new subscribers use the \"requeue\" function."
 
-#, php-format
-#, php-format, php-format
 #~ msgid ""
-#~ "A process for this page is already running and it was still alive %s seconds "
-#~ "ago"
+#~ "A process for this page is already running and it was still alive %s "
+#~ "seconds ago"
 #~ msgstr ""
-#~ "A process for this page is already running and it was still alive %s seconds "
-#~ "ago"
+#~ "A process for this page is already running and it was still alive %s "
+#~ "seconds ago"
 
 #~ msgid "Delete will remove subscriber from the list"
 #~ msgstr "Delete will remove subscriber from the list"
@@ -9601,7 +9568,6 @@ msgstr "Suppression List"
 #~ msgid "Documentation"
 #~ msgstr "Documentation"
 
-#, php-format
 #~ msgid "phpList is licensed with the %sGNU Public License (GPL)%s"
 #~ msgstr "phpList is licensed with the %sGNU Public License (GPL)%s"
 
@@ -9614,22 +9580,19 @@ msgstr "Suppression List"
 #~ msgid "email auto blacklisted for"
 #~ msgstr "email auto blacklisted for"
 
-#, php-format
 #~ msgid "%s users in total"
 #~ msgstr "%s subscribers in total"
 
 #~ msgid "Users marked <span class=\"highlight\">red</span> are unconfirmed"
-#~ msgstr "Subscribers marked <span class=\"highlight\">red</span> are unconfirmed"
+#~ msgstr ""
+#~ "Subscribers marked <span class=\"highlight\">red</span> are unconfirmed"
 
-#, php-format
 #~ msgid "%d email imported"
 #~ msgstr "%d email imported"
 
-#, php-format
 #~ msgid "%d duplicates"
 #~ msgstr "%d duplicates"
 
-#, php-format
 #~ msgid "%d invalidated"
 #~ msgstr "%d invalidated"
 
@@ -9658,11 +9621,13 @@ msgstr "Suppression List"
 #~ msgstr "message(s) to process."
 
 #~ msgid ""
-#~ "Please leave this window open. You have batch processing enabled, so it will "
-#~ "reload several times to send the messages. Reports will be sent by email to"
+#~ "Please leave this window open. You have batch processing enabled, so it "
+#~ "will reload several times to send the messages. Reports will be sent by "
+#~ "email to"
 #~ msgstr ""
-#~ "Please leave this window open. You have batch processing enabled, so it will "
-#~ "reload several times to send the messages. Reports will be sent by email to"
+#~ "Please leave this window open. You have batch processing enabled, so it "
+#~ "will reload several times to send the messages. Reports will be sent by "
+#~ "email to"
 
 #~ msgid "Reports will be sent by email to"
 #~ msgstr "Reports will be sent by email to"
@@ -9671,11 +9636,11 @@ msgstr "Suppression List"
 #~ msgstr "Connection refused, check your host, user or password"
 
 #~ msgid ""
-#~ "Please make sure to read the file README.security that can be found in the "
-#~ "zip file."
+#~ "Please make sure to read the file README.security that can be found in "
+#~ "the zip file."
 #~ msgstr ""
-#~ "Please make sure to read the file README.security that can be found in the "
-#~ "zip file."
+#~ "Please make sure to read the file README.security that can be found in "
+#~ "the zip file."
 
 #~ msgid "Please make sure to"
 #~ msgstr "Please make sure to"
@@ -9699,11 +9664,11 @@ msgstr "Suppression List"
 #~ msgstr "view subscribers"
 
 #~ msgid ""
-#~ "Sorry, this help topic does not exist in your language. Below is the english "
-#~ "version."
+#~ "Sorry, this help topic does not exist in your language. Below is the "
+#~ "english version."
 #~ msgstr ""
-#~ "Sorry, this help topic does not exist in your language. Below is the english "
-#~ "version."
+#~ "Sorry, this help topic does not exist in your language. Below is the "
+#~ "english version."
 
 #~ msgid "Sorry, this help topic does not exist in your language."
 #~ msgstr "Sorry, this help topic does not exist in your language."
@@ -9719,8 +9684,8 @@ msgstr "Suppression List"
 
 #~ msgid "pagetitlehover:converttoutf8"
 #~ msgstr ""
-#~ "Check and action upgrade of the phpList database to use UTF8, which allows "
-#~ "the use of special characters"
+#~ "Check and action upgrade of the phpList database to use UTF8, which "
+#~ "allows the use of special characters"
 
 #~ msgid "Sending admin copy to"
 #~ msgstr "Sending admin copy to"
@@ -9766,7 +9731,8 @@ msgstr "Suppression List"
 #~ "subscribers automatically added to it (0/1)"
 
 #~ msgid ""
-#~ "Does the admin get copies of subscribe, update and unsubscribe messages (0/1)"
+#~ "Does the admin get copies of subscribe, update and unsubscribe messages "
+#~ "(0/1)"
 #~ msgstr ""
 #~ "Does the admin get copies of subscribe, update and unsubscribe messages "
 #~ "(0/1)"
@@ -9786,8 +9752,6 @@ msgstr "Suppression List"
 #~ msgid "Message Campaign finished"
 #~ msgstr "Campaign finished"
 
-#, php-format
-#, php-format, php-format
 #~ msgid "phplist has finished sending the campaign with subject %s"
 #~ msgstr "phpList has finished sending the campaign with subject %s"
 
@@ -9824,7 +9788,6 @@ msgstr "Suppression List"
 #~ msgid "status"
 #~ msgstr "status"
 
-#, php-format
 #~ msgid "%d emails imported"
 #~ msgstr "%d emails imported"
 
@@ -9894,14 +9857,12 @@ msgstr "Suppression List"
 #~ msgid "Your password has been sent by email"
 #~ msgstr "Your password has been sent by email"
 
-#, php-format
 #~ msgid "successful password request from %s for %s"
 #~ msgstr "successful password request from %s for %s"
 
 #~ msgid "Unable to send the password"
 #~ msgstr "Unable to send the password"
 
-#, php-format
 #~ msgid "failed password request from %s for %s"
 #~ msgstr "failed password request from %s for %s"
 
@@ -9915,19 +9876,19 @@ msgstr "Suppression List"
 #~ msgstr "phpList Ltd"
 
 #~ msgid ""
-#~ "Cannot find column with email, you need to map at least one column to \"Email"
-#~ "\" "
+#~ "Cannot find column with email, you need to map at least one column to "
+#~ "\"Email\" "
 #~ msgstr ""
 #~ "Cannot find column with email, you need to map at least one column to "
 #~ "\"Email\" "
 
 #~ msgid ""
-#~ "Test output:There should only be ONE email per line.If the output looks ok, "
-#~ "go Back to resubmit for real"
+#~ "Test output:There should only be ONE email per line.If the output looks "
+#~ "ok, go Back to resubmit for real"
 #~ msgstr ""
-#~ "Test output:<br/>There should only be ONE email per line.<br/>If the output "
-#~ "looks ok, go <a href=javascript:history.go(-1)>Back</a> to resubmit for "
-#~ "real<br/><br/>"
+#~ "Test output:<br/>There should only be ONE email per line.<br/>If the "
+#~ "output looks ok, go <a href=javascript:history.go(-1)>Back</a> to "
+#~ "resubmit for real<br/><br/>"
 
 #~ msgid "All the emails already exist in the database"
 #~ msgstr "All the emails already exist in the database"
@@ -9957,26 +9918,23 @@ msgstr "Suppression List"
 #~ msgstr "subscribers processed"
 
 #~ msgid ""
-#~ "Cannot find column with email, please make sure the column is called &quot;"
-#~ "email&quot; and not eg e-mail, and that your column delimiter is correct"
+#~ "Cannot find column with email, please make sure the column is called "
+#~ "&quot;email&quot; and not eg e-mail, and that your column delimiter is "
+#~ "correct"
 #~ msgstr ""
 #~ "Cannot find column with email, please make sure the column is called "
 #~ "&quot;email&quot; and not eg e-mail, and that your column delimiter is "
 #~ "correct"
 
-#, php-format
 #~ msgid "%d Duplicate Emails found."
 #~ msgstr "%d Duplicate Emails found."
 
-#, php-format
 #~ msgid "User data was updated for %d users"
 #~ msgstr "Data was updated for %d subscribers"
 
-#, php-format
 #~ msgid "%d users were matched by foreign key, %d by email"
 #~ msgstr "%d subscribers were matched by foreign key, %d by email"
 
-#, php-format
 #~ msgid ""
 #~ "The following limits are set by your server: Maximum size of a total data "
 #~ "sent to server: %s Maximum size of each individual file: %s"
@@ -9989,7 +9947,8 @@ msgstr "Suppression List"
 #~ msgstr "Subscriber is blacklisted since"
 
 #~ msgid "it should only be done with explicit permission from this user"
-#~ msgstr "it should only be done with explicit permission from this subscriber"
+#~ msgstr ""
+#~ "it should only be done with explicit permission from this subscriber"
 
 #~ msgid "remove User from Blacklist"
 #~ msgstr "remove subscriber from blacklist"
@@ -10009,7 +9968,6 @@ msgstr "Suppression List"
 #~ msgid "emails existed in the database"
 #~ msgstr "emails existed in the database"
 
-#, php-format
 #~ msgid "updated %d langague terms"
 #~ msgstr "updated %d langague terms"
 
@@ -10169,8 +10127,7 @@ msgstr "Suppression List"
 #~ msgid "Initialise Key Manager"
 #~ msgstr "Initialise keymanager"
 
-#, php-format
-#, php-format, fuzzy
+#, fuzzy
 #~ msgid "%d to process"
 #~ msgstr "to process"
 
@@ -10180,18 +10137,44 @@ msgstr "Suppression List"
 #~ msgid "out of"
 #~ msgstr "out of"
 
+#, fuzzy
 #~ msgid "dashboard"
-#~ msgstr "Dashboard"
-
-#~ msgid " Set permissions to view pages in the system:  All: admin has access to page without restrictions View: admin can view content of pages, but not change anything. This currently only work for the ""user"", ""users"" and ""members"" pages. None: admin cannot see this page Owner: admin can see this page, but only see the content of the lists they own  Note: Admin Password must be at least 4 characters long "
 #~ msgstr ""
-#~ "<hr/> <p class=information>Set permissions to view pages in the system:</p> "
-#~ "<ul> <li>All: admin has access to page without restrictions</li> <li>View: "
-#~ "admin can view content of pages, but not change anything. This currently "
-#~ "only work for the user, users and members pages.</li> <li>None: admin cannot "
-#~ "see this page</li> <li>Owner: admin can see this page, but only see the "
-#~ "content of the lists they own</li> </ul> <p class=information>Note: Admin "
-#~ "Password must be at least 4 characters long</p> "
+#~ "#-#-#-#-#  phplist.po (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "Dashboard\n"
+#~ "#-#-#-#-#  phplist.po (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "dashboard\n"
+#~ "#-#-#-#-#  phplist.po (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "dashboard\n"
+#~ "#-#-#-#-#  phplist.po (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "dashboard\n"
+#~ "#-#-#-#-#  phplist.po (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "dashboard\n"
+#~ "#-#-#-#-#  phplist.po (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "dashboard\n"
+#~ "#-#-#-#-#  phplist.po (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "dashboard\n"
+#~ "#-#-#-#-#  phplist.po (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "dashboard\n"
+#~ "#-#-#-#-#  phplist.po (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "dashboard"
+
+#~ msgid ""
+#~ " Set permissions to view pages in the system:  All: admin has access to "
+#~ "page without restrictions View: admin can view content of pages, but not "
+#~ "change anything. This currently only work for the user, users and members "
+#~ "pages. None: admin cannot see this page Owner: admin can see this page, "
+#~ "but only see the content of the lists they own  Note: Admin Password must "
+#~ "be at least 4 characters long "
+#~ msgstr ""
+#~ "<hr/> <p class=information>Set permissions to view pages in the system:</"
+#~ "p> <ul> <li>All: admin has access to page without restrictions</li> "
+#~ "<li>View: admin can view content of pages, but not change anything. This "
+#~ "currently only work for the user, users and members pages.</li> <li>None: "
+#~ "admin cannot see this page</li> <li>Owner: admin can see this page, but "
+#~ "only see the content of the lists they own</li> </ul> <p "
+#~ "class=information>Note: Admin Password must be at least 4 characters "
+#~ "long</p> "
 
 #~ msgid "Is this user Super Admin?"
 #~ msgstr "Is this admin super admin?"
@@ -10229,8 +10212,12 @@ msgstr "Suppression List"
 #~ msgid "Listing"
 #~ msgstr "Listing"
 
-#~ msgid "are you sure you want to delete all bounces,\n even the ones that have not been processed"
-#~ msgstr "Are you sure you want to delete all bounces,\n even the ones that have not been processed"
+#~ msgid ""
+#~ "are you sure you want to delete all bounces,\n"
+#~ " even the ones that have not been processed"
+#~ msgstr ""
+#~ "Are you sure you want to delete all bounces,\n"
+#~ " even the ones that have not been processed"
 
 #~ msgid "are you sure you want to reset all counters"
 #~ msgstr "Are you sure you want to reset all counters"
@@ -10283,8 +10270,10 @@ msgstr "Suppression List"
 #~ msgid "enter your email"
 #~ msgstr "Enter your email"
 
-#~ msgid "An image exists on the server, check this box to keep the existing one"
-#~ msgstr "An image exists on the server, check this box to keep the existing one"
+#~ msgid ""
+#~ "An image exists on the server, check this box to keep the existing one"
+#~ msgstr ""
+#~ "An image exists on the server, check this box to keep the existing one"
 
 #~ msgid "View Image"
 #~ msgstr "View Image"
@@ -10322,8 +10311,13 @@ msgstr "Suppression List"
 #~ msgid "purgerss"
 #~ msgstr "purgerss"
 
-#~ msgid "Your version of PHP has a major security issue.It is best to upgrade to the latest version of PHP. Read More about this issue."
-#~ msgstr "Your version of PHP has a major security issue.<br/>It is best to upgrade to the latest version of PHP. <a href=""http://www.hardened-php.net/globals-problem"">Read More</a> about this issue."
+#~ msgid ""
+#~ "Your version of PHP has a major security issue.It is best to upgrade to "
+#~ "the latest version of PHP. Read More about this issue."
+#~ msgstr ""
+#~ "Your version of PHP has a major security issue.<br/>It is best to upgrade "
+#~ "to the latest version of PHP. <a href=http://www.hardened-php.net/globals-"
+#~ "problem>Read More</a> about this issue."
 
 #~ msgid "Development"
 #~ msgstr "Development"
@@ -10460,9 +10454,6 @@ msgstr "Suppression List"
 #~ msgid "You have requested a new password at phpList."
 #~ msgstr "You have requested a new password at phpList."
 
-#~ msgid "Listing"
-#~ msgstr "Listing"
-
 #~ msgid "is an rss feed for"
 #~ msgstr "is an rss feed for"
 
@@ -10475,11 +10466,19 @@ msgstr "Suppression List"
 #~ msgid "Message Sending has started"
 #~ msgstr "Message Sending has started"
 
-#~ msgid "Please enter the emails to import in the box below, one per line, and click ""Import Emails"""
-#~ msgstr "Please enter the emails to import in the box below, one per line, and click ""Import Emails"""
+#~ msgid ""
+#~ "Please enter the emails to import in the box below, one per line, and "
+#~ "click Import Emails"
+#~ msgstr ""
+#~ "Please enter the emails to import in the box below, one per line, and "
+#~ "click Import Emails"
 
-#~ msgid "<b>Warning</b>: the emails you import will not be checked on validity. You can do this later on the ""reconcile subscribers"" page."
-#~ msgstr "<b>Warning</b>: the emails you import will not be checked on validity. You can do this later on the ""reconcile subscribers"" page."
+#~ msgid ""
+#~ "<b>Warning</b>: the emails you import will not be checked on validity. "
+#~ "You can do this later on the reconcile subscribers page."
+#~ msgstr ""
+#~ "<b>Warning</b>: the emails you import will not be checked on validity. "
+#~ "You can do this later on the reconcile subscribers page."
 
 #~ msgid "checklist for installation"
 #~ msgstr "Checklist for Installation"
@@ -10496,8 +10495,14 @@ msgstr "Suppression List"
 #~ msgid "Message that is sent when users change their information"
 #~ msgstr "Message that is sent when subscribers change their information"
 
-#~ msgid "Header of public pages. The header should start with &lt;/head&gt; . You can add header elements, but don't add the title or other basic header elements."
-#~ msgstr "Header of public pages. The header should start with &lt;/head&gt; . You can add header elements, but don't add the title or other basic header elements."
+#~ msgid ""
+#~ "Header of public pages. The header should start with &lt;/head&gt; . You "
+#~ "can add header elements, but don't add the title or other basic header "
+#~ "elements."
+#~ msgstr ""
+#~ "Header of public pages. The header should start with &lt;/head&gt; . You "
+#~ "can add header elements, but don't add the title or other basic header "
+#~ "elements."
 
 #~ msgid "Charset for HTML messages"
 #~ msgstr "Charset for HTML messages"
@@ -10531,12 +10536,6 @@ msgstr "Suppression List"
 
 #~ msgid "URL where known users can unsubscribe"
 #~ msgstr "URL where known subscribers can unsubscribe"
-
-#~ msgid "dashboard"
-#~ msgstr "dashboard"
-
-#~ msgid "dashboard"
-#~ msgstr "dashboard"
 
 #~ msgid "Announcements"
 #~ msgstr "Announcements"
@@ -10579,12 +10578,6 @@ msgstr "Suppression List"
 
 #~ msgid "Listing 1 to 50"
 #~ msgstr "Listing 1 to 50"
-
-#~ msgid "dashboard"
-#~ msgstr "dashboard"
-
-#~ msgid "dashboard"
-#~ msgstr "dashboard"
 
 #~ msgid "Configuration functions"
 #~ msgstr "Configuration functions"
@@ -10631,17 +10624,18 @@ msgstr "Suppression List"
 #~ msgid "Purge rss items"
 #~ msgstr "Purge rss items"
 
-#~ msgid "dashboard"
-#~ msgstr "dashboard"
-
 #~ msgid "Please select at least one list"
 #~ msgstr "Please select at least one list"
 
 #~ msgid "Use of wrong characters: "
 #~ msgstr "Use of wrong characters: "
 
-#~ msgid "Some characters that are not valid have been found. These might be delimiters. Please check the file and select the right delimiter."
-#~ msgstr "Some characters that are not valid have been found. These might be delimiters. Please check the file and select the right delimiter."
+#~ msgid ""
+#~ "Some characters that are not valid have been found. These might be "
+#~ "delimiters. Please check the file and select the right delimiter."
+#~ msgstr ""
+#~ "Some characters that are not valid have been found. These might be "
+#~ "delimiters. Please check the file and select the right delimiter."
 
 #~ msgid "No lists available, "
 #~ msgstr "No lists available, "
@@ -10667,26 +10661,46 @@ msgstr "Suppression List"
 #~ msgid "Illegal character was %s"
 #~ msgstr "Illegal character was %s"
 
-#~ msgid "A character has been found in the import which is not the delimiter indicated, but is likely to be confused for one. Please clean up your import file and try again"
-#~ msgstr "A character has been found in the import which is not the delimiter indicated, but is likely to be confused for one. Please clean up your import file and try again"
+#~ msgid ""
+#~ "A character has been found in the import which is not the delimiter "
+#~ "indicated, but is likely to be confused for one. Please clean up your "
+#~ "import file and try again"
+#~ msgstr ""
+#~ "A character has been found in the import which is not the delimiter "
+#~ "indicated, but is likely to be confused for one. Please clean up your "
+#~ "import file and try again"
 
-#~ msgid "Cannot find column with email, please make sure the column is called &quot;email&quot; and not eg e-mail"
-#~ msgstr "Cannot find column with email, please make sure the column is called &quot;email&quot; and not eg e-mail"
+#~ msgid ""
+#~ "Cannot find column with email, please make sure the column is called "
+#~ "&quot;email&quot; and not eg e-mail"
+#~ msgstr ""
+#~ "Cannot find column with email, please make sure the column is called "
+#~ "&quot;email&quot; and not eg e-mail"
 
-#~ msgid "If you check ""Test Output"", you will get the list of parsed emails on screen, and the database will not be filled with the information. This is useful to find out whether the format of your file is correct. It will only show the first 50 records."
-#~ msgstr "If you check ""Test Output"", you will get the list of parsed emails on screen, and the database will not be filled with the information. This is useful to find out whether the format of your file is correct. It will only show the first 50 records."
+#~ msgid ""
+#~ "If you check Test Output, you will get the list of parsed emails on "
+#~ "screen, and the database will not be filled with the information. This is "
+#~ "useful to find out whether the format of your file is correct. It will "
+#~ "only show the first 50 records."
+#~ msgstr ""
+#~ "If you check Test Output, you will get the list of parsed emails on "
+#~ "screen, and the database will not be filled with the information. This is "
+#~ "useful to find out whether the format of your file is correct. It will "
+#~ "only show the first 50 records."
 
-#~ msgid "If you choose ""send notification email"" the subscribers you are adding will be sent the request for confirmation of subscription to which they will have to reply. This is recommended, because it will identify invalid emails."
-#~ msgstr "If you choose ""send notification email"" the subscribers you are adding will be sent the request for confirmation of subscription to which they will have to reply. This is recommended, because it will identify invalid emails."
+#~ msgid ""
+#~ "If you choose send notification email the subscribers you are adding will "
+#~ "be sent the request for confirmation of subscription to which they will "
+#~ "have to reply. This is recommended, because it will identify invalid "
+#~ "emails."
+#~ msgstr ""
+#~ "If you choose send notification email the subscribers you are adding will "
+#~ "be sent the request for confirmation of subscription to which they will "
+#~ "have to reply. This is recommended, because it will identify invalid "
+#~ "emails."
 
 #~ msgid "phplist Import  Results"
 #~ msgstr "phplist Import  Results"
-
-#~ msgid "(default is TAB)"
-#~ msgstr "(default is TAB)"
-
-#~ msgid "(default is line break)"
-#~ msgstr "(default is line break)"
 
 #~ msgid "Use of wrong characters in filename, allowed are: "
 #~ msgstr "Use of wrong characters in filename, allowed are: "
@@ -10706,11 +10720,14 @@ msgstr "Suppression List"
 #~ msgid "loginname"
 #~ msgstr "loginname"
 
-#~ msgid "No default permissions have been defined, please create default permissions first, by creating one dummy admin and assigning the default permissions to this admin"
-#~ msgstr "No default permissions have been defined, please create default permissions first, by creating one dummy admin and assigning the default permissions to this admin"
-
-#~ msgid "If you check ""Test Output"", you will get the list of parsed emails on screen, and the database will not be filled with the information. This is useful to find out whether the format of your file is correct. It will only show the first 50 records."
-#~ msgstr "If you check ""Test Output"", you will get the list of parsed emails on screen, and the database will not be filled with the information. This is useful to find out whether the format of your file is correct. It will only show the first 50 records."
+#~ msgid ""
+#~ "No default permissions have been defined, please create default "
+#~ "permissions first, by creating one dummy admin and assigning the default "
+#~ "permissions to this admin"
+#~ msgstr ""
+#~ "No default permissions have been defined, please create default "
+#~ "permissions first, by creating one dummy admin and assigning the default "
+#~ "permissions to this admin"
 
 #~ msgid "import from file"
 #~ msgstr "import from file"
@@ -10721,14 +10738,23 @@ msgstr "Suppression List"
 #~ msgid "no_lists"
 #~ msgstr "no_lists"
 
-#~ msgid "dashboard"
-#~ msgstr "dashboard"
+#~ msgid ""
+#~ "List for testing. If you don't make this list active and add yourself as "
+#~ "a member, you can use this list to test a message. If the message comes "
+#~ "out ok, you can resend it to other lists."
+#~ msgstr ""
+#~ "List for testing. If you don't make this list active and add yourself as "
+#~ "a member, you can use this list to test a message. If the message comes "
+#~ "out ok, you can resend it to other lists."
 
-#~ msgid "List for testing. If you don't make this list active and add yourself as a member, you can use this list to test a message. If the message comes out ok, you can resend it to other lists."
-#~ msgstr "List for testing. If you don't make this list active and add yourself as a member, you can use this list to test a message. If the message comes out ok, you can resend it to other lists."
-
-#~ msgid "to make sure you are updated when new versions come out.     Sometimes security bugs are found which make it important to upgrade. Traffic on the list is very low."
-#~ msgstr "to make sure you are updated when new versions come out.     Sometimes security bugs are found which make it important to upgrade. Traffic on the list is very low."
+#~ msgid ""
+#~ "to make sure you are updated when new versions come out.     Sometimes "
+#~ "security bugs are found which make it important to upgrade. Traffic on "
+#~ "the list is very low."
+#~ msgstr ""
+#~ "to make sure you are updated when new versions come out.     Sometimes "
+#~ "security bugs are found which make it important to upgrade. Traffic on "
+#~ "the list is very low."
 
 #~ msgid "PHPlist Setup"
 #~ msgstr "PHPlist Setup"
@@ -10742,11 +10768,27 @@ msgstr "Suppression List"
 #~ msgid "Hello, admin"
 #~ msgstr "Hello, admin"
 
-#~ msgid "After Database initialisation, you will receive an email with a token to set your login password."
-#~ msgstr "After Database initialisation, you will receive an email with a token to set your login password."
+#~ msgid ""
+#~ "After Database initialisation, you will receive an email with a token to "
+#~ "set your login password."
+#~ msgstr ""
+#~ "After Database initialisation, you will receive an email with a token to "
+#~ "set your login password."
 
-#~ msgid "The initial <i>login name</i> will be' ).' ""admin""'.'</p>';   }   */   print '<input type=""text"" name=""adminemail"" value="""" size=""25"" /><br/>';   /*   if (!ENCRYPT_ADMIN_PASSWORDS) {     */     print '<p>'.$GLOBALS['I18N']->get('The initial <i>login name</i> will be' ).' ""admin""'.'</p>';     print '<p>'.$GLOBALS['I18N']->get('Please enter the password you want to use for this account."
-#~ msgstr "The initial <i>login name</i> will be' ).' ""admin""'.'</p>';   }   */   print '<input type=""text"" name=""adminemail"" value="""" size=""25"" /><br/>';   /*   if (!ENCRYPT_ADMIN_PASSWORDS) {     */     print '<p>'.$GLOBALS['I18N']->get('The initial <i>login name</i> will be' ).' ""admin""'.'</p>';     print '<p>'.$GLOBALS['I18N']->get('Please enter the password you want to use for this account."
+#~ msgid ""
+#~ "The initial <i>login name</i> will be' ).' admin'.'</p>';   }   */   "
+#~ "print '<input type=text name=adminemail value= size=25 /><br/>';   /*   "
+#~ "if (!ENCRYPT_ADMIN_PASSWORDS) {     */     print '<p>'.$GLOBALS['I18N']-"
+#~ ">get('The initial <i>login name</i> will be' ).' admin'.'</p>';     print "
+#~ "'<p>'.$GLOBALS['I18N']->get('Please enter the password you want to use "
+#~ "for this account."
+#~ msgstr ""
+#~ "The initial <i>login name</i> will be' ).' admin'.'</p>';   }   */   "
+#~ "print '<input type=text name=adminemail value= size=25 /><br/>';   /*   "
+#~ "if (!ENCRYPT_ADMIN_PASSWORDS) {     */     print '<p>'.$GLOBALS['I18N']-"
+#~ ">get('The initial <i>login name</i> will be' ).' admin'.'</p>';     print "
+#~ "'<p>'.$GLOBALS['I18N']->get('Please enter the password you want to use "
+#~ "for this account."
 
 #~ msgid " Bounces on this list"
 #~ msgstr " Bounces on this list"
@@ -10777,12 +10819,6 @@ msgstr "Suppression List"
 
 #~ msgid "new password"
 #~ msgstr "new password"
-
-#~ msgid "dashboard"
-#~ msgstr "dashboard"
-
-#~ msgid "dashboard"
-#~ msgstr "dashboard"
 
 #~ msgid "All done, %d emails processed, %d emails marked unconfirmed<br/>"
 #~ msgstr "All done, %d emails processed, %d emails marked unconfirmed<br/>"
@@ -10817,8 +10853,12 @@ msgstr "Suppression List"
 #~ msgid "# rss"
 #~ msgstr "# rss"
 
-#~ msgid "<b>Note:</b> this message has already been sent to all lists. To resend it to new users use the &quot;Requeue&quot; function."
-#~ msgstr "<b>Note:</b> this message has already been sent to all lists. To resend it to new users use the &quot;Requeue&quot; function."
+#~ msgid ""
+#~ "<b>Note:</b> this message has already been sent to all lists. To resend "
+#~ "it to new users use the &quot;Requeue&quot; function."
+#~ msgstr ""
+#~ "<b>Note:</b> this message has already been sent to all lists. To resend "
+#~ "it to new users use the &quot;Requeue&quot; function."
 
 #~ msgid "id"
 #~ msgstr "id"

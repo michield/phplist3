@@ -495,7 +495,8 @@ msgstr "警告"
 #: public_html/lists/admin/home.php:303
 msgid ""
 "You have set TEST in config.php to 1, so it will only show what would be sent"
-msgstr "您在 config.php 中將TEST設定(測試模式)為 1(啟動)，所以所有的訊息將不會寄出"
+msgstr ""
+"您在 config.php 中將TEST設定(測試模式)為 1(啟動)，所以所有的訊息將不會寄出"
 
 #: public_html/lists/admin/home.php:308
 msgid "processbounces"
@@ -915,8 +916,7 @@ msgid "Listing %d to %d of %d"
 msgstr ""
 
 #: public_html/lists/admin/connect.php:2199
-#, php-format
-#, php-format, fuzzy
+#, fuzzy, php-format
 msgid "Listing %d to %d"
 msgstr "列出訂閱者 %d 到 %d"
 
@@ -1862,7 +1862,6 @@ msgid "Cannot open mailbox file"
 msgstr "無法開啟郵件檔案"
 
 #: public_html/lists/admin/processbounces.php:389
-#, php-format
 #, fuzzy, php-format
 msgid "%d bounces to fetch from the mailbox"
 msgstr "封退信於信箱"
@@ -1873,7 +1872,6 @@ msgid "Please do not interrupt this process"
 msgstr "請不要中斷這個處理程序"
 
 #: public_html/lists/admin/processbounces.php:397
-#, php-format
 #, fuzzy, php-format
 msgid "%d bounces to process"
 msgstr "封退信待處理"
@@ -1939,7 +1937,6 @@ msgid "Download failed, exiting"
 msgstr ""
 
 #: public_html/lists/admin/processbounces.php:507
-#, php-format
 #, fuzzy, php-format
 msgid "%d bounces to reprocess"
 msgstr "封退信待處理"
@@ -2117,7 +2114,6 @@ msgid "Marking all subscribers confirmed"
 msgstr "將所有訂閱者標示為已確認"
 
 #: public_html/lists/admin/reconcileusers.php:163
-#, php-format
 #, fuzzy, php-format
 msgid "Marking all subscribers on list %s confirmed"
 msgstr "將所有訂閱者標示為已確認"
@@ -2273,7 +2269,6 @@ msgid "Mark all subscribers to receive text"
 msgstr "讓訂閱者 %s 訂閱純文字版本<br/>"
 
 #: public_html/lists/admin/reconcileusers.php:470
-#, php-format
 #, fuzzy, php-format
 msgid "Mark all subscribers on list %s confirmed"
 msgstr "將所有訂閱者標示為已確認"
@@ -2377,7 +2372,8 @@ msgstr "圖片"
 msgid ""
 "Below is the list of images used in your template. If an image is currently "
 "unavailable, please upload it to the database."
-msgstr "下面是您在樣版中使用到的圖片，如果任何圖片有問題，請記得重新上傳到資料庫。"
+msgstr ""
+"下面是您在樣版中使用到的圖片，如果任何圖片有問題，請記得重新上傳到資料庫。"
 
 #: public_html/lists/admin/template.php:173
 msgid ""
@@ -2844,7 +2840,6 @@ msgid "# bounced"
 msgstr "封退信"
 
 #: public_html/lists/admin/msgbounces.php:31
-#, php-format
 #, fuzzy
 msgid "Listing %s to %s"
 msgstr "列出訂閱者 %s 到 %s"
@@ -2943,8 +2938,7 @@ msgid "Removing %d from this list "
 msgstr ""
 
 #: public_html/lists/admin/members.php:269
-#, php-format
-#, php-format, fuzzy
+#, fuzzy, php-format
 msgid "Listing subscriber %d to %d"
 msgstr "列出訂閱者 %d 到 %d"
 
@@ -2966,7 +2960,6 @@ msgid "unconfirmed"
 msgstr "未確認"
 
 #: public_html/lists/admin/members.php:301
-#, php-format
 #, fuzzy, php-format
 msgid "%d subscribers"
 msgstr "訂閱者"
@@ -4442,7 +4435,6 @@ msgid ""
 msgstr "所有的電子郵件都已經存在，而且也訂閱了這個電子報"
 
 #: public_html/lists/admin/actions/import2.php:502
-#, php-format
 #, fuzzy, php-format
 msgid "%d emails succesfully imported to the database and added to %d lists."
 msgstr "%s 個電子郵件成功匯入到資料庫，並且訂閱了電子報 %d 。"
@@ -4454,7 +4446,6 @@ msgstr "%d 的電子郵件訂閱了這個電子報"
 
 #: public_html/lists/admin/actions/import2.php:506
 #: public_html/lists/admin/actions/import1.php:222
-#, php-format
 #, fuzzy, php-format
 msgid "%d emails already existed in the database"
 msgstr "%s 個電子郵件已經存在於資料庫中"
@@ -4491,7 +4482,6 @@ msgid "%d emails were on the blacklist and have not been added to the lists"
 msgstr ""
 
 #: public_html/lists/admin/actions/import2.php:527
-#, php-format
 #, fuzzy, php-format
 msgid "%d subscribers were matched by foreign key, %d by email"
 msgstr "%d 個訂閱者符合外部鍵值， %d 來自電子郵件"
@@ -4944,13 +4934,11 @@ msgid "Campaign started"
 msgstr ""
 
 #: public_html/lists/admin/actions/processqueue.php:720
-#, php-format
-#, php-format, fuzzy
+#, fuzzy, php-format
 msgid "phplist has started sending the campaign with subject %s"
 msgstr "phplist 已經開始寄送主旨為 %s 的信件"
 
 #: public_html/lists/admin/actions/processqueue.php:721
-#, php-format
 #, fuzzy, php-format
 msgid "to view the progress of this campaign, go to %s://%s"
 msgstr "要檢視這個信件的處理過程，請前往 %s"
@@ -5102,13 +5090,11 @@ msgid "Message campaign finished"
 msgstr ""
 
 #: public_html/lists/admin/actions/processqueue.php:1369
-#, php-format
 #, fuzzy, php-format
 msgid "phpList has finished sending the campaign with subject %s"
 msgstr "phplist 已經開始寄送主旨為 %s 的信件"
 
 #: public_html/lists/admin/actions/processqueue.php:1370
-#, php-format
 #, fuzzy, php-format
 msgid "to view the statistics of this campaign, go to %s://%s"
 msgstr "要檢視這個信件的處理過程，請前往 %s"
@@ -5182,8 +5168,7 @@ msgid "Check your INBOX to see if all worked ok"
 msgstr ""
 
 #: public_html/lists/admin/import2.php:31
-#, php-format
-#, php-format, fuzzy
+#, fuzzy, php-format
 msgid ""
 "The temporary directory for uploading (%s) is not writable, so import will "
 "fail"
@@ -5482,7 +5467,9 @@ msgid ""
 "If you choose \"send notification email\" the subscribers you are adding "
 "will be sent the request for confirmation of subscription to which they will "
 "have to reply. This is recommended, because it will identify invalid emails."
-msgstr "如果您選擇 \"寄送通知信函\" ，您新增的訂閱者會收到一封確認信函來通知他們，建議您使用這個功能來避免有問題的 email。"
+msgstr ""
+"如果您選擇 \"寄送通知信函\" ，您新增的訂閱者會收到一封確認信函來通知他們，建"
+"議您使用這個功能來避免有問題的 email。"
 
 #: public_html/lists/admin/import2.php:770
 msgid "Send&nbsp;Notification&nbsp;email"
@@ -5866,7 +5853,9 @@ msgid ""
 "the users you are adding will be sent the request for confirmation of "
 "subscription to which they will have to reply. This is recommended, because "
 "it will identify invalid emails."
-msgstr "如果您選擇 \"寄送通知信函\" ，您新增的訂閱者會收到一封確認信函來通知他們，建議您使用這個功能來避免有問題的 email。"
+msgstr ""
+"如果您選擇 \"寄送通知信函\" ，您新增的訂閱者會收到一封確認信函來通知他們，建"
+"議您使用這個功能來避免有問題的 email。"
 
 #: public_html/lists/admin/import3.php:270
 msgid "Send&nbsp;Notification&nbsp;email&nbsp;"
@@ -5878,7 +5867,9 @@ msgid ""
 "the entire name or two attributes, one for first name and one for last name. "
 "If you use &quot;two attributes&quot;, the name will be split after the "
 "first space."
-msgstr "有兩種加入訂閱者名稱的方法，就是一或兩個欄位，兩個欄位是將姓與名分開。如果您使用兩個欄位，名稱會使用空白字元分開"
+msgstr ""
+"有兩種加入訂閱者名稱的方法，就是一或兩個欄位，兩個欄位是將姓與名分開。如果您"
+"使用兩個欄位，名稱會使用空白字元分開"
 
 #: public_html/lists/admin/import3.php:273
 msgid "Use one attribute for name"
@@ -5980,7 +5971,6 @@ msgid "changed from"
 msgstr ""
 
 #: public_html/lists/admin/user.php:256
-#, php-format
 #, fuzzy, php-format
 msgid "Subscribed to %s"
 msgstr "訂閱"
@@ -6244,7 +6234,8 @@ msgstr "版權"
 #, php-format
 msgid "phpList is licensed with the %sGNU Affero Public License (AGPL)%s"
 msgstr ""
-"phpList 為 %sGNU Affero Public License (AGPL)%s 授權 Clark's Hosting Service 使用"
+"phpList 為 %sGNU Affero Public License (AGPL)%s 授權 Clark's Hosting Service "
+"使用"
 
 #: public_html/lists/admin/about.php:30
 msgid "Certification"
@@ -6282,7 +6273,9 @@ msgstr "翻譯"
 msgid ""
 "The translations are provided by the <a href=\"https://translate.phplist.org/"
 "about/contributors/\">phpList translation community</a>"
-msgstr "台灣中文翻譯由 <a href=\"https://host.clark-chen.com/\">Clark's 虛擬主機服務</a> 提供"
+msgstr ""
+"台灣中文翻譯由 <a href=\"https://host.clark-chen.com/\">Clark's 虛擬主機服務"
+"</a> 提供"
 
 #: public_html/lists/admin/about.php:101
 msgid ""
@@ -6302,7 +6295,9 @@ msgid ""
 "The developers wish to thank the many contributors to this system, who have "
 "helped out with bug reports, suggestions, donations, feature requests, "
 "sponsoring, translations and many other contributions."
-msgstr "開發人員希望藉此感激許多參與、協同開發的朋友們，包括回報問題、建議、贊助、功能提議、翻譯與許多提供協助的朋友。"
+msgstr ""
+"開發人員希望藉此感激許多參與、協同開發的朋友們，包括回報問題、建議、贊助、功"
+"能提議、翻譯與許多提供協助的朋友。"
 
 #: public_html/lists/admin/about.php:116
 msgid "Portions of the system include"
@@ -6632,7 +6627,6 @@ msgid "%d new email addresses imported"
 msgstr ""
 
 #: public_html/lists/admin/importsimple.php:97
-#, php-format
 #, fuzzy, php-format
 msgid "%d email addresses already existed in the database"
 msgstr "%s 個電子郵件已經存在於資料庫中"
@@ -6801,20 +6795,17 @@ msgid "Made subscriber %s unconfirmed"
 msgstr "讓訂閱者 %s 狀態變成未確認<br/>"
 
 #: public_html/lists/admin/bounce.php:88
-#, php-format
-#, php-format, fuzzy
+#, fuzzy, php-format
 msgid "Made subscriber %d to receive text"
 msgstr "讓訂閱者 %s 訂閱純文字版本<br/>"
 
 #: public_html/lists/admin/bounce.php:93
-#, php-format
-#, php-format, fuzzy
+#, fuzzy, php-format
 msgid "Deleted subscriber %d"
 msgstr "刪除訂閱者 %s<br/>"
 
 #: public_html/lists/admin/bounce.php:97
-#, php-format
-#, php-format, fuzzy
+#, fuzzy, php-format
 msgid "Deleting bounce %d .. "
 msgstr "刪除退信中 %s .."
 
@@ -7606,7 +7597,9 @@ msgid ""
 "Some characters that are not valid have been found. These might be "
 "delimiters. Please check the file and select the right delimiter. Character "
 "found:"
-msgstr "發現部分字元錯誤，可能資料中包含了分隔字元，請檢查檔案後選擇正確的分隔字元。找到的字元："
+msgstr ""
+"發現部分字元錯誤，可能資料中包含了分隔字元，請檢查檔案後選擇正確的分隔字元。"
+"找到的字元："
 
 #: public_html/lists/admin/importadmin.php:81
 msgid "Name cannot be empty"
@@ -7695,8 +7688,9 @@ msgid ""
 "Warning: the file needs to be plain text. Do not upload binary files like a "
 "Word Document.   "
 msgstr ""
-"您上傳的檔案必須包含您希望新增的管理者資訊，標題列需要包含欄位如下：<b>email</b>、<b>帳號</b>、<b>密碼</b>，其他的欄位會被新增為"
-"管理者欄位。 <b>注意</b>：檔案必須是純文字格式，而非 Word 之類的文件  "
+"您上傳的檔案必須包含您希望新增的管理者資訊，標題列需要包含欄位如下："
+"<b>email</b>、<b>帳號</b>、<b>密碼</b>，其他的欄位會被新增為管理者欄位。 <b>"
+"注意</b>：檔案必須是純文字格式，而非 Word 之類的文件  "
 
 #: public_html/lists/admin/importadmin.php:331
 msgid ""
@@ -8075,7 +8069,6 @@ msgid "add a new rule"
 msgstr "新增規則"
 
 #: public_html/lists/admin/bounces.php:8
-#, php-format
 #, fuzzy, php-format
 msgid "deleting bounce %d"
 msgstr "刪除退信中 %s .."
@@ -9803,10 +9796,12 @@ msgstr ""
 #~ msgstr "新增訂閱者錯誤，請檢查這個訂閱者是否已經存在"
 
 #~ msgid ""
-#~ "to make sure you are updated when new versions come out. Sometimes security "
-#~ "bugs are found which make it important to upgrade. Traffic on the list is "
-#~ "very low."
-#~ msgstr "可以確認您是否更新到最新版本，有時候會出現安全性漏洞需要升級，我們寄送信件的頻率並不高。"
+#~ "to make sure you are updated when new versions come out. Sometimes "
+#~ "security bugs are found which make it important to upgrade. Traffic on "
+#~ "the list is very low."
+#~ msgstr ""
+#~ "可以確認您是否更新到最新版本，有時候會出現安全性漏洞需要升級，我們寄送信件"
+#~ "的頻率並不高。"
 
 #~ msgid "msg"
 #~ msgstr "訊息"
@@ -9829,21 +9824,18 @@ msgstr ""
 #~ msgid "num"
 #~ msgstr "數量"
 
-#, php-format
-#, php-format, fuzzy
+#, fuzzy
 #~ msgid "to view the progress of this campaign, go to http://%s"
 #~ msgstr "要檢視這個信件的處理過程，請前往 %s"
 
-#, php-format
 #, fuzzy
 #~ msgid "to view the results of this campaign, go to http://%s"
 #~ msgstr "要檢視這個信件的處理過程，請前往 %s"
 
-#, php-format
-#~ msgid "%s emails succesfully imported to the database and added to %d lists."
+#~ msgid ""
+#~ "%s emails succesfully imported to the database and added to %d lists."
 #~ msgstr "%s 個電子郵件成功匯入到資料庫，並且訂閱了電子報 %d 。"
 
-#, php-format
 #~ msgid "%s emails already existed in the database"
 #~ msgstr "%s 個電子郵件已經存在於資料庫中"
 
@@ -9853,11 +9845,10 @@ msgstr ""
 #~ msgid "Attachments for this message"
 #~ msgstr "這封信的附加檔案"
 
-#, php-format
-#, php-format, fuzzy
+#, fuzzy
 #~ msgid ""
-#~ "A process for this page is already running and it was still alive %s seconds "
-#~ "ago"
+#~ "A process for this page is already running and it was still alive %s "
+#~ "seconds ago"
 #~ msgstr "這個頁面有一個處理程序還在進行中"
 
 #, fuzzy
@@ -9931,21 +9922,26 @@ msgstr ""
 #~ msgstr "樣版不包含本機圖片"
 
 #~ msgid ""
-#~ "Please leave this window open. You have batch processing enabled, so it will "
-#~ "reload several times to send the messages. Reports will be sent by email to"
-#~ msgstr "請保持這個視窗開啟，因為您啟用了批次處理功能，所以系統會自動重新載入頁面多次來寄送所有信件；報表將會寄到 "
+#~ "Please leave this window open. You have batch processing enabled, so it "
+#~ "will reload several times to send the messages. Reports will be sent by "
+#~ "email to"
+#~ msgstr ""
+#~ "請保持這個視窗開啟，因為您啟用了批次處理功能，所以系統會自動重新載入頁面多"
+#~ "次來寄送所有信件；報表將會寄到 "
 
 #~ msgid ""
-#~ "Your webserver is running in safe_mode. Please keep this window open. It may "
-#~ "reload several times to make sure all messages are sent."
-#~ msgstr "您的網站伺服器執行在 \"安全模式\"，請保持開啟這個視窗，它也許會重新讀取多次來確保所有信件能夠順利寄出。"
+#~ "Your webserver is running in safe_mode. Please keep this window open. It "
+#~ "may reload several times to make sure all messages are sent."
+#~ msgstr ""
+#~ "您的網站伺服器執行在 \"安全模式\"，請保持開啟這個視窗，它也許會重新讀取多"
+#~ "次來確保所有信件能夠順利寄出。"
 
 #~ msgid "Reports will be sent by email to"
 #~ msgstr "報表會寄到"
 
 #~ msgid ""
-#~ "Please make sure to read the file README.security that can be found in the "
-#~ "zip file."
+#~ "Please make sure to read the file README.security that can be found in "
+#~ "the zip file."
 #~ msgstr "請記得閱讀 README.security 檔案中的說明，解壓縮後就可以找到"
 
 #~ msgid "Please make sure to"
@@ -9997,8 +9993,7 @@ msgstr ""
 #~ msgid "invalid emails"
 #~ msgstr "錯誤的信箱"
 
-#, php-format
-#, php-format, fuzzy
+#, fuzzy
 #~ msgid "phplist has finished sending the campaign with subject %s"
 #~ msgstr "phplist 完成主旨為 %s 的信件寄送"
 
@@ -10063,11 +10058,9 @@ msgstr ""
 #~ msgid "than is currently allowed per batch"
 #~ msgstr "接著是目前批次處理的上限"
 
-#, php-format
 #~ msgid "successful password request from %s for %s"
 #~ msgstr "成功索取密碼自 %s ，帳號 %s"
 
-#, php-format
 #~ msgid "failed password request from %s for %s"
 #~ msgstr "索取密碼自 %s  失敗，帳號 %s"
 
@@ -10141,16 +10134,18 @@ msgstr ""
 #~ msgid "To delete all users with more than"
 #~ msgstr "刪除所有訂閱者，如果超過"
 
-#~ msgid "Note: this will use the total count of bounces on a user, not consecutive bounces"
+#~ msgid ""
+#~ "Note: this will use the total count of bounces on a user, not consecutive "
+#~ "bounces"
 #~ msgstr "注意：這將會使用個別訂閱者的退信總數，不包括連續退信"
 
-#~ msgid "To delete users who signed up and have not confirmed their subscription"
+#~ msgid ""
+#~ "To delete users who signed up and have not confirmed their subscription"
 #~ msgstr "刪除訂閱但未確認的訂閱者"
 
 #~ msgid "Sorry, only super users can purge RSS items from the database"
 #~ msgstr "抱歉，只有管理者能夠從資料庫中清除 RSS 項目"
 
-#, php-format
 #~ msgid "%d RSS items purged"
 #~ msgstr "%d 個 RSS 項目清除了"
 
@@ -10160,10 +10155,12 @@ msgstr ""
 #~ msgid "Enter the number of days to go back purging entries"
 #~ msgstr "輸入要自動清除資料的天數"
 
-#~ msgid "Test output:There should only be ONE email per line.If the output looks ok, go Back to resubmit for real"
+#~ msgid ""
+#~ "Test output:There should only be ONE email per line.If the output looks "
+#~ "ok, go Back to resubmit for real"
 #~ msgstr ""
-#~ "測試輸出：<br/>一行應該只有一個 email。<br/>如果輸出正常，可以 <a "
-#~ "href=\"javascript:history.go(-1)\">回上頁</a> 來正式送出<br/><br/>"
+#~ "測試輸出：<br/>一行應該只有一個 email。<br/>如果輸出正常，可以 <a href="
+#~ "\"javascript:history.go(-1)\">回上頁</a> 來正式送出<br/><br/>"
 
 #~ msgid "All the emails already exist in the database"
 #~ msgstr "所有的 emails 都已經在資料庫中"
@@ -10223,52 +10220,87 @@ msgstr ""
 
 #~ msgid "Sample Newsletter text"
 #~ msgstr ""
-#~ "真糗，在書店門口打了半天的資料，因為忘記存檔就付諸流水了；這是第二次開頭，希望別忘記太多。\r\r由於許多管理學理論都在沒有電腦與網路的時代發明，當代的管理"
-#~ "學大師也不會為了我所面臨的問題寫書，更別提許許多多我請不起、也不見得認同的顧問，畢竟我還小。因此我決定停止翻書了，放下老師教的東西(應該說忘了吧...)"
-#~ "，誠實面對自己遇到的問題，試著找出合適的解決方案。\r\r從\"顧問成功的秘密\"( "
-#~ "http://www.cite.com.tw/product_info.php?products_id=9394 "
-#~ ")一書，我認同大部分的答案，在問題提出前就存在於發問者的腦中，只是大部份發問者都無法跳脫自己的立場，或是不敢下決定；從\"重新想像\"( "
-#~ "http://www.bookzone.com.tw/event/CB311/index.asp )一書，我認同現在許多過去深信不已的事情，現在都需要重"
-#~ "新檢驗或打破。我是個非常厭惡效率不彰的人，因此希望能夠找到一個符合實際需求的答案，更希望能夠讓人動起來。\r\r"
-#~ "我希望能夠發展以開放原始碼為基礎的商務模式，也就是朝服務導向發展。這樣的方向，從GOOGLE( http://www.google.com.tw/ "
-#~ ")現在的成果中看到了些信心，也從IKEA( http://www.ikea.com.tw/ "
-#~ ")的賣場中發現，消費者體驗帶給人們的影響，遠超過誇大不實的行銷手法；即使後者往往有著比較好的成本、效益比，我還是希望能夠踏實些。\r\r"
-#~ "朝著這個方向走，我需要更多人的幫助；而如何能夠讓更多人的力量朝這個方向推進？也許真有些朋友像我這樣傻，有著一兩個念頭就會徹夜難眠，憑著一點點理想就 \"撩"
-#~ "落去\"；但是這樣的人畢竟太少了，而且光靠這些人，只會讓這件事情看來像是遙遙欲墬的象牙塔，當然不夠！還要有更多的人才行。這樣的人，可能每天沉溺在線上遊戲與"
-#~ "即時通訊之中，無法從現實中獲得足夠的認同；這樣的人，可能每天忙於事業、家庭等壓力，除非有機會病倒，否則很難思考什麼人生價值之類的問題；這樣的人，可能活在"
-#~ "一個又一個的小圈子中，每天鑽研少數人看的懂得技術、理論，出口閉口都異於常人而不自知。(我也許也算是第三種人吧)\r\r線上遊戲真的很迷人吧，我在過去網路聊天"
-#~ "盛行的時代也有著同樣的感受，當時每天只要有機會打開電腦、連上網路，我的暱稱就一定會出現在線上聊天室中；感謝那些讓我發現自己自作多情的女性網友，感謝品質越"
-#~ "來越差的聊天室，我因此有機會戒了這個癮，也對後來更多的誘惑產生抗體。但是，我如何讓身陷其中的力量能夠轉而支持自己的方向？抱歉，只能夠等，我也只願意等；等"
-#~ "到這樣的朋友發現自己因此忽略了現實生活，等到這樣的朋友認同這個方向，或者，線上遊戲公司突然都消失？別鬧了。 :)\r\r當然不能夠只是期待推力，要想法子讓這"
-#~ "個方向對他們而言具有吸引力。這樣的朋友大多較年輕，有很多的機會變成忙於生活的人們；所以先在他們的下一個階段設下圈套！嘿嘿...\r\r成天忙於事業、家庭的朋"
-#~ "友，很直接的問題就是經濟壓力；錢的問題好解決，可惜我也沒有錢...。我的想法是，設置一個類似\"開放原始碼商業協會\"的組織，制定遊戲規則來讓這個社群能夠活"
-#~ "下去；我很有把握的是，一定會有想要鑽研規則漏洞的朋友，畢竟這是台灣聞名世界的條件之一。但是規則要想一開始就沒有漏洞，那也是不切實際的想法；先要有人動手做"
-#~ "、正視面臨的任何問題、挽回失去的信心，然後才有蓬勃發展的可能。\r\r"
-#~ "我不打算回答大量\"你憑什麼...\"之類的問題，雖然我說過要放下老師教的東西，但是有一句話回應問題最方便，那就是\"Action speaks louder "
-#~ "than words\"。\r\r對於那些希望在技術領域持續精進的朋友，也就是下一個GOOGLE可能的創辦人，或者是因為無私的犧牲奉獻而留名青史的偉人，我相"
-#~ "信自己經常是被這些朋友嗤之以鼻的對象；我想說的很單純，如果有機會發現這麼做沒那麼糟時，千萬別把跟我或我們之間的爭執放在心上；就事論事罷了，立場不同、答案"
-#~ "也就自然不同。\r\r其實，這篇文章的重點從下面才開始，感謝您那麼用心的看了我的開場白...。\r\r"
-#~ "\"開放原始碼商業協會\"這樣的組織需要什麼樣的遊戲規則？開宗明義，就是要開放原始碼。而在GPL( "
-#~ "http://www.slat.org/project/legal/GNU_GPL_Chinese )的定義中，如果我沒有著太多的誤解，那麼也許該說是對"
-#~ "您的客戶開放原始碼；除非您透過GPL發布的軟體公開讓人下載，否則沒有必要去理會那些莫名奇妙想索取原始碼的朋友。\r\r"
-#~ "但是GPL並不是開放原始碼唯一的途徑，在開放原始碼協會( http://www.opensource.org/ "
-#~ ")中通過了許多我們可能從未看過的授權方式，偉大的微軟公司對於特定對象也有開放原始碼的行為( "
-#~ "http://taiwan.cnet.com/news/software/0,2000064574,20064270,00.htm "
-#~ ")，我們需要一個比較明確、通用的定義。我曾提出這樣的定義：\r\r「當商品的標的為軟體時，任何客戶有權(無償或合理價格)取得軟體原始碼，散佈、修改與否則依各"
-#~ "公司規定；當商品標的為硬體時，客戶有權得知硬體所附帶之各種軟體/韌體授權方式等必要資訊。合理價格的定義是不超過軟體或服務本身交易價格的 2 "
-#~ "倍，而任何商務發展均不得違反原始軟體的授權規定。」\r\r也許可以用來起個頭，等候大家的評論。\r\r至於做法，就以台灣PHP聯盟( "
-#~ "http://twpug.net/ )想要做的事情當作例子。從一個願意支援開放原始碼軟體本地化(也就是翻譯或自行設計)的朋友開始，他會將與軟體有關的資訊"
-#~ "帶給大家；因此如果有商務需求時，自然會推薦這個熱心的朋友。這個熱心的朋友很有可能來自學術界，因此商務需求也許會導向他所推薦的對象；從這裡開始就可以區分成"
-#~ "三個角色，一個是商務性支援的聯繫人，一個是學術性資源的聯繫人，另外一個則是橫跨兩個領域的角色，這三個角色都對於該軟體有相當的貢獻。\r\r三個和尚沒水喝，因"
-#~ "此在這邊需要多一點著墨。當專案的本地化只有一個人支援時，這個人理所當然扮演了三個角色；而要一個人兼三個角色或另外指定人來協助，就由開始的人決定。三個角色"
-#~ "都各只能有一個人擔任，其他熱心參與貢獻且希望參與核心運作的朋友則可以隸屬於\"意見小組\"，也就是具有重大決議的提案與投票權。當衝突形成時，就是透過這群人自"
-#~ "行協商來取得共識(投票？)；如果爭議無法解決，則由協會仲裁。\r\r那麼協會扮演的角色為何？很簡單，就是凝聚通用性資訊、資源與擔任溝通的橋樑。\r\r"
-#~ "人的定義為何？那就是法人或自然人(還有其他的嗎？)。\r\r接著要考慮的是依存關係的部分，像是模組、佈景、元件、物件、...等等基於於同一個軟體所存在的資源"
-#~ "；如果有程式設計概念的朋友，麻煩使用遞迴處理...。簡單的說，就是把協會對於軟體專案的角色，換成了軟體專案對於模組的角色；如果還有更下層的關係，以此類推"
-#~ "。但是有個特別的地方是，如果模組本地化維護者不願意隸屬於軟體專案下，那麼也可以直接對應到協會；而如果連對協會都不滿，這個專有名詞叫做無限迴圈，俗話說叫做"
-#~ "無解，那就只能麻煩自己成立一個協會了。不過有一個衝突情形，那就是衍生版本(FORK)；如果有朋友希望支援衍生版本，那麼就不能夠隸屬於原本的專案之下。\r\r而"
-#~ "上面這些東西當然不是說說就算了，任何重大決議都要透過書面協議；我沒有寫的像法條一樣，原因是要先討論，也讓大家了解這些想法。真的有機會成型時，希望能夠有法"
-#~ "律領域的專業先進指導。\r\r額外一提，以商業協會名義存在的目的只有一個，那就是更大的包容；非營利組織經常無法包容營利行為，這不是我們所樂見的。"
+#~ "真糗，在書店門口打了半天的資料，因為忘記存檔就付諸流水了；這是第二次開頭，"
+#~ "希望別忘記太多。\r\r由於許多管理學理論都在沒有電腦與網路的時代發明，當代的"
+#~ "管理學大師也不會為了我所面臨的問題寫書，更別提許許多多我請不起、也不見得認"
+#~ "同的顧問，畢竟我還小。因此我決定停止翻書了，放下老師教的東西(應該說忘了"
+#~ "吧...)，誠實面對自己遇到的問題，試著找出合適的解決方案。\r\r從\"顧問成功的"
+#~ "秘密\"( http://www.cite.com.tw/product_info.php?products_id=9394 )一書，我"
+#~ "認同大部分的答案，在問題提出前就存在於發問者的腦中，只是大部份發問者都無法"
+#~ "跳脫自己的立場，或是不敢下決定；從\"重新想像\"( http://www.bookzone.com."
+#~ "tw/event/CB311/index.asp )一書，我認同現在許多過去深信不已的事情，現在都需"
+#~ "要重新檢驗或打破。我是個非常厭惡效率不彰的人，因此希望能夠找到一個符合實際"
+#~ "需求的答案，更希望能夠讓人動起來。\r\r我希望能夠發展以開放原始碼為基礎的商"
+#~ "務模式，也就是朝服務導向發展。這樣的方向，從GOOGLE( http://www.google.com."
+#~ "tw/ )現在的成果中看到了些信心，也從IKEA( http://www.ikea.com.tw/ )的賣場中"
+#~ "發現，消費者體驗帶給人們的影響，遠超過誇大不實的行銷手法；即使後者往往有著"
+#~ "比較好的成本、效益比，我還是希望能夠踏實些。\r\r朝著這個方向走，我需要更多"
+#~ "人的幫助；而如何能夠讓更多人的力量朝這個方向推進？也許真有些朋友像我這樣"
+#~ "傻，有著一兩個念頭就會徹夜難眠，憑著一點點理想就 \"撩落去\"；但是這樣的人"
+#~ "畢竟太少了，而且光靠這些人，只會讓這件事情看來像是遙遙欲墬的象牙塔，當然不"
+#~ "夠！還要有更多的人才行。這樣的人，可能每天沉溺在線上遊戲與即時通訊之中，無"
+#~ "法從現實中獲得足夠的認同；這樣的人，可能每天忙於事業、家庭等壓力，除非有機"
+#~ "會病倒，否則很難思考什麼人生價值之類的問題；這樣的人，可能活在一個又一個的"
+#~ "小圈子中，每天鑽研少數人看的懂得技術、理論，出口閉口都異於常人而不自知。"
+#~ "(我也許也算是第三種人吧)\r\r線上遊戲真的很迷人吧，我在過去網路聊天盛行的時"
+#~ "代也有著同樣的感受，當時每天只要有機會打開電腦、連上網路，我的暱稱就一定會"
+#~ "出現在線上聊天室中；感謝那些讓我發現自己自作多情的女性網友，感謝品質越來越"
+#~ "差的聊天室，我因此有機會戒了這個癮，也對後來更多的誘惑產生抗體。但是，我如"
+#~ "何讓身陷其中的力量能夠轉而支持自己的方向？抱歉，只能夠等，我也只願意等；等"
+#~ "到這樣的朋友發現自己因此忽略了現實生活，等到這樣的朋友認同這個方向，或者，"
+#~ "線上遊戲公司突然都消失？別鬧了。 :)\r\r當然不能夠只是期待推力，要想法子讓"
+#~ "這個方向對他們而言具有吸引力。這樣的朋友大多較年輕，有很多的機會變成忙於生"
+#~ "活的人們；所以先在他們的下一個階段設下圈套！嘿嘿...\r\r成天忙於事業、家庭"
+#~ "的朋友，很直接的問題就是經濟壓力；錢的問題好解決，可惜我也沒有錢...。我的"
+#~ "想法是，設置一個類似\"開放原始碼商業協會\"的組織，制定遊戲規則來讓這個社群"
+#~ "能夠活下去；我很有把握的是，一定會有想要鑽研規則漏洞的朋友，畢竟這是台灣聞"
+#~ "名世界的條件之一。但是規則要想一開始就沒有漏洞，那也是不切實際的想法；先要"
+#~ "有人動手做、正視面臨的任何問題、挽回失去的信心，然後才有蓬勃發展的可能。\r"
+#~ "\r我不打算回答大量\"你憑什麼...\"之類的問題，雖然我說過要放下老師教的東"
+#~ "西，但是有一句話回應問題最方便，那就是\"Action speaks louder than words"
+#~ "\"。\r\r對於那些希望在技術領域持續精進的朋友，也就是下一個GOOGLE可能的創辦"
+#~ "人，或者是因為無私的犧牲奉獻而留名青史的偉人，我相信自己經常是被這些朋友嗤"
+#~ "之以鼻的對象；我想說的很單純，如果有機會發現這麼做沒那麼糟時，千萬別把跟我"
+#~ "或我們之間的爭執放在心上；就事論事罷了，立場不同、答案也就自然不同。\r\r其"
+#~ "實，這篇文章的重點從下面才開始，感謝您那麼用心的看了我的開場白...。\r\r"
+#~ "\"開放原始碼商業協會\"這樣的組織需要什麼樣的遊戲規則？開宗明義，就是要開放"
+#~ "原始碼。而在GPL( http://www.slat.org/project/legal/GNU_GPL_Chinese )的定義"
+#~ "中，如果我沒有著太多的誤解，那麼也許該說是對您的客戶開放原始碼；除非您透過"
+#~ "GPL發布的軟體公開讓人下載，否則沒有必要去理會那些莫名奇妙想索取原始碼的朋"
+#~ "友。\r\r但是GPL並不是開放原始碼唯一的途徑，在開放原始碼協會( http://www."
+#~ "opensource.org/ )中通過了許多我們可能從未看過的授權方式，偉大的微軟公司對"
+#~ "於特定對象也有開放原始碼的行為( http://taiwan.cnet.com/news/"
+#~ "software/0,2000064574,20064270,00.htm )，我們需要一個比較明確、通用的定"
+#~ "義。我曾提出這樣的定義：\r\r「當商品的標的為軟體時，任何客戶有權(無償或合"
+#~ "理價格)取得軟體原始碼，散佈、修改與否則依各公司規定；當商品標的為硬體時，"
+#~ "客戶有權得知硬體所附帶之各種軟體/韌體授權方式等必要資訊。合理價格的定義是"
+#~ "不超過軟體或服務本身交易價格的 2 倍，而任何商務發展均不得違反原始軟體的授"
+#~ "權規定。」\r\r也許可以用來起個頭，等候大家的評論。\r\r至於做法，就以台灣"
+#~ "PHP聯盟( http://twpug.net/ )想要做的事情當作例子。從一個願意支援開放原始碼"
+#~ "軟體本地化(也就是翻譯或自行設計)的朋友開始，他會將與軟體有關的資訊帶給大"
+#~ "家；因此如果有商務需求時，自然會推薦這個熱心的朋友。這個熱心的朋友很有可能"
+#~ "來自學術界，因此商務需求也許會導向他所推薦的對象；從這裡開始就可以區分成三"
+#~ "個角色，一個是商務性支援的聯繫人，一個是學術性資源的聯繫人，另外一個則是橫"
+#~ "跨兩個領域的角色，這三個角色都對於該軟體有相當的貢獻。\r\r三個和尚沒水喝，"
+#~ "因此在這邊需要多一點著墨。當專案的本地化只有一個人支援時，這個人理所當然扮"
+#~ "演了三個角色；而要一個人兼三個角色或另外指定人來協助，就由開始的人決定。三"
+#~ "個角色都各只能有一個人擔任，其他熱心參與貢獻且希望參與核心運作的朋友則可以"
+#~ "隸屬於\"意見小組\"，也就是具有重大決議的提案與投票權。當衝突形成時，就是透"
+#~ "過這群人自行協商來取得共識(投票？)；如果爭議無法解決，則由協會仲裁。\r\r那"
+#~ "麼協會扮演的角色為何？很簡單，就是凝聚通用性資訊、資源與擔任溝通的橋樑。\r"
+#~ "\r人的定義為何？那就是法人或自然人(還有其他的嗎？)。\r\r接著要考慮的是依存"
+#~ "關係的部分，像是模組、佈景、元件、物件、...等等基於於同一個軟體所存在的資"
+#~ "源；如果有程式設計概念的朋友，麻煩使用遞迴處理...。簡單的說，就是把協會對"
+#~ "於軟體專案的角色，換成了軟體專案對於模組的角色；如果還有更下層的關係，以此"
+#~ "類推。但是有個特別的地方是，如果模組本地化維護者不願意隸屬於軟體專案下，那"
+#~ "麼也可以直接對應到協會；而如果連對協會都不滿，這個專有名詞叫做無限迴圈，俗"
+#~ "話說叫做無解，那就只能麻煩自己成立一個協會了。不過有一個衝突情形，那就是衍"
+#~ "生版本(FORK)；如果有朋友希望支援衍生版本，那麼就不能夠隸屬於原本的專案之"
+#~ "下。\r\r而上面這些東西當然不是說說就算了，任何重大決議都要透過書面協議；我"
+#~ "沒有寫的像法條一樣，原因是要先討論，也讓大家了解這些想法。真的有機會成型"
+#~ "時，希望能夠有法律領域的專業先進指導。\r\r額外一提，以商業協會名義存在的目"
+#~ "的只有一個，那就是更大的包容；非營利組織經常無法包容營利行為，這不是我們所"
+#~ "樂見的。"
 
 #~ msgid "Change Admin Password"
 #~ msgstr "修改管理者密碼"
@@ -10346,11 +10378,9 @@ msgstr ""
 #~ msgid "User added to group"
 #~ msgstr "訂閱者新增到群組"
 
-#, php-format
 #~ msgid "User data was updated for %d users"
 #~ msgstr "更新了 %d 個訂閱者的資料"
 
-#, php-format
 #~ msgid "%d users were matched by foreign key, %d by email"
 #~ msgstr "%d 個訂閱者符合外部鍵值， %d 來自電子郵件"
 
@@ -10373,8 +10403,7 @@ msgstr ""
 #~ msgid "resend verification email"
 #~ msgstr "送出通知信函"
 
-#, php-format
-#, php-format, fuzzy
+#, fuzzy
 #~ msgid "%d users apply"
 #~ msgstr "沒有符合的訂閱者"
 
@@ -10385,8 +10414,7 @@ msgstr ""
 #~ msgid "is"
 #~ msgstr "是"
 
-#, php-format
-#, php-format, fuzzy
+#, fuzzy
 #~ msgid "%d to process"
 #~ msgstr "處理"
 
@@ -10400,8 +10428,12 @@ msgstr ""
 #~ msgid "seconds ago"
 #~ msgstr "秒前"
 
-#~ msgid "No default permissions have been defined, please create default permissions first, by creating one dummy admin and assigning the default permissions to this admin"
-#~ msgstr "沒有定義預設權限，請先建立一個預設權限，並且指定預設的權限給這個管理者"
+#~ msgid ""
+#~ "No default permissions have been defined, please create default "
+#~ "permissions first, by creating one dummy admin and assigning the default "
+#~ "permissions to this admin"
+#~ msgstr ""
+#~ "沒有定義預設權限，請先建立一個預設權限，並且指定預設的權限給這個管理者"
 
 #~ msgid "PHPList Users"
 #~ msgstr "訂閱者"
