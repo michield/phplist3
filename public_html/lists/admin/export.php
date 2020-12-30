@@ -20,8 +20,41 @@ if (isset($_REQUEST['list'])) {
 } else {
     $list = 0;
 }
-
 $access = accessLevel('export');
+
+if ($GLOBALS['commandline']) {
+    if (isset($cline['l'])) {
+        $list = $cline['l'];
+    } else {
+        $list = 0;
+    }
+    cl_output(s('Export subscribers'));
+    cl_output('*  '.s('Exporting all subscribers. Use -l[listnumber] to export subscribers on a list'));
+
+    $_SESSION['export'] = array();
+    $cols = array();
+    foreach ($DBstruct['user'] as $key => $val) {
+        if (strpos($val[1], 'sys') === false) {
+            $cols[] = $key;
+        } elseif (preg_match('/sysexp:(.*)/', $val[1], $regs)) {
+            $cols[] = $key;
+        }
+    }
+    $res = Sql_Query("select id,name,tablename,type from {$tables['attribute']} order by listorder");
+    $attrs = array();
+    while ($row = Sql_fetch_array($res)) {
+        $attrs[$row['id']] = stripslashes(htmlspecialchars($row['name']));
+    }
+    $_SESSION['export']['column'] = 'nodate';
+    $_SESSION['export']['cols'] = $cols;
+    $_SESSION['export']['attrs'] = $attrs;
+    $_SESSION['export']['fromdate'] = '2000-01-01';
+    $_SESSION['export']['todate'] = date('Y-m-d');
+    $_SESSION['export']['list'] = $list;
+    require __DIR__.'/actions/export.php';
+    exit;
+}
+
 switch ($access) {
     case 'owner':
         if ($list) {
@@ -71,7 +104,6 @@ if (isset($_POST['processexport'])) {
     $_SESSION['export']['todate'] = $to->getDate('to');
     $_SESSION['export']['list'] = $list;
 
-    echo '<p>'.s('Processing export, this may take a while. Please wait').'</p>';
     echo $GLOBALS['img_busy'];
     echo '<div id="progresscount" style="width: 200; height: 50;">Progress</div>';
     echo '<br/> <iframe id="export" src="./?page=pageaction&action=export&ajaxed=true'.addCsrfGetToken().'" scrolling="no" height="50"></iframe>';
@@ -84,7 +116,7 @@ if ($list) {
 }
 
 echo formStart();
-$checked = 'entered';
+$checked = 'nodate';
 if (isset($_GET['list']) && $_GET['list'] == 'all') {
     $checked = 'nodate';
 }
@@ -153,7 +185,3 @@ while ($row = Sql_fetch_array($res)) {
     </p></form>
 
 <?php
-
-if ($checked == 'nodate') {
-    echo '<script type="text/javascript">$("#exportdates").hide();</script>';
-}

@@ -54,6 +54,9 @@ include_once dirname(__FILE__).'/admin/lib.php';
 
 $I18N = new phplist_I18N();
 header('Access-Control-Allow-Origin: '.ACCESS_CONTROL_ALLOW_ORIGIN);
+if (defined('ACCESS_CONTROL_ALLOW_ORIGINS') && count('ACCESS_CONTROL_ALLOW_ORIGINS') > 1) {
+    header('Vary: Origin'); // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin#CORS_and_caching
+}
 
 if (!empty($GLOBALS['SessionTableName'])) {
     require_once dirname(__FILE__).'/admin/sessionlib.php';
@@ -85,29 +88,6 @@ if (isset($_GET['uid']) && $_GET['uid']) {
     $userid = $req[1];
     $userpassword = $req[2];
     $emailcheck = $req[3];
-} elseif (isset($_GET['email'])) {
-    $req = Sql_Fetch_Row_Query(sprintf('select subscribepage,id,password,email from %s where email = "%s"',
-        $tables['user'], $_GET['email']));
-    $id = $req[0];
-    $userid = $req[1];
-    $userpassword = $req[2];
-    $emailcheck = $req[3];
-} elseif (isset($_REQUEST['unsubscribeemail'])) {
-    $req = Sql_Fetch_Row_Query(sprintf('select subscribepage,id,password,email from %s where email = "%s"',
-        $tables['user'], sql_escape($_REQUEST['unsubscribeemail'])));
-    $id = $req[0];
-    $userid = $req[1];
-    $userpassword = $req[2];
-    $emailcheck = $req[3];
-    /*
-    } elseif ($_SESSION["userloggedin"] && $_SESSION["userid"]) {
-      $req = Sql_Fetch_Row_Query(sprintf('select subscribepage,id,password,email from %s where id = %d',
-        $tables["user"],$_SESSION["userid"]));
-      $id = $req[0];
-      $userid = $req[1];
-      $userpassword = $req[2];
-      $emailcheck = $req[3];
-    */
 } else {
     $userid = '';
     $userpassword = '';
@@ -168,13 +148,14 @@ if ($login_required && empty($_SESSION['userloggedin'])) {
                     $encP == $userpassword && $_POST['email'] == $emailcheck;
                 //      print $_POST['password'].' '.$encP.' '.$userpassword.' '.$canlogin; exit;
             } else {
-                $canlogin = $_POST['password'] == $userpassword && $_POST['email'] == $emailcheck;
+                $canlogin = $_POST['password'] === $userpassword && $_POST['email'] === $emailcheck;
             }
         }
 
         if (!$canlogin) {
             $msg = '<p class="error">'.$strInvalidPassword.'</p>';
         } else {
+            session_regenerate_id();
             loadUser($emailcheck);
             $_SESSION['userloggedin'] = $_SERVER['REMOTE_ADDR'];
         }
@@ -267,8 +248,10 @@ if ($login_required && empty($_SESSION['userloggedin']) && !$canlogin) {
                 if (isset($_GET['email']) && !isset($_POST['email'])) {
                     $_POST['email'] = $_GET['email'];
                 }
-                foreach (explode(',', $GLOBALS['pagedata']['lists']) as $listid) {
-                    $_POST['list'][$listid] = 'signup';
+                if (!isset($_POST['list'])) {
+                    foreach (explode(',', $GLOBALS['pagedata']['lists']) as $listid) {
+                        $_POST['list'][$listid] = 'signup';
+                    }
                 }
                 $_POST['htmlemail'] = 1; //# @@ should actually be taken from the subscribe page data
 
@@ -290,7 +273,14 @@ if ($login_required && empty($_SESSION['userloggedin']) && !$canlogin) {
                     }
                     exit;
                 } else {
+                    // we failed to subscribe the user; send an error back to
+                    // the ajax client
+
                     echo 'FAIL';
+
+                    // return a 500, so that it is more easily processed at the other end
+                    http_response_code( 500 );
+
                 }
                 break;
             case 'preferences':
@@ -320,6 +310,9 @@ if ($login_required && empty($_SESSION['userloggedin']) && !$canlogin) {
             case 'confirm':
                 print ConfirmPage($id);
                 break;
+            case 'vcard':
+                print downloadvCard();
+                break;
             //0013076: Blacklisting posibility for unknown users
             case 'donotsend':
             case 'blacklist':
@@ -333,28 +326,46 @@ if ($login_required && empty($_SESSION['userloggedin']) && !$canlogin) {
         FileNotFound();
     }
 } else {
+    // If no particular page was requested then show the default
     echo '<title>'.$GLOBALS['strSubscribeTitle'].'</title>';
     echo $pagedata['header'];
     $req = Sql_Query(sprintf('select * from %s where active', $tables['subscribepage']));
+
+    // If active subscribe pages exist then list them
     if (Sql_Affected_Rows()) {
         while ($row = Sql_Fetch_Array($req)) {
             $intro = Sql_Fetch_Row_Query(sprintf('select data from %s where id = %d and name = "intro"',
                 $tables['subscribepage_data'], $row['id']));
-            echo $intro[0];
+            echo stripslashes($intro[0]);
             if (SHOW_SUBSCRIBELINK) {
                 printf('<p><a href="'.getConfig('subscribeurl').'&id=%d">%s</a></p>', $row['id'],
                     strip_tags(stripslashes($row['title'])));
             }
         }
+    // If no active subscribe page exist then print link to default
     } else {
         if (SHOW_SUBSCRIBELINK) {
             printf('<p><a href="'.getConfig('subscribeurl').'">%s</a></p>', $strSubscribeTitle);
         }
     }
 
+    // Print preferences page link
+    if (SHOW_PREFERENCESLINK) {
+        printf('<p><a href="'.getConfig('preferencesurl').'">%s</a></p>', $strPreferencesTitle);
+    }
+
+    // Print unsubscribe page link
     if (SHOW_UNSUBSCRIBELINK) {
         printf('<p><a href="'.getConfig('unsubscribeurl').'">%s</a></p>', $strUnsubscribeTitle);
     }
+    // Print link to contact admin using HTML entities for email obfuscation
+    echo
+        '<p class=""><a href="'.
+            preg_replace_callback('/./', function($m) {
+                return '&#'.ord($m[0]).';';
+            }
+            , 'mailto:'.getConfig('admin_address')).
+        '">'.$GLOBALS['strContactAdmin'].'</a></p>';
     echo $PoweredBy;
     echo $pagedata['footer'];
 }
@@ -375,7 +386,7 @@ function LoginPage($id, $userid, $email = '', $msg = '')
 
     $html .= formStart('name="loginform"');
     $html .= '<table border=0>';
-    $html .= '<tr><td>'.$GLOBALS['strEmail'].'</td><td><input type=text name="email" value="'.$email.'" size="30"></td></tr>';
+    $html .= '<tr><td>'.$GLOBALS['strEmail'].'</td><td><input type=text name="email" value="'.$email.'" size="30" autofocus></td></tr>';
     $html .= '<tr><td>'.$GLOBALS['strPassword'].'</td><td><input type="password" name="password" value="'.$_POST['password'].'" size="30"></td></tr>';
     $html .= '</table>';
     $html .= '<p><input type=submit name="login" value="'.$GLOBALS['strLogin'].'"></p>';
@@ -462,7 +473,7 @@ function checkform()
     if ($GLOBALS['pagedata']['emaildoubleentry'] == 'yes') {
         $html .= '
   if (! compareEmail()) {
-    alert("Email addresses you entered do not match");
+    alert("' .str_replace('"', '\"', $GLOBALS['strEmailsNoMatch']).'");
 
     return false;
   }';
@@ -470,7 +481,7 @@ function checkform()
 
     $html .= '
   if (! checkEmail()) {
-    alert("Email addresses you entered is not valid");
+    alert("' .str_replace('"', '\"', $GLOBALS['strEmailNotValid']).'");
 
     return false;
   }';
@@ -530,6 +541,16 @@ function checkEmail()
     return $html;
 }
 
+function downloadvCard(){
+
+    require 'admin/vCard.php';
+    $vCard = new vCard();
+    $vCard-> setOrg(getConfig('organisation_name'));
+    $vCard-> setEmail(getConfig('message_from_address'));
+    $vCard-> setUrl('http://'.getConfig('website'));
+    $vCard->createVCard();
+}
+
 function subscribePage($id)
 {
     //  return subscribePage2($id);
@@ -551,7 +572,7 @@ function checkform()
     if (eval("document.subscribeform.elements[\'"+fieldstocheck[i]+"\'].type") == "checkbox") {
       if (document.subscribeform.elements[fieldstocheck[i]].checked) {
       } else {
-        alert("' .$GLOBALS['strPleaseEnter'].' "+fieldnames[i]);
+        alert("' .$GLOBALS['strCheckbox'].' "+fieldnames[i]);
         eval("document.subscribeform.elements[\'"+fieldstocheck[i]+"\'].focus()");
 
         return false;
@@ -674,7 +695,7 @@ function checkGroup(name,value)
     if (SHOW_UNSUBSCRIBELINK) {
         $html .= ' &nbsp;&nbsp; <a href="'.getConfig('unsubscribeurl').'&id='.$id.'">'.$GLOBALS['strUnsubscribe'].'</a>';
     }
-	$html .='</form>';
+    $html .='</form>';
     $html .= $GLOBALS['PoweredBy'];
     $html .= $GLOBALS['pagedata']['footer'];
     unset($_SESSION['subscriberConfirmed']);
@@ -709,7 +730,7 @@ function confirmPage($id)
         while ($row = Sql_fetch_array($req)) {
             array_push($subscriptions, $row['id']);
             $lists .= "\n *".stripslashes($row['name']);
-            $html .= '<li class="list">'.stripslashes($row['name']).'<div class="listdescription">'.stripslashes($row['description']).'</div></li>';
+            $html .= '<li class="list"><b>'.stripslashes($row['name']).'</b><div class="listdescription">'.stripslashes($row['description']).'</div></li>';
         }
         $html .= '</ul>';
         if ($blacklisted) {
@@ -739,7 +760,7 @@ function confirmPage($id)
                 addSubscriberStatistics('confirmation', 1);
             }
         } else {
-            $html = $GLOBALS['strAlreadyConfirmed'];
+            $html .= $GLOBALS['strAlreadyConfirmed'];
         }
         $_SESSION['subscriberConfirmed'][$userdata['email']] = time();
         $info = $GLOBALS['strConfirmInfo'];
@@ -897,15 +918,15 @@ function unsubscribePage($id)
             }
         }
 
-	if ($userid) {
-	    if (UNSUBSCRIBE_CONFIRMATION) {
-	        $res .= '<h3>' . $GLOBALS['strUnsubscribeDone'] . '</h3>';
-	    } else {
-	        $res .= '<h3>' . $GLOBALS['strUnsubscribedNoConfirm'] . '</h3>';
-	    }
-	}
-        
-	//0013076: Blacklisting posibility for unknown users
+    if ($userid) {
+        if (UNSUBSCRIBE_CONFIRMATION) {
+            $res .= '<h3>' . $GLOBALS['strUnsubscribeDone'] . '</h3>';
+        } else {
+            $res .= '<h3>' . $GLOBALS['strUnsubscribedNoConfirm'] . '</h3>';
+        }
+    }
+
+    //0013076: Blacklisting posibility for unknown users
         //if ($blacklistRequest) {
         //$res .= '<h3>'.$GLOBALS["strYouAreBlacklisted"] ."</h3>";
         //}
@@ -1060,7 +1081,14 @@ function forwardPage($id)
     } else {
         $ok = false;
     }
-
+    // subscriber name
+    if (!empty($_REQUEST['subscriberName'])) {
+        $subscriberName = htmlspecialchars_decode(stripslashes($_REQUEST['subscriberName']));
+        $userdata['subscriberName'] = $subscriberName;
+    } else {
+        $subscriberName = '';
+        $ok = false;
+    }
     //0011996: forward to friend - personal message
     // text cannot be longer than max, to prevent very long text with only linefeeds total cannot be longer than twice max
     if (FORWARD_PERSONAL_NOTE_SIZE && isset($_REQUEST['personalNote'])) {
@@ -1162,22 +1190,36 @@ function forwardPage($id)
     if (!$ok) {
         //0011860: forward to friend, multiple emails
         if (FORWARD_EMAIL_COUNT == 1) {
-            $form .= '<br /><h2>'.$GLOBALS['strForwardEnterEmail'].'</h2>';
-            $form .= sprintf('<input type=text name="email" value="%s" size=50 class="attributeinput">', $forwardemail);
+            $format = <<<'END'
+<div class="required"><label for="email">%s</label></div>
+<input type=text name="email" id="email" value="%s" size=50 class="attributeinput">
+END;
+            $form .= sprintf($format, $GLOBALS['strForwardEnterEmail'], $forwardemail);
         } else {
-            $form .= '<br /><h2>'.sprintf($GLOBALS['strForwardEnterEmails'], FORWARD_EMAIL_COUNT).'</h2>';
-            $form .= sprintf('<textarea name="email" rows="10" cols="50" class="attributeinput">%s</textarea>',
-                $forwardemail);
+            $labelText = sprintf($GLOBALS['strForwardEnterEmails'], FORWARD_EMAIL_COUNT);
+            $format = <<<'END'
+<div class="required"><label for="email">%s</label></div>
+<textarea name="email" id="email" rows="%d" cols="50" class="attributeinput">%s</textarea>
+END;
+            $form .= sprintf($format, $labelText, min(10, FORWARD_EMAIL_COUNT), $forwardemail);
         }
+        $format = <<<'END'
+<div class="required"><label for="subscriberName">%s</label></div>
+<input type=text name="subscriberName" id="subscriberName" value="%s" size=50 class="attributeinput">
+END;
+        $form .= sprintf($format, $GLOBALS['strForwardForwardingName'], htmlspecialchars($subscriberName));
 
         //0011996: forward to friend - personal message
         if (FORWARD_PERSONAL_NOTE_SIZE) {
-            $form .= sprintf('<h2>'.$GLOBALS['strForwardPersonalNote'].'</h2>', FORWARD_PERSONAL_NOTE_SIZE);
+            $labelText= sprintf($GLOBALS['strForwardPersonalNote'], FORWARD_PERSONAL_NOTE_SIZE);
             $cols = 50;
             $rows = min(10, ceil(FORWARD_PERSONAL_NOTE_SIZE / 40));
-
-            $form .= sprintf('<br/><textarea type="text" name="personalNote" rows="%d" cols="%d" class="attributeinput">%s</textarea>',
-                $rows, $cols, $personalNote);
+            $format = <<<'END'
+<div><label for="personalNote">%s</div>
+<textarea type="text" name="personalNote" id="personalNote" rows="%d" cols="%d" class="attributeinput">%s</textarea>
+</label>
+END;
+            $form .= sprintf($format, $labelText, $rows, $cols, $personalNote);
         }
         $form .= sprintf('<br /><input type="submit" value="%s"></form>', $GLOBALS['strContinue']);
     }

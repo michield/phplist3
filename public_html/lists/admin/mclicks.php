@@ -39,12 +39,12 @@ switch ($access) {
 $download = !empty($_GET['dl']);
 if ($download) {
     ob_end_clean();
-//  header("Content-type: text/plain");
     header('Content-type: text/csv');
     header('Content-disposition:  attachment; filename="phpList Campaign click statistics.csv"');
     ob_start();
 }
 
+// If and ID is provided, and we're viewing details for a specific campaign, load an ajaxed page version
 if (!$id) {
     echo '<div id="contentdiv"></div>';
     echo asyncLoadContent('./?page=pageaction&action=mclicks&ajaxed=true&id='.$id.addCsrfGetToken());
@@ -52,19 +52,30 @@ if (!$id) {
     return;
 }
 
+echo
+    '<div class="actions pull-right">'.PageLinkButton(
+        'mclicks&id='.$id.'&dl=1'
+        , s('Download as CSV file')
+    ).'</div><div class="clearfix"></div>';
+
 echo '<h3>'.s('Click Details for a Message').'</h3>';
 $messagedata = Sql_Fetch_Array_query("SELECT * FROM {$tables['message']} where id = $id $subselect");
 $totalusers = Sql_Fetch_Row_Query(sprintf('select count(userid) from %s where messageid = %d and status = "sent"',
     $GLOBALS['tables']['usermessage'], $id));
 $totalbounced = Sql_Fetch_Row_Query(sprintf('select count(user) from %s where message = %d',
     $GLOBALS['tables']['user_message_bounce'], $id));
+//unique clicks
 $totalclicked = Sql_Fetch_Row_Query(sprintf('select count(distinct userid) from %s where messageid = %d',
     $GLOBALS['tables']['linktrack_uml_click'], $id));
+//total clicks
+$totalclicks = Sql_Fetch_Row_Query(sprintf('select sum(clicked) from %s where messageid = %d',
+    $GLOBALS['tables']['linktrack_ml'], $id));
 if (($totalusers[0] - $totalbounced[0]) > 0) {
     $clickperc = sprintf('%0.2f', ($totalclicked[0] / ($totalusers[0] - $totalbounced[0]) * 100));
 } else {
     $clickperc = $GLOBALS['I18N']->get('N/A');
 }
+
 echo '<table class="mclicksDetails">
 <tr><td>' .s('Subject').'</td><td>'.$messagedata['subject'].'</td></tr>
 <tr><td>' .s('Entered').'</td><td>'.formatDateTime($messagedata['entered']).'</td></tr>
@@ -77,16 +88,31 @@ if ($totalusers[0] > 0) {
 }
 echo '<tr><td>'.s('Unique subscribers who clicked').'</td><td>'.number_format($totalclicked[0]).' <span style="margin-left:10px">'.PageLinkButton('userclicks&msgid='.$id,
         s('View subscribers')).'</span></td></tr>
-<tr><td>' .$GLOBALS['I18N']->get('Click rate').'</td><td>'.$clickperc.' %</td></tr>
+<tr><td>' .s('Total clicks').'</td><td>'.number_format($totalclicks[0]).' </td></tr>
+<tr><td>' .s('Click rate').'</td><td>'.$clickperc.' %</td></tr>
+
+
 </table><hr/>';
 
 $ls = new WebblerListing(s('Campaign click statistics'));
 $ls->setElementHeading(s('Link URL'));
 
-$query = sprintf('select url,firstclick,date_format(latestclick,
-  "%%e %%b %%Y %%H:%%i") as latestclick,total,clicked,htmlclicked,textclicked,forwardid from %s ml, 
-  %s forward  where ml.messageid = %d and ml.forwardid = forward.id', $GLOBALS['tables']['linktrack_ml'],
-    $GLOBALS['tables']['linktrack_forward'], $id);
+$query = '
+    SELECT
+        url,
+        firstclick,
+        latestclick,
+        total,
+        clicked,
+        htmlclicked,
+        textclicked,
+        forwardid
+    FROM
+        '.$GLOBALS['tables']['linktrack_ml'].' ml,
+        '.$GLOBALS['tables']['linktrack_forward'].' forward
+    WHERE
+        ml.messageid = '.sprintf($id, '%d').'
+        AND ml.forwardid = forward.id';
 
 $req = Sql_Query($query);
 //# put a limit on (when there are too many distinct URLs, eg when personalised URLs have been used)
@@ -100,14 +126,18 @@ $summary = array();
 $summary['totalclicks'] = 0;
 $summary['totalsent'] = 0;
 $summary['uniqueclicks'] = 0;
+
 while ($row = Sql_Fetch_Array($req)) {
 
-//  if (CLICKTRACK_SHOWDETAIL) {
-    $uniqueclicks = Sql_Fetch_Array_Query(sprintf('select count(distinct userid) as users from %s
-      where messageid = %d and forwardid = %d',
-        $GLOBALS['tables']['linktrack_uml_click'], $id, $row['forwardid']));
-//  }
-//  $element = sprintf('<a href="%s" target="_blank" class="url" title="%s">%s</a>',$row['url'],$row['url'],substr(str_replace('http://','',$row['url']),0,50));
+    $uniqueclicks = Sql_Fetch_Array_Query('
+        SELECT
+            COUNT(DISTINCT userid) AS users
+        FROM
+            '.$GLOBALS['tables']['linktrack_uml_click'].'
+        WHERE
+            messageid = '.sprintf($id, '%d').'
+            AND forwardid = '.sprintf($row['forwardid'], '%d')
+    );
 
     if (!$download) {
         $element = shortenTextDisplay($row['url']);
@@ -126,7 +156,12 @@ while ($row = Sql_Fetch_Array($req)) {
     //$perc = sprintf('%0.2f',($row['clicked'] / $row['total'] * 100));
     //$ls->addColumn($element,$GLOBALS['I18N']->get('clickrate'),$perc.'%');
 //  if (CLICKTRACK_SHOWDETAIL) {
-    $ls->addColumn($element, s('clicks'), number_format($uniqueclicks['users']));
+
+    $ls->addColumn(
+        $element
+        , s('unique clicks')
+        , number_format($uniqueclicks['users']).'<span class="viewusers"><a class="button" href="'.PageUrl2('userclicks&amp;msgid='.$id.'&amp;fwdid='.$row['forwardid']).'" title="'.s('view subscribers who clicked').'"></a></span>');
+
     $perc = sprintf('%0.2f', ($uniqueclicks['users'] / $totalusers[0] * 100));
     $ls->addColumn($element, s('clickrate'), $perc.'%');
     $summary['uniqueclicks'] += $uniqueclicks['users'];
@@ -137,7 +172,7 @@ while ($row = Sql_Fetch_Array($req)) {
     ';
     $moreInfo2 = '
       <div class="content listingsmall fright gray">' .s('firstclick').': '.formatDateTime($row['firstclick']).'</div>'.'
-      <div class="content listingsmall fright gray">' .s('latestclick').': '.$row['latestclick'].'</div>'.'
+      <div class="content listingsmall fright gray">' .s('latestclick').': '.formatDateTime($row['latestclick']).'</div>'.'
     ';
 
     //# @@TODO the totals for HTML+text will now not match the total clicks
@@ -148,8 +183,13 @@ while ($row = Sql_Fetch_Array($req)) {
 }
 $ls->addElement('Total');
 $ls->setClass('Total', 'rowtotal');
-$ls->addColumn('Total', s('clicks'), number_format($summary['uniqueclicks']));
+$ls->addColumn('Total', s('unique clicks'), number_format($summary['uniqueclicks']));
 $perc = sprintf('%0.2f', ($summary['uniqueclicks'] / $totalusers[0] * 100));
 $ls->addColumn('Total', s('clickrate'), $perc.'%');
+
+if ($download) {
+    ob_end_clean();
+    $status .= $ls->tabDelimited();
+}
 
 echo $ls->display();

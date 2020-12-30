@@ -1,8 +1,7 @@
 <?php
 
-if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50303) {
-    die('Your PHP version is too old. Please upgrade PHP before continuing.');
-}
+// check for basic prerequisites
+require_once dirname(__FILE__).'/checkprerequisites.php';
 
 if (ob_get_level() == 0) {
     @ob_start();
@@ -79,6 +78,7 @@ if (is_file($configfile) && filesize($configfile) > 20) {
     echo '<h3>Cannot find config file, please check permissions</h3>';
     exit;
 }
+
 $ajax = isset($_GET['ajaxed']);
 
 if (!isset($database_host) || !isset($database_user) || !isset($database_password) || !isset($database_name)) {
@@ -96,8 +96,10 @@ $GLOBALS['pagestats']['number_of_queries'] = 0;
 require_once dirname(__FILE__).'/init.php';
 require_once dirname(__FILE__).'/inc/UUID.php';
 require_once dirname(__FILE__).'/'.$GLOBALS['database_module'];
-include_once dirname(__FILE__).'/../texts/english.inc';
-include_once dirname(__FILE__).'/../texts/'.$GLOBALS['language_module'];
+include_once dirname(__FILE__).'/defaultFrontendTexts.php';
+if (file_exists(dirname(__FILE__).'/../texts/'.$GLOBALS['language_module'])) {
+    include_once dirname(__FILE__).'/../texts/'.$GLOBALS['language_module'];
+}
 include_once dirname(__FILE__).'/languages.php';
 require_once dirname(__FILE__).'/defaultconfig.php';
 
@@ -183,6 +185,7 @@ if (isset($GLOBALS['pageheader'])) {
 
 $GLOBALS['require_login'] = 1; ## this is no longer configurable and should never have been
 if ($GLOBALS['commandline']) {
+    cl_output(ClineSignature());
     if (!isset($_SERVER['USER']) && count($GLOBALS['commandline_users'])) {
         clineError('USER environment variable is not defined, cannot do access check. Please make sure USER is defined.');
         exit;
@@ -207,7 +210,6 @@ if ($GLOBALS['commandline']) {
         } elseif (isset($cline['p'])) {
             $_GET['page'] = $cline['p'];
         }
-        cl_output( ClineSignature());
         cl_processtitle('core-'.$_GET['page']);
     } elseif ($cline['p'] && $IsCommandlinePlugin) {
         if (empty($GLOBALS['developer_email']) && isset($cline['p']) && !in_array($cline['p'],
@@ -217,7 +219,6 @@ if ($GLOBALS['commandline']) {
         } elseif (isset($cline['p'])) {
             $_GET['page'] = $cline['p'];
             $_GET['pi'] = $cline['m'];
-            cl_output( ClineSignature());
             cl_processtitle($_GET['pi'].'-'.$_GET['page']);
         }
     } else {
@@ -240,7 +241,7 @@ if ($GLOBALS['commandline']) {
         $ref = parse_url($_SERVER['HTTP_REFERER']);
         $parts = explode(':', $_SERVER['HTTP_HOST']);
         if ($ref['host'] != $parts[0] && !in_array($ref['host'], $allowed_referrers)) {
-            echo 'Access denied';
+            echo 'Access denied <script type="text/javascript">document.location = document.location</script>';
             exit;
         }
     }
@@ -275,8 +276,11 @@ if (!$GLOBALS['admin_auth_module']) {
     $GLOBALS['require_login'] = 0;
 }
 
-if (!empty($_GET['pi']) && isset($GLOBALS['plugins'][$_GET['pi']])) {
-    $page_title = $GLOBALS['plugins'][$_GET['pi']]->pageTitle($page);
+$plugin = !empty($GLOBALS['plugins'][$_GET['pi']]) && isset($GLOBALS['plugins'][$_GET['pi']])
+    ? $GLOBALS['plugins'][$_GET['pi']]
+    : null;
+if ($plugin) {
+    $page_title = $plugin->pageTitle($page);
 } else {
     $page_title = $GLOBALS['I18N']->pageTitle($page);
 }
@@ -286,6 +290,7 @@ if (isset($GLOBALS['installation_name'])) {
     echo $GLOBALS['installation_name'].' :: ';
 }
 echo "$page_title</title>";
+$inRemoteCall = false;
 
 if (!empty($GLOBALS['require_login'])) {
     //bth 7.1.2015 to support x-forwarded-for
@@ -307,6 +312,7 @@ if (!empty($GLOBALS['require_login'])) {
                 $_REQUEST['login']));
             $msg = $loginresult[1];
         } else {
+            session_regenerate_id();
             $_SESSION['adminloggedin'] = $remoteAddr;
             $_SESSION['logindetails'] = array(
                 'adminname' => $_REQUEST['login'],
@@ -330,7 +336,8 @@ if (!empty($GLOBALS['require_login'])) {
             $msg = $GLOBALS['I18N']->get('Failed sending a change password token');
         }
         $page = 'login';
-    } elseif (!empty($_GET['secret']) && ($_GET['page'] == 'processbounces' || $_GET['page'] == 'processqueue' || $_GET['page'] == 'processcron')) {
+    } elseif (!empty($_GET['secret'])
+        && in_array($_GET['page'], $plugin === null ? array('processbounces', 'processqueue', 'processcron') : $plugin->remotePages)) {
         //# remote processing call
         $ourSecret = getConfig('remote_processing_secret');
         if ($ourSecret != $_GET['secret']) {
@@ -346,6 +353,7 @@ if (!empty($GLOBALS['require_login'])) {
             'superuser' => 0,
             'passhash'  => 'xxxx',
         );
+        $inRemoteCall = true;
     } elseif (!isset($_SESSION['adminloggedin']) || !$_SESSION['adminloggedin']) {
         //$msg = 'Not logged in';
         $logged = false;
@@ -507,14 +515,34 @@ if (!$GLOBALS['commandline']) {
 if (!$ajax && $page != 'login') {
     if (strpos(VERSION, 'dev') && !TEST) {
         if (!empty($GLOBALS['developer_email'])) {
-            Info('Running DEV version. All emails will be sent to '.$GLOBALS['developer_email']);
+            Info( s('Running DEV version. All emails will be sent to '.$GLOBALS['developer_email']) );
         } else {
-            Info('Running DEV version, but developer email is not set');
+            Info( s('Running DEV version, but developer email is not set') );
         }
     }
     if (TEST) {
         echo Info($GLOBALS['I18N']->get('Running in testmode, no emails will be sent. Check your config file.'));
     }
+
+ #   if (!DEVVERSION) { ## why not, quite useful to see
+    if (ALLOW_UPDATER) {
+        $updaterdir = __DIR__ . '/../updater';
+
+        include 'updateLib.php';
+        $updateNotif = checkForUpdate();
+        $moreInfo = ' <ul><li><a href="https://www.phplist.com/download?utm_source=pl' . VERSION . '&amp;utm_medium=updatedownload&amp;utm_campaign=phpList" title="' . s('Download the new version') . '" target="_blank">' . s('Download the new version') . '</a></li>';
+
+        if (file_exists($updaterdir)) {
+            $moreInfo .= '<li>'.s('or use the %sphpList Updater%s','<a href="?page=update" title="' . s('automatic updater') . '">','</a>');
+        }
+        $moreInfo .= '</ul>';
+
+        if ($updateNotif !== '') {
+            Info($updateNotif . '' . $moreInfo);
+        }
+    }
+#   }
+
     if (version_compare(PHP_VERSION, '5.3.3', '<') && WARN_ABOUT_PHP_SETTINGS) {
         Error(s('Your PHP version is out of date. phpList requires PHP version 5.3.3 or higher.'));
     }
@@ -620,7 +648,7 @@ if (!empty($_SESSION['logindetails']['id']) && defined('PHPLISTNEWSROOT') && PHP
     $phpListNewsLastChecked = getConfig('phpListNewsLastChecked-'.$_SESSION['adminlanguage']['iso']);
     if (empty($phpListNewsLastChecked) || ($phpListNewsLastChecked + 86400 < time())) {
         SaveConfig('phpListNewsLastChecked-'.$_SESSION['adminlanguage']['iso'], time(), 0, 1);
-        $newsIndex = fetchUrl(PHPLISTNEWSROOT.'/'.VERSION.'-'.$_SESSION['adminlanguage']['iso'].'-index.txt');
+        $newsIndex = fetchUrlDirect(PHPLISTNEWSROOT.'/'.VERSION.'-'.$_SESSION['adminlanguage']['iso'].'-index.txt');
         SaveConfig('phpListNewsIndex-'.$_SESSION['adminlanguage']['iso'], $newsIndex, 0, 1);
     }
     $newsIndex = getConfig('phpListNewsIndex-'.$_SESSION['adminlanguage']['iso']);
@@ -679,15 +707,15 @@ if (defined('USE_PDF') && USE_PDF && !defined('FPDF_VERSION')) {
     Warn($GLOBALS['I18N']->get('You are trying to use PDF support without having FPDF loaded'));
 }
 
-$this_doc = getenv('REQUEST_URI');
-if (preg_match('#(.*?)/admin?$#i', $this_doc, $regs)) {
-    $check_pageroot = $pageroot;
-    $check_pageroot = preg_replace('#/$#', '', $check_pageroot);
-    if ($check_pageroot != $regs[1] && WARN_ABOUT_PHP_SETTINGS) {
-        Warn($GLOBALS['I18N']->get('The pageroot in your config does not match the current locationCheck your config file.'));
+if (WARN_ABOUT_PHP_SETTINGS && !$GLOBALS['commandline']) {
+    if (strpos(getenv('REQUEST_URI'), $pageroot.'/admin') !== 0) {
+        Warn(s(
+            'The pageroot in your config "%s" does not match the current location "%s". Check your config file.',
+            $pageroot,
+            strstr(getenv('REQUEST_URI'), '/admin', true)
+        ));
     }
 }
-
 clearstatcache();
 if (empty($_GET['pi']) && (is_file($include) || is_link($include))) {
     if (checkAccess($page) || $page == 'about') {
@@ -733,9 +761,10 @@ if (empty($_GET['pi']) && (is_file($include) || is_link($include))) {
         Error(s('Access Denied'));
     }
 //  print "End of inclusion<br/>";
-} elseif (!empty($_GET['pi']) && isset($GLOBALS['plugins']) && is_array($GLOBALS['plugins']) && isset($GLOBALS['plugins'][$_GET['pi']]) && is_object($GLOBALS['plugins'][$_GET['pi']])) {
-    $plugin = $GLOBALS['plugins'][$_GET['pi']];
+} elseif ($plugin !== null && isset($GLOBALS['plugins']) && is_array($GLOBALS['plugins']) && is_object($GLOBALS['plugins'][$_GET['pi']])) {
+
     $menu = $plugin->adminmenu();
+
     if (checkAccess($page, $_GET['pi'])) {
         if (is_file($plugin->coderoot.$include)) {
             include $plugin->coderoot.$include;
@@ -825,6 +854,9 @@ function parseCline()
             $clinearg = substr($clinearg, 2, strlen($clinearg));
             // $res[$par] = "";
             $cur = mb_strtolower($par);
+            if (!isset($res[$cur])) {
+                $res[$cur] = '';
+            }
             $res[$cur] .= $clinearg;
         } elseif ($cur) {
             if ($res[$cur]) {

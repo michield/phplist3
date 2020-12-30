@@ -48,13 +48,30 @@ if (!empty($_POST['selected']) && is_array($_POST['selected'])) {
         if ($lc_name == '') {
             Fatal_Error($GLOBALS['I18N']->get('Name cannot be empty:')." $lc_name");
         }
-        Sql_Query("select * from {$tables['attribute']} where tablename = \"$lc_name\"");
-        if (Sql_Affected_Rows()) {
-            Fatal_Error($GLOBALS['I18N']->get('Name is not unique enough'));
+
+
+        $typeValue = 'select';
+        $terms = 'termsofservice';
+        $adult = 'subscriberisanadult';
+
+        if ($lc_name == '') {
+            Fatal_Error($GLOBALS['I18N']->get('Name cannot be empty:')." $lc_name");
+        }
+        $lc_name = getNewAttributeTablename($lc_name);
+
+        if(substr($lc_name, 0, strlen($terms)) === $terms){
+            $typeValue = 'checkbox';
+            if(getConfig('domain')!==null && getConfig('domain')!==''){
+                $name.= getConfig('domain');
+            } else $name.= 'our website';
+
+        }
+        if(substr($lc_name, 0, strlen($adult)) === $adult){
+            $typeValue= 'checkbox';
         }
 
-        $query = sprintf('insert into %s (name,type,required,tablename) values("%s","%s",%d,"%s")',
-            $tables['attribute'], addslashes($name), 'select', 1, $lc_name);
+            $query = sprintf('insert into %s (name,type,required,tablename) values("%s","%s",%d,"%s")',
+            $tables['attribute'], addslashes($name), $typeValue, 1, $lc_name);
         Sql_Query($query);
         $insertid = Sql_Insert_id();
 

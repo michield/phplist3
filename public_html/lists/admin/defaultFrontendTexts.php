@@ -22,6 +22,7 @@ $strConfirmEmail        = 'Confirm your email address';
 $strInvalidHostInEmail  = 'Sorry, email to that domain is undeliverable, please check that you typed the correct email address';
 $strEnterList           = 'Please select a newsletter to subscribe to';
 $strPleaseEnter         = 'Please enter your';
+$strCheckbox            = 'The following field is required: ';
 # the thanks message can contain placeholders
 #$strThanks              = 'Dear [FIRST NAME], <br/>Thank you for subscribing to our lists.';
 $strThanks              = 'Thank you for subscribing to our newsletters.';
@@ -90,7 +91,7 @@ $strForgotPasswordEmailBody = '
     Could you reset it to something and let me know what it is?
 
     Thanks
-';    
+';
 
 $strPassword           = 'Password';
 $strPassword2           = 'Confirm Password';
@@ -139,6 +140,9 @@ $strForwardFooter = 'This message has been forwarded to you by [FORWARDEDBY].
   To subscribe to this newsletter go to';
 $strForward = 'Forward';
 $strFwd = 'Fwd'; # short version of forward for email subject
+$strForwardForwardingName = 'Please enter your full name';
+$strContactAdmin = 'Contact the administrator';
+$strContactMessage     = 'Add us to your address book';
 
 
 ?>

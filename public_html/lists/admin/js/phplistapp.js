@@ -61,10 +61,10 @@ function autoSave() {
 function checkAllBoxes(checked, checkboxes) {
     checkboxes.each(function () {
         if (checked) {
-            $(this).find('input[id^=targetlist]').prop('checked', true);
+            $(this).find('input[name^=targetlist]').prop('checked', true);
         }
         else {
-            $(this).find('input[id^=targetlist]').prop('checked', false);
+            $(this).find('input[name^=targetlist]').prop('checked', false);
         }
     });
 }
@@ -110,7 +110,7 @@ function openHelpDialog(url) {
     var destpage = urlParameter('page', url);
     url = url.replace(/page=/, 'origpage=');
     $("#dialog").load(url + '&ajaxed=true&page=pageaction&action=' + destpage);
-    $(".ui-widget-overlay").click(function () {
+    $(".ui-widget-overlay").on("click",function () {
         $("#dialog").dialog('close');
     });
 }
@@ -133,7 +133,7 @@ function totalSentUpdate(msgid) {
 }
 
 $(document).ready(function () {
-    $(".note .hide").click(function () {
+    $(".note .hide").on("click",function () {
         $(this).parents('.note').hide();
     });
 
@@ -143,7 +143,7 @@ $(document).ready(function () {
         }
     });
 
-    $("a.ajaxable").click(function () {
+    $("a.ajaxable").on("click",function () {
         var url = this.href;
         var thispage = urlParameter('page', window.location.href);
         if (thispage == "") {
@@ -161,7 +161,7 @@ $(document).ready(function () {
         return false;
     });
 
-    $("input:checkbox.checkallcheckboxes").click(function () {
+    $("input:checkbox.checkallcheckboxes").on("click",function () {
         if (this.checked) {
             $("input[type=checkbox]:not(:checked)").each(function () {
                 this.checked = true;
@@ -193,12 +193,12 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
-    $(".closedialog").click(function () {
+    $(".closedialog").on("click",function () {
         $("#dialog").dialog('close');
     });
 
     //dropbuttons
-    $("div.dropButton img.arrow").click(function () {
+    $("div.dropButton img.arrow").on("click",function () {
         submenu = $(this).parent().parent().find("div.submenu");
         if (submenu.css('display') == "block") {
             submenu.hide();
@@ -209,6 +209,13 @@ $(document).ready(function () {
         }
         return false;
     });
+
+    $(".blockenterkey").on("keypress", function(e) {
+       if (e.keyCode == 13) {
+          return false; // stop submitting the form with enter
+        }
+    });
+
 
     /* hmm, doesn't work yet, but would be nice at some point
      $("#emailsearch").autocomplete({
@@ -232,54 +239,62 @@ $(document).ready(function () {
         $(".tabbed1").tabs();
     }
 
-    $("#subjectinput").focus(function () {
+    $("#subjectinput").on("focus",function () {
         if (this.value == '(no subject)') {
             this.value = "";
         }
     })
-    $("#subjectinput").blur(function () {
+    $("#subjectinput").on("blur",function () {
         if (this.value == "") {
             this.value = "(no subject)";
             return;
         }
     });
-    $("#campaigntitleinput").focus(function () {
+    $("#campaigntitleinput").on("focus",function () {
         if (this.value == '(no title)') {
             this.value = "";
         }
     })
-    $("#campaigntitleinput").blur(function () {
+    $("#campaigntitleinput").on("blur",function () {
         if (this.value == "") {
             this.value = "(no title)";
             return;
         }
     });
-    $("#remoteurlinput").focus(function () {
+    $("#remoteurlinput").on("focus",function () {
         if (this.value == 'e.g. https://www.phplist.com/testcampaign.html') {
             this.value = "";
         }
     })
-    $("#remoteurlinput").blur(function () {
+    $("#remoteurlinput").on("blur",function () {
         if (this.value == "") {
             this.value = "e.g. https://www.phplist.com/testcampaign.html";
             return;
         }
         $("#remoteurlstatus").html(busyImage);
-        $("#remoteurlstatus").load("./?page=pageaction&action=checkurl&ajaxed=true&url=" + this.value);
+        $("#remoteurlstatus").load("./?page=pageaction&action=checkurl&ajaxed=true&url=" + encodeURIComponent(this.value));
     });
-    $("#filtertext").focus(function () {
+    $("#filtertext").on("focus",function () {
         if (this.value == ' --- filter --- ') {
             this.value = "";
         }
     })
-    $("#filtertext").blur(function () {
+    $("#filtertext").on("blur",function () {
         if (this.value == "") {
             this.value = " --- filter --- ";
             return;
         }
     });
 
-    $("input:radio[name=sendmethod]").change(function () {
+    $("#google_track").on("click",function () {
+        if (this.checked) {
+            $("#analytics").show();
+        } else {
+            $("#analytics").hide();
+        }
+    });
+
+    $("input:radio[name=sendmethod]").on("change",function () {
         if (this.value == "remoteurl") {
             $("#remoteurl").show();
             $("#messagecontent").hide();
@@ -289,7 +304,9 @@ $(document).ready(function () {
         }
     });
 
-    $("a.savechanges").click(function () {
+
+
+    $("a.savechanges").on("click",function () {
         if (changed) {
             document.sendmessageform.followupto.value = this.href;
             document.location.hash = ""
@@ -298,7 +315,7 @@ $(document).ready(function () {
         }
     });
 
-    $("#criteriaSelect").change(function () {
+    $("#criteriaSelect").on("change",function () {
         var val = $("#criteriaSelect").val();
         var operator = '';
         switch (aT[val]) {
@@ -325,14 +342,56 @@ $(document).ready(function () {
         }
     });
 
-    $("#initialadminpassword").keyup(function () {
+    $("#passrow").hide();
+    $("#confirmrow").hide();
+
+    $('input[type=radio][name=passwordoption]').on("change",function() {
+        if($("#passwordoption1").is(':checked'))
+        {
+            $("#passrow").hide();
+            $("#confirmrow").hide();
+        } else if($("#passwordoption0").is(':checked'))
+        {
+            $("#passrow").show();
+            $("#confirmrow").show();
+            $('#shortpassword').prop('required',true);
+            $('#confirmpassword').prop('required',true);
+        }
+    });
+    $(document).ready(function () {
+
+
+        $('#notmatching, #shortpassword').hide();
+        $('#adminpassword, #confirmpassword').on('keyup', function () {
+            if ($('#adminpassword').val().length < 8){
+                $('#shortpassword').show();
+                $('#shortpassword').css('color', 'red');
+                $("#savechanges").attr('disabled', 'disabled');
+            }else if ($('#adminpassword').val().length >= 8){
+                $('#shortpassword').hide();
+                if ($('#adminpassword').val() === $('#confirmpassword').val()) {
+                    $('#notmatching').hide();
+                    $("#savechanges").removeAttr('disabled');
+                } else {
+                    $('#notmatching').show();
+                    $('#notmatching').css('color', 'red');
+                    $("#savechanges").attr('disabled', 'disabled');
+                }
+
+
+            }
+        });
+    });
+
+    $("#initialadminpassword").on("keyup",function () {
         if (this.value.length >= 8) {
             $("#initialisecontinue").removeAttr('disabled');
         } else if (this.value.length < 8) {
             $("#initialisecontinue").attr('disabled', 'disabled');
         }
     });
-    $("#initialiseform").submit(function () {
+
+    $("#initialiseform").on("submit",function () {
         $("#dialog").dialog({
             minHeight: 400,
             width: 600,
@@ -342,20 +401,23 @@ $(document).ready(function () {
     });
 
     // export page
-    $("input:radio[name=column]").change(function () {
+    $(document).ready(function () {
+        $("#exportdates").hide();
+    $("input:radio[name=column]").on("change",function () {
         if (this.value == 'nodate') {
             $("#exportdates").hide();
         } else {
             $("#exportdates").show();
         }
     });
+});
 
-    $("#processexport").click(function () {
+    $("#processexport").on("click",function () {
         // for export, refresh underlying page, to get a new security token
         setTimeout("refreshExport()", 10000);
     })
 
-    $("#selectallcheckbox").click(function () {
+    $("#selectallcheckbox").on("click",function () {
         $(':checkbox').prop('checked', this.checked);
     })
 
@@ -368,14 +430,14 @@ $(document).ready(function () {
 //  $("#processqueueoutput").html('Processing queue, please wait<script type="text/javascript">alert(document.location)</script>');
     $("#spinner").html(busyImage);
 
-    $("#stopqueue").click(function () {
+    $("#stopqueue").on("click",function () {
         $("#processqueueoutput").html('Processing cancelled');
         $("#spinner").html('&nbsp;');
         $("#stopqueue").hide();
         $("#resumequeue").show();
     });
 
-    $(".updatepluginbutton").click(function () {
+    $(".updatepluginbutton").on("click",function () {
         if (!confirm("Are you sure you want to update this plugin? \nphpList does not currently check on compatibility of the update.\nThis will just fetch the latest version.\nPlease verify before upgrading.")) {
             return false;
         }
@@ -383,20 +445,19 @@ $(document).ready(function () {
     });
 
     var docurl = document.location.search;
-    document.cookie = "browsetrail=" + escape(docurl);
+    document.cookie = "browsetrail=" + escape(docurl) +'; SameSite=Strict';
 
     setInterval("autoSave();", 120000); // once every two minutes should suffice
 
     // tick all the boxes in a category.
     $('li.selectallcategory').on('click', function () {
-        if ($(this).find('input[type=checkbox]').attr('id').match('all-lists')) {
+        if ($(this).find('input[type=checkbox]').attr('name').match('all-lists')) {
             var ul = $(this).parent();
             var lists = ul.parent().find('li');
 
-            checkAllBoxes(lists.find('input[id^=all-lists]').prop('checked'), lists);
+            checkAllBoxes(lists.find('input[name^=all-lists]').prop('checked'), lists);
         }
     });
-
     // @TODO, only set when needed
     setInterval(getServerTime, 30000);
 
@@ -499,6 +560,10 @@ $.fn.updateProgress = function () {
     $("#progressbar").progressbar({max: 100, value: +perc});
 };
 
+function confirmOpenUrl(msg, url) {
+    if (confirm(msg))
+        document.location = url;
+}
 
 /*
  * old library of stuff that needs to be ported to jQuery style JS

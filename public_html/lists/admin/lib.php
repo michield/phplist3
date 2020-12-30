@@ -114,6 +114,17 @@ function setMessageData($msgid, $name, $value)
             }
         }
     }
+    if ($name == 'excludelist' && is_array($value)) {
+        ## make sure all entries are numerical. @@TO(DO We could also check that they are actually valid list IDs
+        $newLists = array();
+        foreach ($value as $v) {
+            if (is_numeric($v)) {
+                $newLists[$v] = $v;
+            }
+        }
+        $value = $newLists;
+        unset($newLists);
+    }
     if (is_array($value) || is_object($value)) {
         $value = 'SER:'.serialize($value);
     }
@@ -754,6 +765,14 @@ function previewTemplate($id, $adminid = 0, $text = '', $footer = '')
         $template = str_replace($logoInstance, '?page=image&amp;id='.$logoImageId.$logoSize, $template);
     }
 
+    $orgName = getConfig('organisation_name');
+    if ($orgName === '' || $orgName === null) {
+        // If organisation name is not set, show [ORGANISATION_NAME] placeholder
+        $template = str_ireplace('[ORGANISATION_NAME]', '[ORGANISATION_NAME]', $template);
+    } else {
+        $template = str_ireplace('[ORGANISATION_NAME]', $orgName, $template);
+    }
+
     if (!EMAILTEXTCREDITS) {
         $template = str_ireplace('[SIGNATURE]',
             '<img src="?page=image&amp;id='.$poweredImageId.'" width="70" height="30" />', $template);
@@ -1125,7 +1144,7 @@ function testUrl($url)
     if (VERBOSE) {
         logEvent('Checking '.$url);
     }
-    $code = 500;
+
     if ($GLOBALS['has_curl']) {
         if (VERBOSE) {
             logEvent('Checking curl ');
@@ -1139,18 +1158,24 @@ function testUrl($url)
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($curl, CURLOPT_HEADER, 0);
         curl_setopt($curl, CURLOPT_DNS_USE_GLOBAL_CACHE, true);
-        curl_setopt($curl, CURLOPT_USERAGENT, 'phplist v'.VERSION.' (https://www.phplist.com)');
+        curl_setopt($curl, CURLOPT_USERAGENT, 'phplist v'.VERSION.'c (https://www.phplist.com)');
         $raw_result = curl_exec($curl);
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-    } elseif ($GLOBALS['has_pear_http_request']) {
+    } else {
         if (VERBOSE) {
-            logEvent('Checking PEAR ');
+            logEvent('Checking HTTP_Request2 ');
         }
-        @require_once 'HTTP/Request.php';
-        $headreq = new HTTP_Request($url, $request_parameters);
-        $headreq->addHeader('User-Agent', 'phplist v'.VERSION.' (https://www.phplist.com)');
-        if (!PEAR::isError($headreq->sendRequest(false))) {
-            $code = $headreq->getResponseCode();
+        require_once 'HTTP/Request2.php';
+
+        $headreq = new HTTP_Request2($url, HTTP_Request2::METHOD_HEAD, array('follow_redirects' => true));
+        $headreq->setHeader('User-Agent', 'phplist v'.VERSION.'p (https://www.phplist.com)');
+
+        try {
+            $response = $headreq->send();
+            $code = $response->getStatus();
+        } catch (HTTP_Request2_Exception $e) {
+            logEvent(sprintf('Error fetching %s %s', $url, $e->getMessage()));
+            $code = 500;
         }
     }
     if (VERBOSE) {
@@ -1160,7 +1185,19 @@ function testUrl($url)
     return $code;
 }
 
-function fetchUrl($url, $userdata = array())
+/**
+ * Returns the content of a URL from
+ *  the global variable $urlcache,
+ *  or the urlcache table
+ *  or fetching the URL directly.
+ *
+ * @param string $url      the URL to fetch
+ * @param array  $userdata user fields to be replaced in the url
+ * @param int    $ttl      time to live, the number of seconds after which the cached item will expire
+ *
+ * @return string|false the url content or false for an error
+ */
+function fetchUrl($url, $userdata = array(), $ttl = REMOTE_URL_REFETCH_TIMEOUT)
 {
     $content = '';
 
@@ -1185,7 +1222,7 @@ function fetchUrl($url, $userdata = array())
 
     // keep in memory cache in case we send a page to many emails
     if (isset($GLOBALS['urlcache'][$url]) && is_array($GLOBALS['urlcache'][$url])
-        && (time() - $GLOBALS['urlcache'][$url]['fetched'] < REMOTE_URL_REFETCH_TIMEOUT)
+        && (time() - $GLOBALS['urlcache'][$url]['fetched'] < $ttl)
     ) {
         //     logEvent($url . " is cached in memory");
         if (VERBOSE && function_exists('output')) {
@@ -1197,7 +1234,7 @@ function fetchUrl($url, $userdata = array())
 
     $dbcache_lastmodified = getPageCacheLastModified($url);
     $timeout = time() - $dbcache_lastmodified;
-    if ($timeout < REMOTE_URL_REFETCH_TIMEOUT) {
+    if ($timeout < $ttl) {
         //    logEvent($url.' was cached in database');
         if (VERBOSE && function_exists('output')) {
             output('From database cache: '.$url);
@@ -1220,24 +1257,14 @@ function fetchUrl($url, $userdata = array())
     //# see http://mantis.phplist.com/view.php?id=7684
 //    $lastmodified = strtotime($header["last-modified"]);
     $lastmodified = time();
-    $cache = getPageCache($url, $lastmodified);
-    if (!$cache) {
-        if (function_exists('curl_init')) {
-            $content = fetchUrlCurl($url, $request_parameters);
-        } elseif (0 && $GLOBALS['has_pear_http_request'] == 2) {
-            //# @#TODO, make it work with Request2
-            @require_once 'HTTP/Request2.php';
-        } elseif ($GLOBALS['has_pear_http_request']) {
-            @require_once 'HTTP/Request.php';
-            $content = fetchUrlPear($url, $request_parameters);
-        } else {
-            return false;
-        }
-    } else {
+    $content = getPageCache($url, $lastmodified);
+
+    if ($content) {
         if (VERBOSE) {
             logEvent($url.' was cached in database');
         }
-        $content = $cache;
+    } else {
+        $content = fetchUrlDirect($url, $request_parameters);
     }
 
     if (!empty($content)) {
@@ -1252,6 +1279,31 @@ function fetchUrl($url, $userdata = array())
     }
 
     return $content;
+}
+
+/**
+ * Fetches a URL directly.
+ * Use curl if available otherwise fallback to HTTP_Request2.
+ *
+ * @param string  $url               the URL to fetch
+ * @param array   $requestParameters params for the http request
+ *
+ * @return string|false the url content or false for an error
+ */
+function fetchUrlDirect($url, $requestParameters = array())
+{
+    global $has_curl;
+
+    $defaultParameters = array(
+        'timeout' => 10,
+    );
+    $parameters = $requestParameters + $defaultParameters;
+
+    if ($has_curl) {
+        return fetchUrlCurl($url, $parameters);
+    }
+
+    return fetchUrlHttpRequest2($url, $parameters);
 }
 
 function fetchUrlCurl($url, $request_parameters)
@@ -1283,59 +1335,47 @@ function fetchUrlCurl($url, $request_parameters)
     }
 }
 
-function fetchUrlPear($url, $request_parameters)
+/**
+ * Fetches a URL using the PEAR package HTTP_Request2.
+ *
+ * @param string  $url               the URL to fetch
+ * @param array   $requestParameters params for the http request
+ *
+ * @return string the url content or false for an error
+ */
+function fetchUrlHttpRequest2($url, $requestParameters)
 {
+    require_once 'HTTP/Request2.php';
+
     if (VERBOSE) {
-        logEvent($url.' fetching with PEAR');
+        logEvent("Fetching $url with HTTP_Request2");
     }
+    $request = new HTTP_Request2(
+        $url,
+        HTTP_Request2::METHOD_GET,
+        array(
+            'timeout' => $requestParameters['timeout'],
+            'follow_redirects' => true,
+        )
+    );
+    $request->setHeader('User-Agent', 'phplist v'.VERSION.'p (http://www.phplist.com)');
 
-    if (0 && $GLOBALS['has_pear_http_request'] == 2) {
-        $headreq = new HTTP_Request2($url, $request_parameters);
-        $headreq->setHeader('User-Agent', 'phplist v'.VERSION.'p (https://www.phplist.com)');
-    } else {
-        $headreq = new HTTP_Request($url, $request_parameters);
-        $headreq->addHeader('User-Agent', 'phplist v'.VERSION.'p (https://www.phplist.com)');
-    }
-    if (!PEAR::isError($headreq->sendRequest(false))) {
-        $code = $headreq->getResponseCode();
-        if ($code != 200) {
-            logEvent('Fetching '.$url.' failed, error code '.$code);
+    try {
+        $response = $request->send();
 
-            return 0;
-        }
-        $header = $headreq->getResponseHeader();
+        if ($response->getStatus() == 200) {
+            $content = $response->getBody();
 
-        if (preg_match('/charset=(.*)/i', $header['content-type'], $regs)) {
-            $remote_charset = strtoupper($regs[1]);
-        }
-
-        $request_parameters['method'] = 'GET';
-        if (0 && $GLOBALS['has_pear_http_request'] == 2) {
-            $req = new HTTP_Request2($url, $request_parameters);
-            $req->setHeader('User-Agent', 'phplist v'.VERSION.'p (https://www.phplist.com)');
-        } else {
-            $req = new HTTP_Request($url, $request_parameters);
-            $req->addHeader('User-Agent', 'phplist v'.VERSION.'p (https://www.phplist.com)');
-        }
-        logEvent('Fetching '.$url);
-        if (VERBOSE && function_exists('output')) {
-            output('Fetching remote: '.$url);
-        }
-        if (!PEAR::isError($req->sendRequest(true))) {
-            $content = $req->getResponseBody();
-
-            if ($remote_charset != 'UTF-8' && function_exists('iconv')) {
-                $content = iconv($remote_charset, 'UTF-8//TRANSLIT', $content);
+            if (VERBOSE) {
+                logEvent("Fetched $url");
             }
         } else {
-            logEvent('Fetching '.$url.' failed on GET '.$req->getResponseCode());
-
-            return 0;
+            logEvent(sprintf('Unexpected HTTP status: %s %s', $response->getStatus(), $response->getReasonPhrase()));
+            $content = false;
         }
-    } else {
-        logEvent('Fetching '.$url.' failed on HEAD');
-
-        return 0;
+    } catch (HTTP_Request2_Exception $e) {
+        logEvent(sprintf('Error fetching %s %s', $url, $e->getMessage()));
+        $content = false;
     }
 
     return $content;
@@ -1385,6 +1425,12 @@ function parseQueryString($str)
 
 function cleanUrl($url, $disallowed_params = array('PHPSESSID'))
 {
+    // process url only if it contains a disallowed parameter
+    $pattern = sprintf('/(%s)=/', implode('|', $disallowed_params));
+
+    if (!preg_match($pattern, $url)) {
+        return htmlspecialchars_decode($url);
+    }
     $parsed = @parse_url($url);
     $params = array();
     if (empty($parsed['query'])) {
@@ -1478,6 +1524,45 @@ function addSubscriberStatistics($item, $amount, $list = 0)
             $GLOBALS['tables']['userstats'], $amount, $time, $item, $list));
     }
 }
+
+
+/**
+ * Insert a draft campaign for use with the Invite plugin
+ * @param null|int $forcedOwnerId
+ * @return bool|mysqli_result
+ * @throws Exception
+ * @todo Make the campaign content translatable
+ * @todo Add Campaign Meta Title to clarify purpose of this draft
+ */
+function addInviteCampaign($forcedOwnerId = null) {
+
+    $message =
+'<p>Hi [FIRST NAME%%there], remember us? You first signed up for our email newsletter on&nbsp;[ENTERED] &ndash; please click here to confirm you&#39;re happy to continue receiving our messages:</p>
+
+<p><strong><a href="[CONFIRMATIONURL]" title="Confirm subscription">Continue receiving messages</a></strong>&nbsp; <u>(If you do not confirm using this link, then you won&#39;t hear from us again</u>)</p>
+
+<p>While you&#39;re at it, you can also update your preferences, including your email address or other details, by clicking here:</p>
+
+<p><strong><a href="[PREFERENCESURL]">Update preferences</a></strong></p>
+
+<p>By confirming your membership and keeping your details up to date, you&#39;re helping us to manage and protect your data in accordance with best practices.</p>
+
+<p>Thank you!</p>';
+
+    $inviteMessage = addslashes($message);
+    $inviteMessageSubject = "Do you want to continue receiving our messages?";
+    $uuid = uuid::generate(4);
+    if ( $forcedOwnerId !== null) {
+        $ownerid = $forcedOwnerId;
+    } else {
+        $ownerid = $_SESSION['logindetails']['id'];
+    }
+    $footer = sql_escape(getConfig('messagefooter'));
+    $result = Sql_query("insert into {$GLOBALS['tables']['message']} (uuid,subject,message,entered, status, owner, footer, sendformat) values(\"$uuid\",\"$inviteMessageSubject\",\"$inviteMessage\",now(),\"draft\",\"$ownerid\",\"$footer\",\"invite\" )");
+
+    return $result;
+
+   }
 
 function deleteMessage($id = 0)
 {
@@ -1629,6 +1714,8 @@ function resetMessageStatistics($messageid = 0)
         Sql_Query(sprintf('delete from %s where messageid = %d', $GLOBALS['tables']['linktrack_uml_click'],
             $messageid));
         Sql_Query(sprintf('delete from %s where messageid = %d', $GLOBALS['tables']['usermessage'], $messageid));
+        Sql_Query(sprintf('delete from %s where messageid = %d', $GLOBALS['tables']['user_message_view'], $messageid));
+        Sql_Query(sprintf('update %s set viewed = 0 where id = %d', $GLOBALS['tables']['message'], $messageid));
     }
 }
 
@@ -1754,10 +1841,10 @@ function refreshTlds($force = 0)
         //# even if it fails we mark it as done, so that we won't getting stuck in eternal updating.
         SaveConfig('tld_last_sync', time(), 0);
         if (defined('TLD_AUTH_LIST')) {
-            $tlds = fetchUrl(TLD_AUTH_LIST);
+            $tlds = fetchUrlDirect(TLD_AUTH_LIST);
         }
         if ($tlds && defined('TLD_AUTH_MD5')) {
-            $tld_md5 = fetchUrl(TLD_AUTH_MD5);
+            $tld_md5 = fetchUrlDirect(TLD_AUTH_MD5);
             list($remote_md5, $fname) = explode(' ', $tld_md5);
             $mymd5 = md5($tlds);
 //        print 'OK: '.$remote_md5.' '.$mymd5;
@@ -1826,7 +1913,7 @@ function shortenTextDisplay($text, $max = 30)
     $display = str_replace('/', '/&#x200b;', $display);
     $display = str_replace('@', '@&#x200b;', $display);
 
-    return sprintf('<span title="%s" ondblclick="alert(\'%s\');">%s</span>', htmlspecialchars($text),
+    return sprintf('<span title="%s">%s</span>', htmlspecialchars($text),
         htmlspecialchars($text), $display);
 }
 
@@ -2014,7 +2101,7 @@ function subscribeToAnnouncementsForm($emailAddress = '')
         .'<h3>'.s('Sign up to receive news and updates about phpList ').'</h3>'
         .s('Make sure you are updated with new security and feature release announcements (fewer than one message per month)').
         '<script type="text/javascript">var pleaseEnter = "'.strip_tags($emailAddress).'";</script> '.
-        '<script type="text/javascript" src="../js/jquery-1.5.2.min.js"></script>
+        '<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../js/phplist-subscribe-0.3.min.js"></script>
 <div id="phplistsubscriberesult"></div> <form action="https://announce.hosted.phplist.com/lists/?p=subscribe&id=3" method="post" id="phplistsubscribeform">
 <input type="text" name="email" value="" id="emailaddress" />
@@ -2110,6 +2197,34 @@ function parseLogoPlaceholders($content)
 }
 
 /**
+ * Parse [CONTACT] as HTML placeholder for VCard
+ * @param $content
+ * @return mixed
+ */
+function parseVCardHTMLPlaceholder($content) {
+    preg_match_all('/\[CONTACT\:?(\d+)?\]/i', $content, $contactInstances);
+    foreach ($contactInstances[0] as $index => $contactInstance) {
+        $content = str_ireplace($contactInstance, '<a href="'.htmlentities(getConfig('vcardurl')).'">'.$GLOBALS['strContactMessage'].'</a>', $content);
+    }
+
+    return $content;
+}
+
+/**
+ * Parse [CONTACT] as Text placeholder for VCard
+ * @param $content
+ * @return mixed
+ */
+function parseVCardTextPlaceholder($content) {
+    preg_match_all('/\[CONTACT\:?(\d+)?\]/i', $content, $contactInstances);
+    foreach ($contactInstances[0] as $index => $contactInstance) {
+        $content = str_ireplace($contactInstance, $GLOBALS['strContactMessage'].' '.htmlentities(getConfig('vcardurl')), $content);
+    }
+
+    return $content;
+}
+
+/**
  * Loop through a multi-dimensional array, check a particular child array
  * key equals desired value, and return a new multi-dimensional array of those
  * child arrays which qualify.
@@ -2196,7 +2311,7 @@ function asyncLoadContent($url)
 {
     return '<script type="text/javascript">
         var loadMessage = \'' .sjs('Please wait, your request is being processed. Do not refresh this page.').'\';
-        var loadMessages = new Array(); 
+        var loadMessages = new Array();
         loadMessages[30] = \'' .sjs('Still loading').'\';
         loadMessages[90] = \'' .sjs('It may seem to take a while, but there is a lot of data to crunch<br/>if you have a lot of subscribers and campaigns').'\';
         loadMessages[150] = \'' .sjs('It should be soon now, your page content is almost here.').'\';
@@ -2213,7 +2328,6 @@ function asyncLoadContent($url)
 /**
  * load content in a div after loading
  */
-
 function asyncLoadContentDiv($url,$divname)
 {
 
@@ -2227,4 +2341,19 @@ function asyncLoadContentDiv($url,$divname)
         asyncLoadDiv[asyncLoadDiv.length] = "'.$divname.'";
         asyncLoadUrl[asyncLoadUrl.length] = "'.$url.'";
      </script>';
+}
+
+/**
+ * Transform a value to be valid for an html id by removing invalid characters.
+ * This is for HTML 4. HTML 5 is more lenient.
+ *
+ * @see https://www.w3.org/TR/html4/types.html#type-id
+ *
+ * @param string $value
+ *
+ * @return string
+ */
+function sanitiseId($value)
+{
+    return preg_replace('/[^0-9A-Za-z\-_:.]/', '', $value);
 }

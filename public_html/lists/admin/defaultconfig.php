@@ -59,6 +59,7 @@ $default_config = array(
     'website' => array(
         'value'       => $D_website,
         'description' => s('Website address (without http://)'),
+        'infoicon'    => true,
         'type'        => 'text',
         'allowempty'  => false, //# indication this value cannot be empty (1 being it can be empty)
         'category'    => 'general',
@@ -87,24 +88,32 @@ $default_config = array(
         'description' => s('Name of the organisation'),
         'type'        => 'text',
         'allowempty'  => true,
+        'allowtags'   => '<b><i><u><strong><em><h1><h2><h3><h4>',
+        'allowJS'     => false,
         'category'    => 'general',
     ),
 // logo of the organisation
     'organisation_logo' => array(
         'value'       => '',
         'description' => s('Logo of the organisation'),
+        'infoicon'    => true,
         'type'        => 'image',
         'allowempty'  => true,
         'category'    => 'general',
     ),
-
-    // how often to check for new versions of PHPlist
-    'check_new_version' => array(
-        'value'       => '7',
-        'description' => s('How often do you want to check for a new version of phplist (days)'),
-        'type'        => 'integer',
-        'min'         => 1,
-        'max'         => 180,
+    'date_format' => array(
+        'value'       => 'j F Y',
+        'description' => s('Date format'),
+        'infoicon'    => true,
+        'type'        => 'text',
+        'allowempty'  => false,
+        'category'    => 'general',
+    ),
+    'rc_notification' => array(
+        'value'       => 0,
+        'description' => s('Show notification for Release Candidates'),
+        'type'        => 'boolean',
+        'allowempty'  => true,
         'category'    => 'security',
     ),
 
@@ -148,10 +157,18 @@ $default_config = array(
     ),
     'always_add_googletracking' => array(
         'value'       => '0',
-        'description' => s('Always add Google tracking code to campaigns'),
+        'description' => s('Always add analytics tracking code to campaigns'),
         'type'        => 'boolean',
         'allowempty'  => true,
         'category'    => 'campaign',
+    ),
+    'analytic_tracker' => array(
+        'values'       => array('google' => 'Google Analytics', 'matomo' => 'Matomo'),
+        'value'        => 'google',
+        'description'  => s('Analytics tracking code to add to campaign URLs'),
+        'type'         => 'select',
+        'allowempty'   => false,
+        'category'     => 'campaign',
     ),
     // report address is the person who gets the reports
     'report_address' => array(
@@ -204,8 +221,17 @@ $default_config = array(
     'list_categories' => array(
         'value'       => '',
         'description' => s('Categories for lists. Separate with commas.'),
+        'infoicon'    => true,
         'type'        => 'text',
         'allowempty'  => true,
+        'category'    => 'list-organisation',
+    ),
+
+    'displaycategories' => array(
+        'value'       => 0,
+        'description' => s('Display list categories on subscribe page'),
+        'type'        => 'boolean',
+        'allowempty'  => false,
         'category'    => 'list-organisation',
     ),
 
@@ -326,6 +352,15 @@ $default_config = array(
         'category'    => 'subscription',
     ),
 
+    // url to download vcf card
+    'vcardurl' => array(
+        'value'       => $GLOBALS['public_scheme']."://[WEBSITE]$pageroot/?p=vcard",
+        'description' => s('URL for downloading vcf card'),
+        'type'        => 'text',
+        'allowempty'  => 0,
+        'category'    => 'subscription',
+    ),
+
     'ajax_subscribeconfirmation' => array(
         'value'       => s('<h3>Thanks, you have been added to our newsletter</h3><p>You will receive an email to confirm your subscription. Please click the link in the email to confirm</p>'),
         'description' => s('Text to display when subscription with an AJAX request was successful'),
@@ -342,6 +377,7 @@ $default_config = array(
     'subscribesubject' => array(
         'value'       => s('Request for confirmation'),
         'description' => s('Subject of the message subscribers receive when they sign up'),
+        'infoicon'        => true,
         'type'        => 'text',
         'allowempty'  => 0,
         'category'    => 'transactional',
@@ -352,7 +388,7 @@ $default_config = array(
     // [CONFIRMATIONURL] will be replaced with the URL where a user has to confirm
     // their subscription
     'subscribemessage' => array(
-        'value' => 
+        'value' =>
 ' You have been subscribed to the following newsletters:
 
 [LISTS]
@@ -389,7 +425,7 @@ If this is not correct, or you do not agree, simply take no action and delete th
 
     // message that is sent when they unsubscribe
     'unsubscribemessage' => array(
-        'value' => 
+        'value' =>
 'Goodbye from our Newsletter, sorry to see you go.
 
 You have been unsubscribed from our newsletters.
@@ -419,7 +455,7 @@ Thank you'
 
     // message that is sent to confirm subscription
     'confirmationmessage' => array(
-        'value' => 
+        'value' =>
 'Welcome to our Newsletter
 
 Please keep this message for later reference.
@@ -452,7 +488,7 @@ Thank you'
     // confirmationinfo is replaced by one of the options below
     // userdata is replaced by the information in the database
     'updatemessage' => array(
-        'value' =>   
+        'value' =>
 'This message is to inform you of a change of your details on our newsletter database
 
 You are currently member of the following newsletters:
@@ -484,9 +520,9 @@ Thank you'
         'value' => '
   When updating your details, your email address has changed.
   Please confirm your new email address by visiting this webpage:
-  
+
   [CONFIRMATIONURL]
-  
+
   ',
         'description' => s('Part of the message that is sent to their new email address when subscribers change their information, and the email address has changed'),
         'type'        => 'textarea',
@@ -498,7 +534,7 @@ Thank you'
     // message, in case the email is sent to their old email address and they have changed
     // their email address
     'emailchanged_text_oldaddress' => array(
-        'value' => 
+        'value' =>
 'Please Note: when updating your details, your email address has changed.
 
 A message has been sent to your new email address with a URL
@@ -520,10 +556,10 @@ your membership.'
     ),
 
     'personallocation_message' => array(
-        'value' => 
+        'value' =>
 'You have requested your personal location to update your details in our newsletter database.
 The location is below. Please make sure that you use the full line as mentioned below.
-Sometimes email programmes can wrap the line into multiple lines.
+Sometimes email programs wrap the link over multiple lines.
 
 Your personal location is:
 [PREFERENCESURL]
@@ -538,11 +574,11 @@ Thank you.'
 
     'messagefooter' => array(
         'value' => '--
-  
+
     <div class="footer" style="text-align:left; font-size: 75%;">
-      <p>This message was sent to [EMAIL] by [FROMEMAIL]</p>
+      <p>This message was sent to [EMAIL] by [FROMEMAIL].</p>
       <p>To forward this message, please do not use the forward button of your email application, because this message was made specifically for you only. Instead use the <a href="[FORWARDURL]">forward page</a> in our newsletter system.<br/>
-      To change your details and to choose which lists to be subscribed to, visit your personal <a href="[PREFERENCESURL]">preferences page</a><br/>
+      To change your details and to choose which lists to be subscribed to, visit your personal <a href="[PREFERENCESURL]">preferences page</a>.<br/>
       Or you can <a href="[UNSUBSCRIBEURL]">opt-out completely</a> from all future mailings.</p>
     </div>
 
@@ -596,7 +632,7 @@ Thank you.'
 //),
 
     'personallocation_message' => array(
-        'value' => 
+        'value' =>
 
 'You have requested your personal location to update your details from our website.
 The location is below. Please make sure that you use the full line as mentioned below.
@@ -813,18 +849,18 @@ function getUserConfig($item, $userid = 0)
 
         $url = getConfig('unsubscribeurl');
         $sep = strpos($url, '?') !== false ? '&' : '?';
-        $value = str_ireplace('[UNSUBSCRIBEURL]', $url.$sep.'uid='.$uniqid, $value);
+        $value = str_ireplace('[UNSUBSCRIBEURL]', $url.$sep.'uid='.$uniqid.' ', $value);
         $url = getConfig('confirmationurl');
         $sep = strpos($url, '?') !== false ? '&' : '?';
-        $value = str_ireplace('[CONFIRMATIONURL]', $url.$sep.'uid='.$uniqid, $value);
+        $value = str_ireplace('[CONFIRMATIONURL]', $url.$sep.'uid='.$uniqid.' ', $value);
         $url = getConfig('preferencesurl');
         $sep = strpos($url, '?') !== false ? '&' : '?';
-        $value = str_ireplace('[PREFERENCESURL]', $url.$sep.'uid='.$uniqid, $value);
+        $value = str_ireplace('[PREFERENCESURL]', $url.$sep.'uid='.$uniqid.' ', $value);
         $value = str_ireplace('[EMAIL]', $email, $value);
 
         $value = parsePlaceHolders($value, getUserAttributeValues($email));
     }
-    $value = str_ireplace('[SUBSCRIBEURL]', getConfig('subscribeurl'), $value);
+    $value = str_ireplace('[SUBSCRIBEURL]', getConfig('subscribeurl').' ', $value);
     $value = preg_replace('/\[DOMAIN\]/i', $domain,
         $value); //@ID Should be done only in one place. Combine getConfig and this one?
     $value = preg_replace('/\[WEBSITE\]/i', $website, $value);

@@ -132,7 +132,7 @@ msgstr "Wybierz inną listę"
 
 #: public_html/lists/admin/listbounces.php:83
 #, php-format
-msgid "%d bounces to list %s"
+msgid "%s bounces to list %s"
 msgstr ""
 
 #: public_html/lists/admin/listbounces.php:103
@@ -361,7 +361,7 @@ msgstr "Export odbiorców "
 
 #: public_html/lists/admin/home.php:159
 msgid "reconcileusers"
-msgstr ""
+msgstr "Uzgodnij subskrybenta"
 
 #: public_html/lists/admin/home.php:161
 msgid "Reconcile the User Database"
@@ -8662,106 +8662,106 @@ msgstr ""
 #: public_html/databasestructure.php:198
 #, fuzzy
 msgid "pagetitle:home"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Główna"
 
 #: public_html/databasestructure.php:199
 #, fuzzy
 msgid "pagetitlehover:home"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Idź do głównej strony"
 
 #: public_html/databasestructure.php:200
 #, fuzzy
 msgid "pagetitle:setup"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Ustawienia"
 
 #: public_html/databasestructure.php:201
 #, fuzzy
 msgid "pagetitlehover:setup"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Lista rzeczy do zrobienia, aby poprawnie skonfigurować phpList"
 
 #: public_html/databasestructure.php:202
 #, fuzzy
 msgid "pagetitle:about"
-msgstr "uaktualnij tłumaczenie"
+msgstr "O phpList"
 
 #: public_html/databasestructure.php:203
 #, fuzzy
 msgid "pagetitlehover:about"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Więcej informacji o aplikacji phpList"
 
 #: public_html/databasestructure.php:204
 #, fuzzy
 msgid "pagetitle:attributes"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Skonfiguruj atrybuty"
 
 #: public_html/databasestructure.php:205
 #, fuzzy
 msgid "pagetitlehover:attributes"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Twórz, edytuj i zmieniaj atrybuty subskrybentów"
 
 #: public_html/databasestructure.php:206
 #, fuzzy
 msgid "pagetitle:stresstest"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Test warunków skrajnych"
 
 #: public_html/databasestructure.php:207
 #, fuzzy
 msgid "pagetitlehover:stresstest"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Test warunków skrajnych"
 
 #: public_html/databasestructure.php:208
 #, fuzzy
 msgid "pagetitle:list"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Listy subskrybentów"
 
 #: public_html/databasestructure.php:209
 #, fuzzy
 msgid "pagetitlehover:list"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Listy, do których subskrybenci mogą się zarejestrować"
 
 #: public_html/databasestructure.php:210
 msgid "pagetitle:config"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Konfiguracja"
 
 #: public_html/databasestructure.php:211
 #, fuzzy
 msgid "pagetitlehover:config"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Funkcje konfiguracyjne"
 
 #: public_html/databasestructure.php:212
 #, fuzzy
 msgid "pagetitle:catlists"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Listy kategorii"
 
 #: public_html/databasestructure.php:213
 #, fuzzy
 msgid "pagetitlehover:catlists"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Organizuj listy subskrybentów według kategorii"
 
 #: public_html/databasestructure.php:214
 #, fuzzy
 msgid "pagetitle:editattributes"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Skonfiguruj atrybuty"
 
 #: public_html/databasestructure.php:215
 #, fuzzy
 msgid "pagetitlehover:editattributes"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Edytuj szczegóły atrybutu"
 
 #: public_html/databasestructure.php:216
 #, fuzzy
 msgid "pagetitle:editlist"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Edytuj listę"
 
 #: public_html/databasestructure.php:217
 #, fuzzy
 msgid "pagetitlehover:editlist"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Zmień szczegóły listy"
 
 #: public_html/databasestructure.php:218
 #, fuzzy
 msgid "pagetitle:checki18n"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Sprawdź, czy istnieją tłumaczenia"
 
 #: public_html/databasestructure.php:219
 #, fuzzy
@@ -8821,7 +8821,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:230
 #, fuzzy
 msgid "pagetitle:import"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Importuj emaile"
 
 #: public_html/databasestructure.php:231
 #, fuzzy
@@ -8831,7 +8831,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:232
 #, fuzzy
 msgid "pagetitle:export"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Eksportuj subskrybentów"
 
 #: public_html/databasestructure.php:233
 #, fuzzy
@@ -8841,7 +8841,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:234
 #, fuzzy
 msgid "pagetitle:initialise"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Initializuj baze danych"
 
 #: public_html/databasestructure.php:235
 #, fuzzy
@@ -8851,7 +8851,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:236
 #, fuzzy
 msgid "pagetitle:send"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Wyślij kampanię"
 
 #: public_html/databasestructure.php:237
 #, fuzzy
@@ -8887,12 +8887,12 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:244
 #, fuzzy
 msgid "pagetitle:users"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Szukaj subskrybentów"
 
 #: public_html/databasestructure.php:245
 #, fuzzy
 msgid "pagetitlehover:users"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Wyszukaj subskrybentów w systemie"
 
 #: public_html/databasestructure.php:246
 msgid "pagetitle:reconcileusers"
@@ -8935,7 +8935,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:254
 #, fuzzy
 msgid "pagetitle:messages"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Lista kampanii"
 
 #: public_html/databasestructure.php:255
 #, fuzzy
@@ -8955,7 +8955,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:258
 #, fuzzy
 msgid "pagetitle:processqueue"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Wyślij kolejkę"
 
 #: public_html/databasestructure.php:259
 #, fuzzy
@@ -8975,7 +8975,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:262
 #, fuzzy
 msgid "pagetitle:upgrade"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Aktualizuj phpList"
 
 #: public_html/databasestructure.php:263
 #, fuzzy
@@ -8985,7 +8985,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:264
 #, fuzzy
 msgid "pagetitle:templates"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Zarządzaj szablonami kampanii"
 
 #: public_html/databasestructure.php:265
 #, fuzzy
@@ -9035,7 +9035,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:274
 #, fuzzy
 msgid "pagetitle:admins"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Zarządzaj administratorami"
 
 #: public_html/databasestructure.php:275
 #, fuzzy
@@ -9045,7 +9045,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:276
 #, fuzzy
 msgid "pagetitle:adminattributes"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Konfiguruj atrybuty administratorów"
 
 #: public_html/databasestructure.php:277
 #, fuzzy
@@ -9104,7 +9104,7 @@ msgstr "uaktualnij tłumaczenie"
 
 #: public_html/databasestructure.php:288
 msgid "pagetitle:eventlog"
-msgstr ""
+msgstr "Logi eventów"
 
 #: public_html/databasestructure.php:289
 msgid "pagetitlehover:eventlog"
@@ -9173,7 +9173,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:302
 #, fuzzy
 msgid "pagetitle:mclicks"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Statystyki kliknięć"
 
 #: public_html/databasestructure.php:303
 #, fuzzy
@@ -9183,7 +9183,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:304
 #, fuzzy
 msgid "pagetitle:uclicks"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Statystyki URL"
 
 #: public_html/databasestructure.php:305
 #, fuzzy
@@ -9211,17 +9211,17 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:310
 #, fuzzy
 msgid "pagetitle:usermgt"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Zarządzaj subskrybentami"
 
 #: public_html/databasestructure.php:311
 #, fuzzy
 msgid "pagetitlehover:usermgt"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Wspólne funkcje zarządzania subskrybentami"
 
 #: public_html/databasestructure.php:312
 #, fuzzy
 msgid "pagetitle:bouncemgt"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Zarządzaj odbiciami"
 
 #: public_html/databasestructure.php:313
 #, fuzzy
@@ -9231,7 +9231,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:314
 #, fuzzy
 msgid "pagetitle:domainstats"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Statystyki domen"
 
 #: public_html/databasestructure.php:315
 #, fuzzy
@@ -9241,7 +9241,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:316
 #, fuzzy
 msgid "pagetitle:mviews"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Wyświetl otwarte"
 
 #: public_html/databasestructure.php:317
 #, fuzzy
@@ -9260,7 +9260,7 @@ msgstr "uaktualnij tłumaczenie"
 
 #: public_html/databasestructure.php:320
 msgid "pagetitle:statsoverview"
-msgstr ""
+msgstr "Ogólne statystyki"
 
 #: public_html/databasestructure.php:321
 msgid "pagetitlehover:statsoverview"
@@ -9277,7 +9277,7 @@ msgstr ""
 #: public_html/databasestructure.php:324
 #, fuzzy
 msgid "pagetitle:dbcheck"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Uaktualnij strukturę bazy"
 
 #: public_html/databasestructure.php:325
 #, fuzzy
@@ -9287,7 +9287,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:326
 #, fuzzy
 msgid "pagetitle:importadmin"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Importuj administratorów"
 
 #: public_html/databasestructure.php:327
 #, fuzzy
@@ -9317,7 +9317,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:332
 #, fuzzy
 msgid "pagetitle:listbounces"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Zobacz odrzucenia według listy"
 
 #: public_html/databasestructure.php:333
 #, fuzzy
@@ -9327,7 +9327,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:334
 #, fuzzy
 msgid "pagetitle:bouncerules"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Zasady odrzuceń"
 
 #: public_html/databasestructure.php:335
 #, fuzzy
@@ -9347,7 +9347,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:338
 #, fuzzy
 msgid "pagetitle:checkbouncerules"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Sprawdź zasady odrzuceń"
 
 #: public_html/databasestructure.php:339
 #, fuzzy
@@ -9376,7 +9376,7 @@ msgstr "uaktualnij tłumaczenie"
 
 #: public_html/databasestructure.php:344
 msgid "pagetitle:updatetranslation"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Uaktualnij tłumaczenia"
 
 #: public_html/databasestructure.php:345
 msgid "pagetitlehover:updatetranslation"
@@ -9385,7 +9385,7 @@ msgstr "pagetitlehover:uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:346
 #, fuzzy
 msgid "pagetitle:reindex"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Rekonfiguj indeksy bazy"
 
 #: public_html/databasestructure.php:347
 #, fuzzy
@@ -9395,7 +9395,7 @@ msgstr "uaktualnij tłumaczenie"
 #: public_html/databasestructure.php:348
 #, fuzzy
 msgid "pagetitle:plugins"
-msgstr "uaktualnij tłumaczenie"
+msgstr "Konfiguracja pluginów"
 
 #: public_html/databasestructure.php:349
 #, fuzzy
@@ -9412,7 +9412,7 @@ msgstr ""
 
 #: public_html/databasestructure.php:352
 msgid "pagetitle:suppressionlist"
-msgstr ""
+msgstr "Lista zakazanych"
 
 #: public_html/databasestructure.php:353
 msgid "pagetitlehover:suppressionlist"

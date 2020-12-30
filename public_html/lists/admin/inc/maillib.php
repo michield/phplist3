@@ -19,8 +19,8 @@ function HTML2Text($text)
 
 //  $text = preg_replace("/<a href=\"(.*?)\"[^>]*>(.*?)<\/a>/is","[URLTEXT]\\2[/URLTEXT][LINK]\\1[/LINK]",$text,100);
 
-    $text = preg_replace("/<a[^>]*href=[\"\'](.*)[\"\'][^>]*>(.*)<\/a>/Umis",
-        "[URLTEXT]\\2[ENDURLTEXT][LINK]\\1[ENDLINK]\n", $text);
+    $text = preg_replace("/<a[^>]*href=([\"\'])(.*)\\1[^>]*>(.*)<\/a>/Umis",
+        "[URLTEXT]\\3[ENDURLTEXT][LINK]\\2[ENDLINK]\n", $text);
     $text = preg_replace("/<b>(.*?)<\/b\s*>/is", '*\\1*', $text);
     $text = preg_replace("/<h[\d]>(.*?)<\/h[\d]\s*>/is", "**\\1**\n", $text);
 //  $text = preg_replace("/\s+/"," ",$text);
@@ -39,12 +39,13 @@ function HTML2Text($text)
         $linkurl = $links[2][$matchindex];
         // check if the text linked is a repetition of the URL
         if (trim($linktext) == trim($linkurl) ||
+            'https://'.trim($linktext) == trim($linkurl) ||
             'http://'.trim($linktext) == trim($linkurl)
         ) {
             $linkreplace = $linkurl;
         } else {
             //# if link is an anchor only, take it out
-            if (strpos($linkurl, '#') !== false) {
+            if (strpos($linkurl, '#') === 0) {
                 $linkreplace = $linktext;
             } else {
                 $linkreplace = $linktext.' <'.$linkurl.'>';
@@ -144,9 +145,9 @@ function addAbsoluteResources($text, $url)
         for ($i = 0; $i < count($foundtags[0]); ++$i) {
             $match = $foundtags[2][$i];
             $tagmatch = $foundtags[1][$i];
-//      print "$match<br/>";
-            if (preg_match('#^(http|javascript|https|ftp|mailto):#i', $match)) {
-                // scheme exists, leave it alone
+
+            if (preg_match('#^[a-z][a-z0-9.-]*:#i', $match)) {
+                // begins with a scheme, leave it alone
             } elseif (preg_match("#\[.*\]#U", $match)) {
                 // placeholders used, leave alone as well
             } elseif (substr($match, 0, 2) == '//') {

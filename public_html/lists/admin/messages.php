@@ -5,18 +5,70 @@ require_once dirname(__FILE__).'/accesscheck.php';
 $subselect = $whereClause = '';
 $action_result = '';
 $access = accessLevel('messages');
-$filterSelectDefault = ' --- '.s('filter').' --- ';
 
 $messageSortOptions = array(
-    'default'     => s('Sort by'),
-    'subjectasc'  => s('Subject').' - '.s('Ascending'),
-    'subjectdesc' => s('Subject').' - '.s('Descending'),
-    'enteredasc'  => s('Entered').' - '.s('Ascending'),
-    'entereddesc' => s('Entered').' - '.s('Descending'),
-    'embargoasc'  => s('Embargo').' - '.s('Ascending'),
-    'embargodesc' => s('Embargo').' - '.s('Descending'),
-    'sentasc'     => s('Sent').' - '.s('Ascending'),
-    'sentdesc'    => s('Sent').' - '.s('Descending'),
+    'subjectasc'  => array(
+        // caption for drop-down list
+        'label' => s('Subject').' - '.s('Ascending'),
+        // sql order by
+        'orderby' => 'subject asc'
+    ),
+    'subjectdesc'  => array(
+        'label' => s('Subject').' - '.s('Descending'),
+        'orderby' => 'subject desc'
+    ),
+    'enteredasc'  => array(
+        'label' => s('Entered').' - '.s('Ascending'),
+        'orderby' => 'entered asc'
+    ),
+    'entereddesc'  => array(
+        'label' => s('Entered').' - '.s('Descending'),
+        'orderby' => 'entered desc'
+    ),
+    'modifiedasc'  => array(
+        'label' => s('Modified').' - '.s('Ascending'),
+        'orderby' => 'modified asc'
+    ),
+    'modifieddesc'  => array(
+        'label' => s('Modified').' - '.s('Descending'),
+        'orderby' => 'modified desc'
+    ),
+    'embargoasc'  => array(
+        'label' => s('Embargo').' - '.s('Ascending'),
+        'orderby' => 'embargo asc'
+    ),
+    'embargodesc'  => array(
+        'label' => s('Embargo').' - '.s('Descending'),
+        'orderby' => 'embargo desc'
+    ),
+    'sentasc'  => array(
+        'label' => s('Sent').' - '.s('Ascending'),
+        'orderby' => 'sent asc'
+    ),
+    'sentdesc'  => array(
+        'label' => s('Sent').' - '.s('Descending'),
+        'orderby' => 'sent desc'
+    ),
+);
+$tabParameters = array(
+    'active' => array(
+        // status values to select messages
+        'status' => "'inprocess', 'submitted', 'suspended'",
+        // initial ordering of tab
+        'defaultSort' => 'embargoasc'
+    ),
+    'draft' => array(
+        'status' => "'draft'",
+        'defaultSort' => 'modifieddesc'
+    ),
+    'sent' => array(
+        'status' => "'sent'",
+        'defaultSort' => 'sentdesc'
+    ),
+    'static' => array(
+        'status' => "'prepared'",
+        'defaultSort' => 'embargoasc'
+    ),
 );
 
 if ($access == 'all') {
@@ -37,7 +89,7 @@ if (!isset($_SESSION['messagefilter'])) {
 }
 if (!empty($_POST['clear'])) {
     $_SESSION['messagefilter'] = '';
-    $_SESSION['messagesortby'] = '';
+    $_SESSION['messagesortby'] = array();
     $_SESSION['messagenumpp'] = MAX_MSG_PP;
     unset($_POST['filter']);
     unset($_POST['numPP']);
@@ -58,21 +110,28 @@ if (isset($_POST['numPP'])) {
         $_SESSION['messagenumpp'] = MAX_MSG_PP;
     }
 }
-// remember last one listed
-if (!isset($_GET['tab']) && !empty($_SESSION['lastmessagetype'])) {
-    $_GET['tab'] = $_SESSION['lastmessagetype'];
-} elseif (isset($_GET['tab'])) {
-    $_SESSION['lastmessagetype'] = $_GET['tab'];
-}
 
-if (!isset($_SESSION['messagesortby'])) {
-    $_SESSION['messagesortby'] = '';
-}
-if (isset($_POST['sortBy'])) {
-    if (in_array($_POST['sortBy'], array_keys($messageSortOptions))) {
-        $_SESSION['messagesortby'] = $_POST['sortBy'];
+if (isset($_GET['tab']) && isset($tabParameters[$_GET['tab']])) {
+    $currentTab = $_GET['tab'];
+} else {
+    if (isset($_SESSION['lastmessagetype'])) {
+        $currentTab = $_SESSION['lastmessagetype'];
+    } else {
+        $currentTab = 'sent';
     }
 }
+$_SESSION['lastmessagetype'] = $currentTab;
+
+if (isset($_POST['sortBy'])) {
+    if (in_array($_POST['sortBy'], array_keys($messageSortOptions))) {
+        $_SESSION['messagesortby'][$currentTab] = $_POST['sortBy'];
+    }
+}
+
+if (!isset($_SESSION['messagesortby'][$currentTab])) {
+    $_SESSION['messagesortby'][$currentTab] = $tabParameters[$currentTab]['defaultSort'];
+}
+$currentSortBy = $_SESSION['messagesortby'][$currentTab];
 
 echo '<div class="actions"><div class="fright">';
 echo PageLinkActionButton('send&amp;new=1', $GLOBALS['I18N']->get('Start a new campaign'));
@@ -91,24 +150,17 @@ if (USE_PREPARE) {
 //if (ENABLE_RSS) {
 //  $tabs->addTab("rss",PageUrl2("messages&amp;tab=rss"));
 //}
-if (!empty($_GET['tab'])) {
-    $tabs->setCurrent($_GET['tab']);
-} else {
-    $_GET['tab'] = 'sent';
-    $tabs->setCurrent('sent');
-}
+$tabs->setCurrent($currentTab);
 
 echo '<div class="minitabs">';
 echo $tabs->display();
 echo '</div>';
 
 $filterDisplay = $_SESSION['messagefilter'];
-if ($filterDisplay == '') {
-    $filterDisplay = $filterSelectDefault;
-}
+
 echo '<div id="messagefilter" class="filterdiv fright">';
 echo formStart(' id="messagefilterform" ');
-echo '<div><input type="text" name="filter" value="'.htmlspecialchars($filterDisplay).'" id="filtertext" />';
+echo '<div><input type="text" name="filter" placeholder="&#128269;'.s('Search campaigns').'" value="'.htmlspecialchars($filterDisplay).'" />';
 
 echo '<select name="numPP" class="numppOptions">';
 foreach (array(5, 10, 15, 20, 50, 100) as $numppOption) {
@@ -120,11 +172,11 @@ foreach (array(5, 10, 15, 20, 50, 100) as $numppOption) {
 }
 echo '</select>';
 echo '<select name="sortBy" class="sortby">';
-foreach ($messageSortOptions as $sortOption => $sortOptionLabel) {
-    if ($sortOption == $_SESSION['messagesortby']) {
-        echo '<option selected="selected" value="'.$sortOption.'">'.$sortOptionLabel.'</option>';
+foreach ($messageSortOptions as $sortOption => $optionData) {
+    if ($sortOption == $currentSortBy) {
+        echo '<option selected="selected" value="'.$sortOption.'">'.$optionData['label'].'</option>';
     } else {
-        echo '<option value="'.$sortOption.'">'.$sortOptionLabel.'</option>';
+        echo '<option value="'.$sortOption.'">'.$optionData['label'].'</option>';
     }
 }
 echo '</select>';
@@ -155,6 +207,27 @@ if (!empty($_GET['delete'])) {
         $action_result .= '<br/>';
     }
     $action_result .= "<hr /><br />\n";
+}
+
+if (isset($_GET['duplicate'])) {
+    verifyCsrfGetToken();
+
+    Sql_Query(sprintf('insert into %s (uuid, subject, fromfield, tofield, replyto, message, textmessage, footer, entered,
+        modified, embargo, repeatuntil, repeatinterval, requeueinterval, status, htmlformatted, sendformat, template, rsstemplate, owner)
+        select "%s", subject, fromfield, tofield, replyto, message, textmessage, footer, now(),
+        now(), now(), now(), repeatinterval, requeueinterval, "draft",  htmlformatted,
+        sendformat, template, rsstemplate, "%d" from %s
+        where id = %d',
+        $GLOBALS['tables']['message'], (string) Uuid::generate(4), $_SESSION['logindetails']['id'],$GLOBALS['tables']['message'],
+        intval($_GET['duplicate'])));
+    if ($newId = Sql_Insert_Id()) {  // if we don't have a newId then the copy failed
+        Sql_Query(sprintf('insert into %s (id,name,data) '.
+            'select %d,name,data from %s where name in ("sendmethod","sendurl","campaigntitle","excludelist","subject") and id = %d',
+            $GLOBALS['tables']['messagedata'],$newId,$GLOBALS['tables']['messagedata'],intval($_GET['duplicate'])));
+        Sql_Query(sprintf('insert into %s (messageid, listid, entered)  select %d, listid, now() from %s where messageid = %d',
+            $GLOBALS['tables']['listmessage'],$newId,$GLOBALS['tables']['listmessage'],intval($_GET['duplicate'])));
+    }
+
 }
 
 if (isset($_GET['resend'])) {
@@ -262,31 +335,8 @@ if (!empty($action_result)) {
 }
 
 $where = array();
-//## Switch tab
-switch ($_GET['tab']) {
-    case 'queued':
-//    $subselect = ' status in ("submitted") and (rsstemplate is NULL or rsstemplate = "") ';
-        $where[] = " status in ('submitted', 'suspended') ";
-        $url_keep = '&amp;tab=queued';
-        break;
-    case 'static':
-        $where[] = " status in ('prepared') ";
-        $url_keep = '&amp;tab=static';
-        break;
-    case 'draft':
-        $where[] = " status in ('draft') ";
-        $url_keep = '&amp;tab=draft';
-        break;
-    case 'active':
-        $where[] = " status in ('inprocess','submitted', 'suspended') ";
-        $url_keep = '&amp;tab=active';
-        break;
-    case 'sent':
-    default:
-        $where[] = " status in ('sent') ";
-        $url_keep = '&amp;tab=sent';
-        break;
-}
+$where[] = sprintf('status in (%s)', $tabParameters[$currentTab]['status']);
+$url_keep = '&amp;tab='.$currentTab;
 
 if (!empty($_SESSION['messagefilter'])) {
     $where[] = ' subject like "%'.sql_escape($_SESSION['messagefilter']).'%" ';
@@ -297,37 +347,7 @@ if ($access != 'all') {
     $where[] = ' owner = '.$_SESSION['logindetails']['id'];
 }
 $whereClause = ' where '.implode(' and ', $where);
-
-$sortBySql = 'order by entered desc';
-switch ($_SESSION['messagesortby']) {
-    case 'sentasc':
-        $sortBySql = 'order by sent asc';
-        break;
-    case 'sentdesc':
-        $sortBySql = 'order by sent desc';
-        break;
-    case 'subjectasc':
-        $sortBySql = 'order by subject asc';
-        break;
-    case 'subjectdesc':
-        $sortBySql = 'order by subject desc';
-        break;
-    case 'enteredasc':
-        $sortBySql = 'order by entered asc';
-        break;
-    case 'entereddesc':
-        $sortBySql = 'order by entered desc';
-        break;
-    case 'embargoasc':
-        $sortBySql = 'order by embargo asc';
-        break;
-    case 'embargodesc':
-        $sortBySql = 'order by embargo desc';
-        break;
-    default:
-        $sortBySql = 'order by embargo desc, entered desc';
-}
-
+$sortBySql = 'order by '.$messageSortOptions[$currentSortBy]['orderby'];
 $req = Sql_query('select count(*) from '.$tables['message'].$whereClause.' '.$sortBySql);
 $total_req = Sql_Fetch_Row($req);
 $total = $total_req[0];
@@ -396,6 +416,40 @@ if ($total) {
         }
         $ls->addColumn($listingelement, $GLOBALS['I18N']->get('Status'), $statusdiv);
 
+        /*
+         * Display the lists that have been selected for the campaign
+         */
+        $maxListsDisplayed = 3;
+        $namesQuery = <<<END
+    SELECT SQL_CALC_FOUND_ROWS l.name
+    FROM {$tables['list']} l
+    JOIN {$tables['listmessage']} lm  ON l.id = lm.listid
+    WHERE lm.messageid = {$msg['id']}
+    ORDER BY l.name
+    LIMIT $maxListsDisplayed
+END;
+        $namesResult = Sql_Query($namesQuery);
+        $row = Sql_Fetch_Row_Query('SELECT FOUND_ROWS()');
+        $numberOfLists = $row[0];
+
+        if ($numberOfLists > 0) {
+            $listNames = array();
+
+            while ($row = Sql_Fetch_Assoc($namesResult)) {
+                $listNames[] = htmlspecialchars($row['name']);
+            }
+
+            if ($numberOfLists > $maxListsDisplayed) {
+                array_pop($listNames);
+                $listNames[] = sprintf(
+                    '<a href="%s">%s</a>',
+                    PageURL2('message', '', "id={$msg['id']}").'#targetlists',
+                    htmlspecialchars(s('and %d more', $numberOfLists - ($maxListsDisplayed - 1)))
+                );
+            }
+            $ls->addRow($listingelement, s('Lists'), implode('<br/>', $listNames), '', 'left');
+        }
+
         if ($msg['status'] != 'draft') {
             //    $ls->addColumn($listingelement,$GLOBALS['I18N']->get("total"), $msg['astext'] + $msg['ashtml'] + $msg['astextandhtml'] + $msg['aspdf'] + $msg['astextandpdf']);
 //    $ls->addColumn($listingelement,$GLOBALS['I18N']->get("text"), $msg['astext']);
@@ -447,7 +501,7 @@ if ($total) {
             $resultStats .= '
             <tr>
                 <td>' .s('Bounced').'</td>
-                <td>'.(!empty($viewStats['bounces']) ? PageLink2('bounces&id='.$msg['id'],$viewStatsFormatted['bounces']): '0').'</td>
+                <td>'.(!empty($viewStats['bounces']) ? PageLink2('msgbounces&id='.$msg['id'],$viewStatsFormatted['bounces']): '0').'</td>
             </tr>
         </tbody>
     </table>';
@@ -463,9 +517,11 @@ if ($total) {
         }
 
         if ($msg['status'] == 'sent') {
-            $timetosend = $GLOBALS['I18N']->get('Time to send').': '.timeDiff($msg['sendstart'], $msg['sent']);
+            $started = s('Started ').': '.formatDateTime($msg['sendstart']);
+            $timetosend = s('Time to send').': '.timeDiff($msg['sendstart'], $msg['sent']);
         } else {
             $timetosend = '';
+            $started = '';
         }
 
         $colspan = 3;
@@ -485,7 +541,7 @@ if ($total) {
         //$bouncedrow = sprintf('<tr><td colspan="%d">%s</td><td>%d</td></tr>',
         //$colspan-1,$GLOBALS['I18N']->get("Bounced"),$msg["bouncecount"]);
         //}
-    
+
         // Calculcate sent statistics for printing
         $sentStats = array(
             'grandTotal' => $msg['astext'] + $msg['ashtml'] + $msg['astextandhtml'] + $msg['aspdf'] + $msg['astextandpdf']
@@ -510,16 +566,18 @@ if ($total) {
             </tr>
           </thead>
           <tbody>
-              %s
-              <tr><td>' .$GLOBALS['I18N']->get('total').'</td><td>'.$GLOBALS['I18N']->get('text').'</td><td>'.$GLOBALS['I18N']->get('html').'</td>
-                %s%s
+              %s %s
+              <tr><td>' .s('total').'</td><td>'.s('text').'</td><td>'.s('html').'</td>
+                %s%
               </tr>
               <tr><td><b>%s</b></td><td><b>%s</b></td><td><b>%s</b></td>
                 %s %s %s %s
               </tr>
           </tbody>
       </table>',
-                !empty($timetosend) ? '<tr><td colspan="'.$colspan.'">'.$timetosend.'</td></tr>' : '',
+                !empty($started) ? '<tr> <td colspan="'.$colspan.'">'.$started.'</td></tr>' : '',
+
+                !empty($timetosend) ? '<tr> <td colspan="'.$colspan.'">'.$timetosend.'</td></tr>' : '',
                 !empty($msg['aspdf']) ? '<td>'.$GLOBALS['I18N']->get('PDF').'</td>' : '',
                 !empty($msg['astextandpdf']) ? '<td>'.$GLOBALS['I18N']->get('both').'</td>' : '',
                 $sentStatsFormatted['grandTotal'],
@@ -565,9 +623,14 @@ if ($total) {
 //      $actionbuttons .= sprintf('<span class="delete"><a href="javascript:deleteRec(\'%s\');" class="button" title="'.$GLOBALS['I18N']->get("delete").'">'.$GLOBALS['I18N']->get("delete").'</a></span>',PageURL2("messages$url_keep","","delete=".$msg["id"]));
             $actionbuttons .= '<span class="edit">'.PageLinkButton('send', $GLOBALS['I18N']->get('Edit'),
                     'id='.$msg['id'], '', s('Edit')).'</span>';
-            if (empty($clicks[0])) { //# disallow deletion when there are stats
+            if (empty($clicks[0])  ||  !empty($messagedata['istestcampaign'])) { //# disallow deletion when there are stats except when is test campaign
                 $actionbuttons .= '<span class="delete">'.$deletebutton->show().'</span>';
             }
+        }
+
+        if ($msg['status'] == 'sent') {
+            $actionbuttons .= '<span class="copy">'.PageLinkButton('messages', s('Copy to Draft'),
+                    'tab=draft&duplicate='.$msg['id'], '', s('Copy to Draft')).'</span>';
         }
 
         $ls->addColumn($listingelement, $GLOBALS['I18N']->get('Action'),
@@ -577,7 +640,7 @@ if ($total) {
 
 echo $ls->display();
 
-if ($total > 5 && $_GET['tab'] == 'active') {
+if ($total > 5 && $currentTab == 'active') {
     echo PageLinkButton('messages', $GLOBALS['I18N']->get('Suspend All'), 'action=suspall');
     echo PageLinkButton('messages', $GLOBALS['I18N']->get('Mark All Sent'), 'action=markallsent');
 }

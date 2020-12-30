@@ -54,7 +54,7 @@ if (isset($_POST['action'])) {
 //          Sql_Query('insert into '.$table_prefix.'listattr_'.$lc_name.' (name) values("Checked")');
 //          Sql_Query('insert into '.$table_prefix.'listattr_'.$lc_name.' (name) values("Unchecked")');
                     // we cannot "require" checkboxes, that does not make sense
-                    Sql_Query("update {$tables['attribute']} set required = 0 where id = $insertid");
+                    Sql_Query("update {$tables['attribute']} set required = 1 where id = $insertid");
                 }
                 if ($_POST['type'][$id] == 'checkboxgroup') {
                     Sql_Query("update {$tables['attribute']} set required = 0 where id = $insertid");
@@ -334,7 +334,7 @@ if (isset($_POST['action'])) {
         }
     }
 }
-Sql_Query("update {$tables['attribute']} set required = 0 where type = \"checkbox\" or type = \"checkboxgroup\" or type = \"hidden\"");
+Sql_Query("update {$tables['attribute']} set required = 0 where type = \"checkboxgroup\" or type = \"hidden\"");
 
 ?>
 
@@ -353,7 +353,7 @@ echo s('Load data from').' '.PageLinkButton('defaults',
 
 $res = Sql_Query("select * from {$tables['attribute']} order by listorder");
 if (Sql_Affected_Rows()) {
-    echo '<p class="information">'.s('Existing attributes').':</p>';
+    echo '<h3>' .s('Existing attributes').'</h3>';
 } else {
     echo '<p class="information">'.s('No Attributes have been defined yet').'</p>';
 }
@@ -423,23 +423,23 @@ if ($c) {
 
 echo '<br /><br /><br /><div id="new-attribute">
 <a name="new"></a>
-<h3>' .s('Add new Attribute').':</h3>
-<div class="alert-warning">' .s('Warning: Please avoid storing sensitive personal information such as race, health, or sexual orientation.').'</div>
+<h3>' .s('Add new Attribute').'</h3>
+<div class="alert alert-warning">' .s('Warning: Storage of sensitive personal data such as race, health, and sexual orientation is regulated by some data protection laws').'. <a href="https://www.phplist.org/manual/ch048_gdpr.xhtml" target="_blank">' .s('Read more'). '&hellip;</a></div>
 
-<div class="label"><label class="label">' .s('Name').': </label></div>
+<div class="label pull-left"><label class="label">' .s('Name').': </label></div>
 <div class="field"><input type="text" name="name[0]" value="" size="40" /></div>
-<div class="label"><label class="label">' .s('Type').': </label></div>
+<div class="label pull-left"><label class="label">' .s('Type').': </label></div>
 <div class="field"><select name="type[0]">';
 foreach ($types as $key => $val) {
     printf('     <option value="%s" %s>%s</option>', $val, '', s($val));
 }
 echo'
 </select></div>
-<div class="label"><label class="label">' .s('Default Value').': </label></div>
+<div class="label pull-left"><label class="label">' .s('Default Value').': </label></div>
 <div class="field"><input type="text" name="default[0]" value="" size="40" /></div>
-<div class="label"><label class="label">' .s('Order of Listing').': </label></div>
+<div class="label pull-left"><label class="label">' .s('Order of Listing').': </label></div>
 <div class="field"><input type="text" name="listorder[0]" value="" size="5" /></div>
-<div class="label"><label class="label">' .s('Is this attribute required?').': </label></div>
+<div class="label pull-left"><label class="label">' .s('Is this attribute required?').': </label></div>
 <div class="field"><input type="checkbox" name="required[0]" value="1" checked="checked" /></div>
 
 <div class="field"><input class="submit" type="submit" name="action" value="' .s('Save Changes').'" /></div>

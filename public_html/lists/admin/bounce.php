@@ -135,7 +135,10 @@ $guessedemail = '';
 if ($id) {
     $result = Sql_query("SELECT * FROM {$tables['bounce']} where id = $id");
     if (!Sql_Affected_Rows()) {
-        Fatal_Error($GLOBALS['I18N']->get('This bounce no longer exists in the database.'));
+
+        echo '<div class="alert alert-warning " role="alert">
+        '.s('This bounce no longer exists in the database.').'</div>';
+        echo '<div class="pull-left">'.PageLinkButton('bounces', s('Manage bounces')).'</div>';
 
         return;
     }
@@ -194,7 +197,7 @@ if ($id) {
 //    print "BOUNDARY: ". $regs[1];
         $multi_part_boundary = $regs[1];
         $parts = explode($multi_part_boundary, $bounce['data']);
-        var_dump($parts);
+
         if (preg_match('/Content-Transfer-Encoding: ([\w-]+)/i', $bounce['data'], $regs)) {
             //     var_dump($regs);
             //     $transfer_encoding = strtolower($regs[1]);

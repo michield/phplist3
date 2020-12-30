@@ -3,7 +3,6 @@
 require_once dirname(__FILE__).'/accesscheck.php';
 
 include dirname(__FILE__).'/structure.php';
-@ob_end_flush();
 
 function output($message)
 {
@@ -50,6 +49,7 @@ if ($force) {
     Redirect('initialise&firstinstall=1');
     exit;
 }
+@ob_end_flush();
 
 if (empty($_SESSION['hasconf']) && !empty($_REQUEST['firstinstall']) && (empty($_REQUEST['adminemail']) || strlen($_REQUEST['adminpassword']) < 8)) {
     echo '<noscript>';
@@ -182,8 +182,6 @@ if ($success) {
     output( s('Setting default configuration').'<br/>');
     // mark the database to be our current version
     SaveConfig('version', VERSION, 0);
-    // mark now to be the last time we checked for an update
-    SaveConfig('updatelastcheck', date('Y-m-d H:i:s', time()), 0, true);
     SaveConfig('admin_address', $adminemail, 1);
     SaveConfig('message_from_name', strip_tags($_REQUEST['adminname']), 1);
     SaveConfig('campaignfrom_default', "$adminemail ".strip_tags($_REQUEST['adminname']));
@@ -193,6 +191,8 @@ if ($success) {
     SaveConfig('message_from_address', $adminemail);
     SaveConfig('message_from_name', strip_tags($_REQUEST['adminname']));
     SaveConfig('message_replyto_address', $adminemail);
+    SaveConfig('secret', bin2hex(random_bytes(20)));
+    SaveConfig('lastcheckupdate', date('m/d/Y h:i:s', time()), 0, true);
 
     if (!empty($_REQUEST['orgname'])) {
         SaveConfig('organisation_name', strip_tags($_REQUEST['orgname']), 1);
@@ -203,9 +203,10 @@ if ($success) {
     } else {
         SaveConfig('organisation_name', strip_tags($_REQUEST['adminemail']), 1);
     }
-
+    // add a draft campaign for invite plugin
+    addInviteCampaign(1);
     // add a testlist
-    $info = $GLOBALS['I18N']->get('List for testing');
+    $info = s('List for testing');
     $result = Sql_query("insert into {$tables['list']} (name,description,entered,active,owner) values(\"test\",\"$info\",now(),0,1)");
     $info = s('Sign up to our newsletter');
     $result = Sql_query("insert into {$tables['list']} (name,description,entered,active,owner) values(\"newsletter\",\"$info\",now(),1,1)");

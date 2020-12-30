@@ -13,8 +13,7 @@ Feature: Navigate the app using the menu
       | campaigns                 |
       | statistics                |
       | system                    |
-      | Configuration functions   |
-      | info                      |
+      | config                    |
       | develop                   |
      Then I should see "Recently Visited"
      Then I should see "logout"
@@ -28,8 +27,8 @@ Feature: Navigate the app using the menu
         Examples:
          | Innerpages                |
          | Search subscribers        |
-         | Add a new subscriber      |
          | Manage subscribers        |
+         | Configure attributes      |
          | Subscriber lists          |
          | Import emails             |
          | Export subscribers        |
@@ -69,7 +68,7 @@ Feature: Navigate the app using the menu
          | Verify the DB structure   |
          | Log of events             |
          | Initialise the database   |
-         | Upgrade phpList           |
+         | Upgrade database          |
          | Manage bounces            |
          | Send the queue            |
          | Rebuild DB indexes        |
@@ -83,7 +82,6 @@ Feature: Navigate the app using the menu
          | Configuration                      |
          | Settings                           |
          | Manage plugins                     |
-         | Configure attributes               |
          | Subscribe pages                    |
          | Manage administrators              |
          | Import administrators              |
@@ -91,16 +89,6 @@ Feature: Navigate the app using the menu
          | Bounce rules                       |
          | Check bounce rules                 |
          | Categorise lists                   |
-    
-      
-    Scenario Outline: Browse Info menu
-        Given I have logged in as an administrator
-        Given I follow "Info"
-        Then I should see "<Innerpages>"
-        Examples:
-         | Innerpages    |
-         | About phpList |
-         | Help          |
     
     Scenario Outline: Browse Develop menu
         Given I have logged in as an administrator

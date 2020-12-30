@@ -1,9 +1,9 @@
 <?php
 
 require_once dirname(__FILE__).'/accesscheck.php';
-$inRemoteCall = false;
 
-if (!$GLOBALS['commandline']) {
+if (!$GLOBALS['commandline'] && !$GLOBALS['inRemoteCall']) {
+    // browser session
     ob_end_flush();
     if (!MANUALLY_PROCESS_BOUNCES) {
         echo $GLOBALS['I18N']->get('This page can only be called from the commandline');
@@ -15,25 +15,9 @@ if (!$GLOBALS['commandline']) {
 
         return;
     }
-    $inRemoteCall = false;
 
-    if (isset($_GET['secret'])) {
-        $ourSecret = getConfig('remote_processing_secret');
-        if ($ourSecret != $_GET['secret']) {
-            echo Error(s('Incorrect processing secret'));
-
-            return;
-        } else {
-            $inRemoteCall = true;
-        }
-    } else {
-        //# we're in a normal session, so the csrf token should work
-        verifyCsrfGetToken();
-    }
-} else {
-    ob_end_clean();
-    echo ClineSignature();
-    ob_start();
+    //# we're in a normal session, so the csrf token should work
+    verifyCsrfGetToken();
 }
 
 flush();
@@ -92,6 +76,10 @@ function outputProcessBounce($message, $reset = 0)
     $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
     if ($GLOBALS['commandline']) {
         cl_output($message);
+    } elseif ($GLOBALS['inRemoteCall']) {
+        ob_end_clean();
+        echo $message, "\n";
+        ob_start();
     } else {
         if ($reset) {
             echo '<script language="Javascript" type="text/javascript">
@@ -154,10 +142,9 @@ function findUserID($text)
     //# that should not be too bad
 
     if (!$userid) {
-        preg_match_all('/[\S]+@[\S\.]+/', $text, $regs);
+        preg_match_all('/[._a-zA-Z0-9-]+@[.a-zA-Z0-9-]+/', $text, $regs);
 
-        foreach ($regs[0] as $match) {
-            $email = cleanEmail($match);
+        foreach ($regs[0] as $email) {
             $useridQ = Sql_Fetch_Row_Query(sprintf('select id from %s where email = "%s"', $tables['user'],
                 sql_escape($email)));
             if (!empty($useridQ[0])) {
@@ -215,24 +202,30 @@ function processImapBounce($link, $num, $header)
         //# just say we did something, when actually we didn't
         return true;
     }
+    $bounceDateFormatted = date('Y-m-d H:i:s', $bounceDate);
 
     Sql_Query(sprintf('insert into %s (date,header,data)
     values("%s","%s","%s")',
         $tables['bounce'],
-        date('Y-m-d H:i', $bounceDate),
+        $bounceDateFormatted,
         addslashes($header),
         addslashes($body)));
 
     $bounceid = Sql_Insert_Id();
 
-    return processBounceData($bounceid, $msgid, $userid);
+    return processBounceData($bounceid, $msgid, $userid, $bounceDateFormatted);
 }
 
-function processBounceData($bounceid, $msgid, $userid)
+function processBounceData($bounceid, $msgid, $userid, $bounceDate = null)
 {
     global $tables;
     $useremailQ = Sql_fetch_row_query(sprintf('select email from %s where id = %d', $tables['user'], $userid));
     $useremail = $useremailQ[0];
+
+    if ($bounceDate === null) {
+        $bounceDate = date('Y-m-d H:i', time());
+    }
+
     if ($msgid === 'systemmessage' && !empty($userid)) {
         Sql_Query(sprintf('update %s
       set status = "bounced system message",
@@ -240,6 +233,25 @@ function processBounceData($bounceid, $msgid, $userid)
       where id = %d',
             $tables['bounce'],
             $userid, $bounceid));
+
+        #Use the date of the bounce, instead of "now" as processing may be different
+        Sql_Query(sprintf('INSERT INTO %s
+            (
+                        user,
+                        message,
+                        bounce,
+                        time
+            )
+            VALUES
+            (
+                        %d,
+                        -1,
+                        %d,
+                        "%s"
+            )',
+                $tables['user_message_bounce'],
+                $userid, $bounceid, $bounceDate)
+        );
         logEvent("$userid ".$GLOBALS['I18N']->get('system message bounced, user marked unconfirmed'));
         addUserHistory($useremail, $GLOBALS['I18N']->get('Bounced system message'), '
     <br/>' .$GLOBALS['I18N']->get('User marked unconfirmed')."
@@ -678,9 +690,9 @@ if (count($bouncerules)) {
                         break;
                     case 'deletebounce':
                         deleteBounce($row['bounce']);
-			if (REPORT_DELETED_BOUNCES == 1) {
-			    $advanced_report .= 'Deleted bounce ' . $userdata['email'] . ' --> Bounce deleted by bounce rule ' . $rule['id'] . PHP_EOL;
-			}
+            if (REPORT_DELETED_BOUNCES == 1) {
+                $advanced_report .= 'Deleted bounce ' . $userdata['email'] . ' --> Bounce deleted by bounce rule ' . $rule['id'] . PHP_EOL;
+            }
                         break;
                 }
 
@@ -722,8 +734,8 @@ while ($user = Sql_Fetch_Row($userid_req)) {
 
     //# 17361 - update of the above query, to include the bounce table and to exclude duplicate bounces
     $msg_req = Sql_Query(sprintf('select umb.*,um.*,b.status,b.comment from %s um left join %s umb on (um.messageid = umb.message and userid = user)
-    left join %s b on umb.bounce = b.id 
-    where userid = %d and um.status = "sent" 
+    left join %s b on umb.bounce = b.id
+    where userid = %d and um.status = "sent"
     order by entered desc',
         $tables['usermessage'], $tables['user_message_bounce'], $tables['bounce'],
         $user[0]));

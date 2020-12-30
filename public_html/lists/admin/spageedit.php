@@ -44,10 +44,11 @@ if (isset($_POST['save'])) {
             $tables['subscribepage'], sql_escape(strip_tags($title)), $owner, $id));
     } else {
         Sql_Query(sprintf('insert into %s (title,owner) values("%s",%d)',
-            $tables['subscribepage'], $title, $owner));
+            $tables['subscribepage'], sql_escape($title), $owner));
         $id = Sql_Insert_id();
     }
     Sql_Query(sprintf('delete from %s where id = %d', $tables['subscribepage_data'], $id));
+
     foreach (array(
                  'title',
                  'language_file',
@@ -58,6 +59,7 @@ if (isset($_POST['save'])) {
                  'button',
                  'htmlchoice',
                  'emaildoubleentry',
+                 'showcategories',
                  'ajax_subscribeconfirmation',
              ) as $item) {
         Sql_Query(sprintf('insert into %s (name,id,data) values("%s",%d,"%s")',
@@ -126,7 +128,7 @@ echo formStart(' class="spageEdit" ');
 
 //# initialise values from defaults
 $data = array();
-$data['title'] = $GLOBALS['I18N']->get('Subscribe to our newsletter');
+$data['title'] = s('Subscribe to our newsletter');
 $data['button'] = $strSubmit;
 $data['intro'] = $strSubscribeInfo;
 $data['language_file'] = ''; //$GLOBALS['language_module'];
@@ -140,12 +142,17 @@ $data['confirmationmessage'] = getConfig('confirmationmessage');
 $data['confirmationsubject'] = getConfig('confirmationsubject');
 $data['unsubscribemessage'] = getConfig('unsubscribemessage');
 $data['unsubscribesubject'] = getConfig('unsubscribesubject');
-$data['htmlchoice'] = 'checkfortext';
+$data['htmlchoice'] = 'htmlonly';
 $data['emaildoubleentry'] = 'yes';
 $data['rssdefault'] = 'daily'; //Leftover from the preplugin era
-$data['rssintro'] = $GLOBALS['I18N']->get('Please indicate how often you want to receive messages');  //Leftover from the preplugin era
+$data['rssintro'] = s('Please indicate how often you want to receive messages');  //Leftover from the preplugin era
 $selected_lists = array();
 $attributedata = array();
+if(getConfig('displaycategories')==0) {
+    $data['showcategories'] = 'no';
+}else {
+    $data['showcategories'] = 'yes';
+}
 
 if ($id) {
     //# Fill values from database
@@ -184,9 +191,10 @@ $generalinfoHTML = '<h3><a name="general">'.s('General Information').'</a></h3>'
 $generalinfoHTML .= '<div>';
 
 $generalinfoHTML .= sprintf('<label for="title">%s</label><input type="text" name="title" value="%s" size="60" />',
-    $GLOBALS['I18N']->get('Title'),
+    s('Title'),
     htmlspecialchars(stripslashes($data['title'])));
 
+$language_files = array();
 $language_file = $GLOBALS['language_module'];
 if (is_dir(dirname(__FILE__).'/../texts')) {
     $language_files = array();
@@ -200,7 +208,7 @@ if (is_dir(dirname(__FILE__).'/../texts')) {
 }
 asort($language_files);
 $language_select = '<select name="language_file">';
-$language_select .= '<option value="">--'.$GLOBALS['I18N']->get('default').'</option>';
+$language_select .= '<option value="">--'.s('default').'</option>';
 foreach ($language_files as $key => $val) {
     $language_select .= sprintf('<option value="%s" %s>%s</option>', $key,
         $key == $data['language_file'] ? 'selected="selected"' : '', $val);
@@ -208,19 +216,19 @@ foreach ($language_files as $key => $val) {
 $language_select .= '</select>';
 
 $generalinfoHTML .= sprintf('<label for="language_file">%s</label>%s',
-    $GLOBALS['I18N']->get('Language file to use'), $language_select);
+    s('Language file to use'), $language_select);
 
 $generalinfoHTML .= sprintf('<label for="intro">%s</label><textarea name="intro" cols="60" rows="10" class="virtual">%s</textarea>',
-    $GLOBALS['I18N']->get('Intro'),
+    s('Intro'),
     htmlspecialchars(stripslashes($data['intro'])));
 $generalinfoHTML .= sprintf('<label for="header">%s</label><textarea name="header" cols="60" rows="10" class="virtual">%s</textarea>',
-    $GLOBALS['I18N']->get('Header'),
+    s('Header'),
     htmlspecialchars(stripslashes($data['header'])));
 $generalinfoHTML .= sprintf('<label for="footer">%s</label><textarea name="footer" cols="60" rows="10" class="virtual">%s</textarea>',
-    $GLOBALS['I18N']->get('Footer'),
+    s('Footer'),
     htmlspecialchars(stripslashes($data['footer'])));
 $generalinfoHTML .= sprintf('<label for="thankyoupage">%s</label><textarea name="thankyoupage" cols="60" rows="10" class="virtual">%s</textarea>',
-    $GLOBALS['I18N']->get('Thank you page'),
+    s('Thank you page'),
     htmlspecialchars(stripslashes($data['thankyoupage'])));
 
 $generalinfoHTML .= sprintf('<label for="ajax_subscribeconfirmation">%s</label><textarea name="ajax_subscribeconfirmation" cols="60" rows="10" class="virtual">%s</textarea>',
@@ -228,70 +236,68 @@ $generalinfoHTML .= sprintf('<label for="ajax_subscribeconfirmation">%s</label><
     htmlspecialchars(stripslashes($data['ajax_subscribeconfirmation'])));
 
 $generalinfoHTML .= sprintf('<label for="button">%s</label><input type="text" name="button" value="%s" size="60" />',
-    $GLOBALS['I18N']->get('Text for Button'),
+    s('Text for Button'),
     htmlspecialchars($data['button']));
-$generalinfoHTML .= sprintf('<label for="htmlchoice">%s</label>', $GLOBALS['I18N']->get('HTML Email choice'));
+$generalinfoHTML .= sprintf('<label for="htmlchoice">%s</label>', s('HTML Email choice'));
 $generalinfoHTML .= sprintf('<input type="radio" name="htmlchoice" value="textonly" %s />
   %s <br/>',
     $data['htmlchoice'] == 'textonly' ? 'checked="checked"' : '',
-    $GLOBALS['I18N']->get('Don\'t offer choice, default to <b>text</b>'));
+    s('Don\'t offer choice, default to <b>text</b>'));
 $generalinfoHTML .= sprintf('<input type="radio" name="htmlchoice" value="htmlonly" %s />
   %s <br/>',
     $data['htmlchoice'] == 'htmlonly' ? 'checked="checked"' : '',
-    $GLOBALS['I18N']->get('Don\'t offer choice, default to <b>HTML</b>'));
+    s('Don\'t offer choice, default to <b>HTML</b>'));
 $generalinfoHTML .= sprintf('<input type="radio" name="htmlchoice" value="checkfortext" %s />
   %s <br/>',
     $data['htmlchoice'] == 'checkfortext' ? 'checked="checked"' : '',
-    $GLOBALS['I18N']->get('Offer checkbox for text'));
+    s('Offer checkbox for text'));
 $generalinfoHTML .= sprintf('<input type="radio" name="htmlchoice" value="checkforhtml" %s />
   %s <br/>',
     $data['htmlchoice'] == 'checkforhtml' ? 'checked="checked"' : '',
-    $GLOBALS['I18N']->get('Offer checkbox for HTML'));
+    s('Offer checkbox for HTML'));
 $generalinfoHTML .= sprintf('<input type="radio" name="htmlchoice" value="radiotext" %s />
   %s <br/>',
     $data['htmlchoice'] == 'radiotext' ? 'checked="checked"' : '',
-    $GLOBALS['I18N']->get('Radio buttons, default to text'));
+    s('Radio buttons, default to text'));
 $generalinfoHTML .= sprintf('<input type="radio" name="htmlchoice" value="radiohtml" %s />
   %s <br/>',
     $data['htmlchoice'] == 'radiohtml' ? 'checked="checked"' : '',
-    $GLOBALS['I18N']->get('Radio buttons, default to HTML'));
+    s('Radio buttons, default to HTML'));
 
 $generalinfoHTML .= sprintf('<label for="emaildoubleentry">%s</label>',
-    $GLOBALS['I18N']->get('Display Email confirmation'));
+    s('Display Email confirmation'));
 $generalinfoHTML .= sprintf('<input type="radio" name="emaildoubleentry" value="yes" %s />%s<br/>',
     $data['emaildoubleentry'] == 'yes' ? 'checked="checked"' : '',
-    $GLOBALS['I18N']->get('Display email confirmation'));
+    s('Display email confirmation'));
 $generalinfoHTML .= sprintf('<input type="radio" name="emaildoubleentry" value="no" %s />%s<br/>',
     $data['emaildoubleentry'] == 'no' ? 'checked="checked"' : '',
-    $GLOBALS['I18N']->get('Don\'t display email confirmation'));
+    s('Don\'t display email confirmation'));
 
 $generalinfoHTML .= '</div>';
-
-echo $generalinfoHTML;
 
 $transactionHTML = '<h3><a name="transaction">'.s('Transaction messages').'</a></h3>';
 
 $transactionHTML .= '<div>';
-$transactionHTML .= '<h4>'.$GLOBALS['I18N']->get('Message they receive when they subscribe').'</h4>';
+$transactionHTML .= '<h4>'.s('Message they receive when they subscribe').'</h4>';
 $transactionHTML .= sprintf('<label for="subscribesubject">%s</label><input type="text" name="subscribesubject" value="%s" size="60" />',
-    $GLOBALS['I18N']->get('Subject'),
+    s('Subject'),
     htmlspecialchars(stripslashes($data['subscribesubject'])));
 $transactionHTML .= sprintf('<label for="subscribemessage">%s</label><textarea name="subscribemessage" cols="60" rows="10" class="virtual">%s</textarea>',
-    $GLOBALS['I18N']->get('Message'),
+    s('Message'),
     htmlspecialchars(stripslashes($data['subscribemessage'])));
-$transactionHTML .= '<h4>'.$GLOBALS['I18N']->get('Message they receive when they confirm their subscription').'</h4>';
+$transactionHTML .= '<h4>'.s('Message they receive when they confirm their subscription').'</h4>';
 $transactionHTML .= sprintf('<label for="confirmationsubject">%s</label><input type="text" name="confirmationsubject" value="%s" size="60" />',
-    $GLOBALS['I18N']->get('Subject'),
+    s('Subject'),
     htmlspecialchars(stripslashes($data['confirmationsubject'])));
 $transactionHTML .= sprintf('<label for="confirmationmessage">%s</label><textarea name="confirmationmessage" cols="60" rows="10" class="virtual">%s</textarea>',
-    $GLOBALS['I18N']->get('Message'),
+    s('Message'),
     htmlspecialchars(stripslashes($data['confirmationmessage'])));
-$transactionHTML .= '<h4>'.$GLOBALS['I18N']->get('Message they receive when they unsubscribe').'</h4>';
+$transactionHTML .= '<h4>'.s('Message they receive when they unsubscribe').'</h4>';
 $transactionHTML .= sprintf('<label for="unsubscribesubject">%s</label><input type="text" name="unsubscribesubject" value="%s" size="60" />',
-    $GLOBALS['I18N']->get('Subject'),
+    s('Subject'),
     htmlspecialchars(stripslashes($data['unsubscribesubject'])));
 $transactionHTML .= sprintf('<label for="unsubscribemessage">%s</label><textarea name="unsubscribemessage" cols="60" rows="10" class="virtual">%s</textarea>',
-    $GLOBALS['I18N']->get('Message'),
+    s('Message'),
     htmlspecialchars(stripslashes($data['unsubscribemessage'])));
 
 $sendtest_content = sprintf('<div class="sendTest" id="sendTest">
@@ -307,9 +313,7 @@ $testpanel->setID('testpanel');
 
 $transactionHTML .= '</div>';
 
-echo $transactionHTML;
-
-$attributesHTML = '<h3><a name="attributes">'.$GLOBALS['I18N']->get('Select the attributes to use').'</a></h3>';
+$attributesHTML = '<h3><a name="attributes">'.s('Select the attributes to use').'</a></h3>';
 $attributesHTML .= '<div>';
 $hasAttributes = false;
 
@@ -328,13 +332,13 @@ while ($row = Sql_Fetch_Array($req)) {
     }
 
     $attributesHTML .= '<table class="spageeditListing" border="1" width="100%" bgcolor="'.$bgcol.'">';
-    $attributesHTML .= '<tr><td colspan="2" width="150">'.$GLOBALS['I18N']->get('Attribute').': '.$row['id'].'</td>';
-    $attributesHTML .= '<td colspan="2">'.$GLOBALS['I18N']->get('Check this box to use this attribute in the page').'<input type="checkbox" name="attr_use['.$row['id'].']" value="1" '.$checked[$row['id']].' /></td></tr>';
-    $attributesHTML .= '<tr><td colspan="2">'.$GLOBALS['I18N']->get('Name').': </td><td colspan="2"><h4>'.htmlspecialchars(stripslashes($row['name'])).'</h4></td></tr>';
-    $attributesHTML .= '<tr><td colspan="2">'.$GLOBALS['I18N']->get('Type').': </td><td colspan="2"><h4>'.$GLOBALS['I18N']->get($row['type']).'</h4></td></tr>';
-    $attributesHTML .= '<tr><td colspan="2">'.$GLOBALS['I18N']->get('Default Value').': </td><td colspan="2"><input type="text" name="attr_default['.$row['id'].']" value="'.htmlspecialchars(stripslashes($value['default_value'])).'" size="40" /></td></tr>';
-    $attributesHTML .= '<tr><td>'.$GLOBALS['I18N']->get('Order of Listing').': </td><td><input type="text" name="attr_listorder['.$row['id'].']" value="'.$value['listorder'].'" size="5" /></td>';
-    $attributesHTML .= '<td>'.$GLOBALS['I18N']->get('Is this attribute required?').': </td><td><input type="checkbox" name="attr_required['.$row['id'].']" value="1" ';
+    $attributesHTML .= '<tr><td colspan="2" width="150">'.s('Attribute').': '.$row['id'].'</td>';
+    $attributesHTML .= '<td colspan="2">'.s('Check this box to use this attribute in the page').'<input type="checkbox" name="attr_use['.$row['id'].']" value="1" '.$checked[$row['id']].' /></td></tr>';
+    $attributesHTML .= '<tr><td colspan="2">'.s('Name').': </td><td colspan="2"><h4>'.htmlspecialchars(stripslashes($row['name'])).'</h4></td></tr>';
+    $attributesHTML .= '<tr><td colspan="2">'.s('Type').': </td><td colspan="2"><h4>'.s($row['type']).'</h4></td></tr>';
+    $attributesHTML .= '<tr><td colspan="2">'.s('Default Value').': </td><td colspan="2"><input type="text" name="attr_default['.$row['id'].']" value="'.htmlspecialchars(stripslashes($value['default_value'])).'" size="40" /></td></tr>';
+    $attributesHTML .= '<tr><td>'.s('Order of Listing').': </td><td><input type="text" name="attr_listorder['.$row['id'].']" value="'.$value['listorder'].'" size="5" /></td>';
+    $attributesHTML .= '<td>'.s('Is this attribute required?').': </td><td><input type="checkbox" name="attr_required['.$row['id'].']" value="1" ';
     $attributesHTML .= $value['required'] ? 'checked="checked"' : '';
     $attributesHTML .= ' /></td></tr>';
     $attributesHTML .= '</table><hr/>';
@@ -342,26 +346,33 @@ while ($row = Sql_Fetch_Array($req)) {
 
 $attributesHTML .= '</div>';
 
-if ($hasAttributes) {
-    echo $attributesHTML;
-}
-
 //## allow plugins to add tabs
+$pluginsHTML = '';
+
 foreach ($GLOBALS['plugins'] as $pluginname => $plugin) {
     $pluginHTML = $plugin->displaySubscribepageEdit($data);
     if (!empty($pluginHTML)) {
-        echo '<h3><a name="'.$pluginname.'">'.s('Information needed for %s', $plugin->name).'</a></h3>';
-        echo '<div>'.$pluginHTML.'</div>';
+        $pluginsHTML .= '<h3><a name="'.$pluginname.'">'.s('Information needed for %s', $plugin->name).'</a></h3>';
+        $pluginsHTML .= '<div>'.$pluginHTML.'</div>';
     }
 }
 
-$listsHTML = '<h3><a name="lists">'.$GLOBALS['I18N']->get('Select the lists to offer').'</a></h3>';
+$listsHTML = '<h3><a name="lists">'.s('Select the lists to offer').'</a></h3>';
 $listsHTML .= '<div>';
-$listsHTML .= '<p>'.s('You can only select "public" lists for subscribe pages.');
+$listsHTML .= sprintf('<label for="listcategories">%s</label><br/>',
+    s('Display list categories'));
+$listsHTML .= sprintf('<input type="radio" name="showcategories" value="no" %s />%s<br/>',
+    $data['showcategories'] === 'no' ? 'checked="checked"' : '',
+    s('Do not show list categories'));
+$listsHTML .= sprintf('<input type="radio" name="showcategories" value="yes" %s />%s<br/>',
+    $data['showcategories'] === 'yes' ? 'checked="checked"' : '',
+    s('Display lists in labelled categories'));
+$listsHTML .= '<p><label>'.s('Lists').'</label><br/>'.s('You can only select "public" lists for subscribe pages.');
 $req = Sql_query("SELECT * FROM {$tables['list']} $subselect order by listorder");
 if (!Sql_Affected_Rows()) {
     $listsHTML .= '<br/>'.s('No lists available, please create one first');
 } else {
+
     $listsHTML .= '<br/>'.s('If you do not choose a list here, all public lists will be displayed.');
     $hideSingle = getConfig('hide_single_list');
     if ($hideSingle) {
@@ -379,7 +390,15 @@ while ($row = Sql_Fetch_Array($req)) {
 
 $listsHTML .= '</div>';
 
+//the order of tabs
+echo $generalinfoHTML;
 echo $listsHTML;
+if ($hasAttributes) {
+    echo $attributesHTML;
+}
+echo $transactionHTML;
+echo $pluginsHTML;
+
 echo '</div>'; // accordion
 
 $ownerHTML = $singleOwner = '';
@@ -388,13 +407,13 @@ if (isSuperUser() || accessLevel('spageedit') == 'all') {
     if (!isset($data['owner'])) {
         $data['owner'] = 0;
     }
-    $ownerHTML .= '<br/>'.$GLOBALS['I18N']->get('Owner').': <select name="owner">';
+    $ownerHTML .= '<br/>'.s('Owner').': <select name="owner">';
     $admins = $GLOBALS['admin_auth']->listAdmins();
     $adminCount = count($admins);
     foreach ($admins as $adminid => $adminname) {
         $singleOwner = '<input type="hidden" name="owner" value="'.$adminid.'" />';
         $ownerHTML .= sprintf('<option value="%d" %s>%s</option>', $adminid,
-            $adminid == $data['owner'] ? 'selected="selected"' : '', $adminname);
+            $adminid == $data['owner'] ? 'selected="selected"' : '', htmlentities($adminname));
     }
     $ownerHTML .= '</select>';
 
@@ -406,6 +425,6 @@ if (isSuperUser() || accessLevel('spageedit') == 'all') {
 }
 
 echo '
-<input class="submit" type="submit" name="save" value="' .$GLOBALS['I18N']->get('Save Changes').'" />
+<input class="submit" type="submit" name="save" value="' .s('Save Changes').'" />
 
 </form>';

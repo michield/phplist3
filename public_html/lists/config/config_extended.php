@@ -55,6 +55,7 @@ $usertable_prefix = 'phplist_user_';
 
 // if you change the path to the phpList system, make the change here as well
 // path should be relative to the root directory of your webserver (document root)
+// If you install phpList in the document root then the value should be an empty string, not '/'.
 // Warning: Do not change this after installation. You can only change this before you
 // install and initialise phpList.
 $pageroot = '/lists';
@@ -440,10 +441,19 @@ define('ALLOW_NON_LIST_SUBSCRIBE', 0);
 // see also https://mantis.phplist.com/view.php?id=15274
 define('PREFERENCEPAGE_SHOW_PRIVATE_LISTS', 0);
 
+// Show the link(s) to subscribe page(s) on the phpList public homepage (lists/)
+define('SHOW_SUBSCRIBELINK', true);
+
+// Show link to the preferences page on the phpList public homepage (lists/)
+define('SHOW_PREFERENCESLINK', true);
+
+// Show link to the unsubscribe page on the phpList public homepage (lists/)
+define('SHOW_UNSUBSCRIBELINK', true);
+
 // Show 'All Subscribers' section on Subscriber Lists page
-// This flag enabled will show a list called “All subscribers” on the 
-// Subscriber Lists page that has all subscribers in the system as members. 
-// This prevents confusion if there are subscribers not assigned to lists and 
+// This flag enabled will show a list called “All subscribers” on the
+// Subscriber Lists page that has all subscribers in the system as members.
+// This prevents confusion if there are subscribers not assigned to lists and
 // therefore total subscribers are than the sum of all list members.
 define('SHOW_LIST_OFALL_SUBSCRIBERS', false);
 
@@ -539,6 +549,9 @@ define('LANGUAGE_SWITCH', 1);
 //# the contents are displayed "as-is", so it will not run any PHP code in the file.
 define('ERROR404PAGE', '404.html');
 
+// Add a Reply-To header. Set this to true to show a Reply to field on the Compose tab when creating a campaign.
+define('USE_REPLY_TO', false);
+
 /*
 
 =========================================================================
@@ -551,14 +564,16 @@ Message sending options
 
 */
 
-// you can specify the location of the phpMailer class here
-// if not set, the version included in the distribution will be used
-//# eg for Debian based systems, it may be something like the example below
-//# when you do this, you may need to run some tests, to see if the phpMailer version
-//# you have works ok
-//define ('PHPMAILER_PATH','/usr/share/php/libphp-phpmailer/class.phpmailer.php');
-// or a more recent version of phpMailer will be like this
-//define ('PHPMAILER_PATH','/usr/share/php/libphp-phpmailer/PHPMailerAutoload.php');
+// If you are using PHPMailer 5 then you can use a different version to the phplist distribution by specifying
+// the location of the PHPMailer autoload file
+// if not set, the PHPMailer version included in the distribution will be used
+// eg for Debian based systems, it may be something like the example below
+// when you do this, you may need to run some tests, to see if the phpMailer version you have works ok
+//define ('PHPMAILER_PATH', '/usr/share/php/libphp-phpmailer/PHPMailerAutoload.php');
+//
+// If you are using PHPMailer 6 then you can use a different version by setting the location of the PHPMailer
+// src directory, e.g.
+//define ('PHPMAILER_PATH', '/var/www/PHPMailer-master/src');
 
 // To use a SMTP server please give your server hostname here, leave it blank to use the standard
 // PHP mail() command.
@@ -589,7 +604,7 @@ define('PHPMAILERHOST', '');
 
 //# SMTP debugging
 // Enable debugging output by phpmailer when sending test emails
-// See https://phpmailer.github.io/PHPMailer/classes/PHPMailer.html#property_SMTPDebug
+// See https://phpmailer.github.io/PHPMailer/classes/PHPMailer.PHPMailer.PHPMailer.html#property_SMTPDebug
 // define('PHPMAILER_SMTP_DEBUG', 0);
 
 //# Smtp Timeout
@@ -597,7 +612,7 @@ define('PHPMAILERHOST', '');
 //# defaults to 5 seconds
 // define('SMTP_TIMEOUT',5);
 
-// Pop-Before-Smtp 
+// Pop-Before-Smtp
 // If you use Pop before Smtp, set to true
 // And complete smtp settings (PHPMAILERHOST,  phpmailer_smtpuser', phpmailer_smtppassword)
 define('POP_BEFORE_SMTP', false);
@@ -623,10 +638,9 @@ Advanced Features, HTML editor, RSS, Attachments, Plugins. PDF creation
 
 // Click tracking
 // If you set this to 1, all links in your emails will be converted to links that
-// go via phpList. This will make sure that clicks are tracked. This is experimental and
-// all your findings when using this feature should be reported to mantis
-// for now it's off by default until we think it works correctly
-define('CLICKTRACK', 0);
+// go via phpList. This will make sure that clicks are tracked. Default: 1
+// If you disable a URL conversion, set to 0.
+define('CLICKTRACK', 1);
 
 // Click track, list detail
 // if you enable this, you will get some extra statistics about unique users who have clicked the
@@ -657,6 +671,9 @@ define('EMBEDEXTERNALIMAGES',false);
 // Manual text part, will give you an input box for the text version of the message
 // instead of trying to create it by parsing the HTML version into plain text
 define('USE_MANUAL_TEXT_PART', 0);
+
+// Message preview tries to show a small preview of how your campaign will look in email applications
+define('USE_MESSAGE_PREVIEW',true);
 
 // set this to 1 to allow adding attachments to the mails
 // caution, message may become very large. it is generally more
@@ -853,3 +870,14 @@ define('FORWARD_PERSONAL_NOTE_SIZE', 0);
 // This will show an extra tab in the message dialog.
 define('FORWARD_ALTERNATIVE_CONTENT', 0);
 
+// To disable the automatic updater change the value to false. By default the value is true.
+define('ALLOW_UPDATER', true);
+
+// Google mail Feedback loop configuration
+// When feedback loop is configured in Google mail according to https://support.google.com/mail/answer/6254652?hl=en
+// adds constant to email headers
+define('GOOGLE_SENDERID', '');
+
+// For ajax based signup forms (https://discuss.phplist.org/t/solved-ajax-subscribe-api/974) the access-control-allow-origin header has to be set properly.
+// Add the addresses of the websites you want to allow to perform ajax requests to PHPList.
+define('ACCESS_CONTROL_ALLOW_ORIGINS', ['https://example.com','https://example.org']);

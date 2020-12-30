@@ -6,7 +6,7 @@ $subselectimp = ''; //# do not use subselect: https://mantis.phplist.com/view.ph
 @ob_end_flush();
 
 if (!ALLOW_IMPORT) {
-    echo '<p class="information">'.$GLOBALS['I18N']->get('import is not available').'</p>';
+    echo '<p class="information">'.s('import is not available').'</p>';
 
     return;
 }
@@ -48,11 +48,16 @@ if (!empty($_POST['importcontent'])) {
         } else {
             $isValid = true;
         }
+        if (!empty($_POST['confirm'])) {
+            $isConfirmed = '1';
+        } else {
+            $isConfirmed= '0';
+        }
 
         if ($isValid) {
             //# I guess everyone will import all their users wanting to receive HTML ....
             $query = sprintf('insert into %s (email,entered,htmlemail,confirmed,uniqid)
-                values("%s",now(),1,1,"%s")', $tables['user'], $line, $uniqid);
+                values("%s",now(),1,"%d","%s")', $tables['user'], $line, $isConfirmed, $uniqid);
             $result = Sql_query($query, 1);
             $userid = Sql_insert_id();
             if (empty($userid)) {
@@ -64,16 +69,20 @@ if (!empty($_POST['importcontent'])) {
                 $userid = $idreq[0];
             } else {
                 ++$count['imported'];
-                addUserHistory($line, $GLOBALS['I18N']->get('import_by').' '.adminName(), '');
+                addUserHistory($line, s('import_by').' '.adminName(), '');
             }
 
             //# do not add them to the list(s) when blacklisted
             $isBlackListed = isBlackListed($line);
             if (!$isBlackListed) {
-                ++$count['addedtolist'];
+                $addition = false;
                 foreach ($selected_lists as $k => $listid) {
-                    $query = 'replace into '.$tables['listuser']." (userid,listid,entered) values($userid,$listid,now())";
+                    $query = 'insert ignore into '.$tables['listuser']." (userid,listid,entered) values($userid,$listid,now())";
                     $result = Sql_query($query);
+                    $addition = $addition || Sql_Affected_Rows() == 1;
+                }
+                if ($addition) {
+                    ++$count['addedtolist'];
                 }
             } else {
                 //# mark blacklisted, just in case ##17288
@@ -87,7 +96,7 @@ if (!empty($_POST['importcontent'])) {
 
         ++$count['processed'];
         if ($count['processed'] % 100 == 0) {
-            echo $count['processed'].' / '.$total.' '.$GLOBALS['I18N']->get('Imported').'<br/>';
+            echo $count['processed'].' / '.$total.' '.s('Imported').'<br/>';
             flush();
         }
     }
@@ -158,7 +167,7 @@ if (isset($_GET['list'])) {
         $subselectimp .= ' where id = '.$id;
     }
 }
-//print PageLinkDialog('addlist',$GLOBALS['I18N']->get('Add a new list'));
+//print PageLinkDialog('addlist',s('Add a new list'));
 echo FormStart(' enctype="multipart/form-data" name="import"');
 
 $result = Sql_query('SELECT id,name FROM '.$tables['list']."$subselectimp ORDER BY listorder");
@@ -166,21 +175,21 @@ $total = Sql_Num_Rows($result);
 $c = 0;
 if ($total == 1) {
     $row = Sql_fetch_array($result);
-    $content .= sprintf('<input type="hidden" name="listname[%d]" value="%s"><input type="hidden" name="importlists[%d]" value="%d">'.$GLOBALS['I18N']->get('Adding subscribers').' <b>%s</b>',
-        $c, stripslashes($row['name']), $c, $row['id'], stripslashes($row['name']));
+    $content .= sprintf('<input type="hidden" name="listname[%d]" value="%s"><input type="hidden" name="importlists[%d]" value="%d">'.s('Adding subscribers').' <b>%s</b>',
+        $c, disableJavascript(stripslashes($row['name'])), $c, $row['id'], disableJavascript(stripslashes($row['name'])));
 } else {
-    $content .= '<p>'.$GLOBALS['I18N']->get('Select the lists to add the emails to').'</p>';
-
+    $content .= '<p>'.s('Select the lists to add the emails to').'</p>';
     $content .= ListSelectHTML($selected_lists, 'importlists', $subselectimp);
 }
 
 $content .= '<p class="information">'.
-    $GLOBALS['I18N']->get('Please enter the emails to import, one per line, in the box below and click "Import Emails"');
-//$GLOBALS['I18N']->get('<b>Warning</b>: the emails you import will not be checked on validity. You can do this later on the "reconcile subscribers" page.');
+    s('Please enter the emails to import, one per line, in the box below and click "Import Emails"');
+//s('<b>Warning</b>: the emails you import will not be checked on validity. You can do this later on the "reconcile subscribers" page.');
 $content .= '</p>';
-$content .= '<div class="field"><input type="checkbox" name="checkvalidity" value="1" checked="checked" /> '.$GLOBALS['I18N']->get('Check to skip emails that are not valid').'</div>';
-$content .= '<div class="field"><input type="submit" name="doimport" value="'.$GLOBALS['I18N']->get('Import emails').'" ></div>';
 $content .= '<div class="field"><textarea name="importcontent" rows="10" cols="40"></textarea></div>';
+$content .= '<div class="field"><input type="checkbox" name="checkvalidity" value="1" checked="checked" /> '.s('Check to skip emails that are not valid').'</div>';
+$content .= '<div class="field"><input type="checkbox" name="confirm" value="1" checked="checked" /> '.s('Confirm email addresses by default').'</div>';
+$content .= '<div class="field"><input type="submit" name="doimport" value="'.s('Import emails').'" ></div>';
 
 $panel = new UIPanel('', $content);
 echo $panel->display();

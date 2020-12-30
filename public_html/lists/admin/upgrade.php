@@ -5,11 +5,8 @@ require_once dirname(__FILE__).'/accesscheck.php';
 if (!$GLOBALS['commandline']) {
     @ob_end_flush();
 } else {
-    @ob_end_clean();
-    echo ClineSignature();
     //# when on cl, doit immediately
     $_GET['doit'] = 'yes';
-    ob_start();
 }
 $force = isset($cline['f']) || isset($_GET['force']);
 
@@ -31,7 +28,7 @@ function output($message)
     flush();
 }
 
-output(""); 
+output("");
 $dbversion = getConfig('version');
 $releaseDBversion = getConfig('releaseDBversion'); // release version check
 $inUpgrade = getConfig('in-upgrade-to');
@@ -58,7 +55,7 @@ if ($GLOBALS['database_module'] == 'mysql.inc') {
     );
 }
 
-if (!versionCompare($dbversion,'2.11.11')) {
+if (!versionCompare($dbversion,'2.11.11') && $dbversion!=='dev') {
     Fatal_Error(s('Your version is older than 3.2.0 and cannot be upgraded to this version. Please upgrade to 3.2.0 first and then try again.'));
     return;
 }
@@ -66,13 +63,15 @@ if (!versionCompare($dbversion,'2.11.11')) {
 // only action upgrade if necessary
 if ($force && $dbversion == VERSION  && defined('RELEASEDATE') && RELEASEDATE <= $releaseDBversion) {
     output(s('Your database is already the correct version (%s), including release date version (%s), there is no need to upgrade',$dbversion, $releaseDBversion));
-    unset($_GET['doit']);
+    clearMaintenanceMode();
+   unset($_GET['doit']);
 }
 
 if ($dbversion == VERSION && !$force) {
     output($GLOBALS['I18N']->get('Your database is already the correct version, there is no need to upgrade'));
 
     echo '<p>'.PageLinkAjax('upgrade&update=tlds', s('update Top Level Domains'), '', 'button').'</p>';
+    clearMaintenanceMode();
 
     echo subscribeToAnnouncementsForm();
 } elseif (isset($_GET['doit']) && $_GET['doit'] == 'yes') {
@@ -110,13 +109,118 @@ if ($dbversion == VERSION && !$force) {
     //# lock this process
     SaveConfig('in-upgrade-to', VERSION, 1);
 
+    if (version_compare($dbversion, '3.3.4','<')) {
+
+        Sql_Query("alter table {$GLOBALS['tables']['bounce']} modify data mediumblob ");
+
+        $indexesToRecreate = array(
+            'urlcache' => array(
+                'urlindex' => array('value' => 'url(255)', 'unique' => false),
+            ),
+            'linktrack_forward' => array(
+                'urlindex' => array('value' => 'url(255)', 'unique' => false),
+                'urlunique' => array('value' => 'urlhash', 'unique' => true),
+            ),
+            'bounceregex' =>  array(
+                'regex' => array('value' => 'regexhash', 'unique'=> true),
+            ),
+        );
+
+        $tablesToAlter = array(
+            'urlcache' => array('url'),
+            'linktrack_forward' => array('url'),
+            'bounceregex' => array('regex'),
+        );
+
+        //add columns for hash values
+
+        Sql_Query("alter table {$GLOBALS['tables']['linktrack_forward']} add  urlhash char(32) ");
+        Sql_Query("alter table {$GLOBALS['tables']['bounceregex']} add  regexhash char(32) ");
+
+        // add hash values
+
+        Sql_Query("update {$GLOBALS['tables']['linktrack_forward']} set urlhash = md5(url) where urlhash is NULL ");
+        Sql_Query("update {$GLOBALS['tables']['bounceregex']} set regexhash = md5(regex) where regexhash is NULL ");
+
+
+
+        foreach($indexesToRecreate as $table => $indexes) {
+
+
+            foreach($indexes as $indexName => $settings) {
+
+                $exists = table_index_exists($GLOBALS['tables'][$table],$indexName);
+                 if ($exists) {
+                     Sql_Query("drop index $indexName on {$GLOBALS['tables'][$table]} ");
+                 }
+            }
+
+            $alteringOperations = $tablesToAlter[$table];
+            foreach($alteringOperations as $operation) {
+                Sql_Query("alter table {$GLOBALS['tables'][$table]} modify $operation varchar(2083) ");
+            }
+
+            foreach($indexes as $indexName => $settings) {
+                $createStmt = '';
+                if($settings['unique'] === true) {
+                    $createStmt = 'create unique index';
+                } else {
+                    $createStmt = 'create index';
+                }
+
+                Sql_Query("$createStmt $indexName on {$GLOBALS['tables'][$table]}({$settings['value']})");
+            }
+
+        }
+    }
+
+    // Update jQuery version referenced in public page HTML stored in the database
+    if (version_compare($dbversion, '3.4.1', '<')) {
+
+        // The new filename does not hard-code the jQuery version number
+        $replacement = "jquery.min.js";
+
+        // Replace jQuery version public page footers in config table
+        $oldConfigFooter = getConfig('pagefooter');
+        $matches = null;
+
+        // Find and replace all references to version-specific jQuery files
+        preg_match('/jquery-3.3.1.min.js/', $oldConfigFooter, $matches);
+        if ($matches[0] == "jquery-3.3.1.min.js") {
+            $pattern = "jquery-3.3.1.min.js";
+        } else {
+            $pattern = "jquery-1.12.1.min.js";
+        }
+
+        $newConfigFooter = str_replace($pattern, $replacement, $oldConfigFooter);
+        SaveConfig('pagefooter', $newConfigFooter);
+
+        //Replace jQuery version for each subscribe page data.
+        $req = Sql_Query(sprintf('select data from %s where name = "footer"', $GLOBALS['tables']['subscribepage_data']));
+        $footersArray = array();
+        while ($row = Sql_Fetch_Assoc($req)) {
+            $footersArray[] = $row['data'];
+        }
+
+        // Find and replace all references to version-specific jQuery files
+        foreach ($footersArray as $key => $value) {
+            preg_match('/jquery-3.3.1.min.js/', $value, $matches);
+            if ($matches[0] == "jquery-3.3.1.min.js") {
+                $pattern = "jquery-3.3.1.min.js";
+            } else {
+                $pattern = "jquery-1.12.1.min.js";
+            }
+            $newFooter = str_replace($pattern, $replacement, $value);
+            Sql_Query(sprintf('update %s set data = "%s" where data = "%s" ', $GLOBALS['tables']['subscribepage_data'], sql_escape($newFooter), addslashes($value)));
+        }
+    }
     //# remember whether we've done this, to avoid doing it every time
     //# even thought that's not such a big deal
     $isUTF8 = getConfig('UTF8converted');
 
     if (empty($isUTF8)) {
         $maxsize = 0;
-        $req = Sql_Query('select (data_length+index_length) tablesize 
+        $req = Sql_Query('select (data_length+index_length) tablesize
       from information_schema.tables
       where table_schema="' .$GLOBALS['database_name'].'"');
 
@@ -125,9 +229,10 @@ if ($dbversion == VERSION && !$force) {
                 $maxsize = $row['tablesize'];
             }
         }
-        $maxsize = (int) $maxsize;
-        $avail = disk_free_space('/'); //# we have no idea where MySql stores the data, so this is only a crude check and warning.
         $maxsize = (int) ($maxsize * 1.2); //# add another 20%
+        $row = Sql_Fetch_Row_Query('select @@datadir');
+        $dataDir = $row[0];
+        $avail = disk_free_space($dataDir);
 
         //# convert to UTF8
         $dbname = $GLOBALS['database_name'];
@@ -273,8 +378,8 @@ if ($dbversion == VERSION && !$force) {
         // it is not strictly necessary to do this here, because processqueue does it as well.
         // that does mean that the first process queue may take a while.
 
-     //   output(s('Giving a UUID to your subscribers and campaigns. If you have a lot of them, this may take a while.'));
-     //   output(s('If the page times out, you can reload. Or otherwise try to run the upgrade from commandline instead.').' '.resourceLink('https://resources.phplist.com/system/commandline', s('Documentation how to set up phpList commandline')));
+        //   output(s('Giving a UUID to your subscribers and campaigns. If you have a lot of them, this may take a while.'));
+        //   output(s('If the page times out, you can reload. Or otherwise try to run the upgrade from commandline instead.').' '.resourceLink('https://resources.phplist.com/system/commandline', s('Documentation how to set up phpList commandline')));
     } else {
         output(s('Giving a UUID to your subscribers and campaigns. If you have a lot of them, this may take a while.'));
         output(s('If the page times out, you can reload. Or otherwise try to run the upgrade from commandline instead.').' '.resourceLink('https://resources.phplist.com/system/commandline', s('Documentation how to set up phpList commandline')));
@@ -303,6 +408,19 @@ if ($dbversion == VERSION && !$force) {
         createTable('user_message_view');
     }
 
+    if (version_compare($dbversion, '3.3.3','<')) {
+        // add a draft campaign for invite plugin
+        addInviteCampaign();
+    }
+
+    if (version_compare($dbversion, '3.3.4','<')) {
+        Sql_Query("alter table {$GLOBALS['tables']['bounce']} modify data mediumblob ");
+    }
+
+    if (version_compare($dbversion, '3.4.0-RC1','<')) {
+        SaveConfig('secret', bin2hex(random_bytes(20)));
+    }
+
     //# longblobs are better at mixing character encoding. We don't know the encoding of anything we may want to store in cache
     //# before converting, it's quickest to clear the cache
     clearPageCache();
@@ -317,7 +435,7 @@ if ($dbversion == VERSION && !$force) {
             SaveConfig('releaseDBversion', RELEASEDATE, 0);
         }
         // mark now to be the last time we checked for an update
-        SaveConfig('updatelastcheck', date('Y-m-d H:i:s', time()), 0, true);
+        SaveConfig('lastcheckupdate', date('m/d/Y h:i:s', time()), 0, true);
         //# also clear any possible value for "updateavailable"
         Sql_Query(sprintf('delete from %s where item = "updateavailable"', $tables['config']));
 

@@ -42,6 +42,7 @@ switch ($page) {
   case 'processbounces': $page_title = 'Retrieve bounces from server'; break;
   case 'bounces': $page_title = 'View bounces'; break;
   case 'bounce': $page_title = 'View a bounce'; break;
+  case 'msgbounces': $page_title = 'View bounces per campaign'; break;
   case 'spageedit': $page_title = 'Edit a subscribe page'; break;
   case 'spage': $page_title = 'Subscribe pages'; break;
   case 'eventlog': $page_title = 'Log of events'; break;
@@ -74,6 +75,7 @@ switch ($page) {
   case 'updatetranslation': $page_title = 'Update translations'; break;
   case 'reindex': $page_title = 'Re-index DB'; break;
   case 'plugins': $page_title = 'Manage Plugins'; break;
+  case 'update': $page_title = 'Update'; break;
 
   default: $page_title = $page;
     if (0) { //# discover new titles
