@@ -26,13 +26,17 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Setup PHP Action
+        uses: shivammathur/setup-php@2.9.0
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
       - name: Set up PHP ${{ matrix.php-version }}
-        uses: actions/setup-php@v2
+        uses: actions/setup-php@2.9.0
         with:
           php-version: ${{ matrix.php-version }}
+          
      # Runs a set of commands using the runners shell
       - name: Run tests
         run: |
