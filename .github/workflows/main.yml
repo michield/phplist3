@@ -30,9 +30,9 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           sudo apt update
-          sudo apt install -y composer php-mbstring php-curl php-mysql mariadb-client mariadb-server php-xml php-zip
+        #  sudo apt install -y composer php-mbstring php-curl php-mysql mariadb-client mariadb-server php-xml php-zip
           composer install
-          sudo service mysqld start
+          sudo systemctl start mysql.service
           sudo mysql -e 'drop database if exists phplistdb'
           sudo mysqladmin create phplistdb
           sudo mysql -e 'grant all on phplistdb.* to phplist@"%" identified by "phplist"'
