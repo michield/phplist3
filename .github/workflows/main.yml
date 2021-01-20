@@ -48,10 +48,9 @@ jobs:
           sudo mysql -proot -e 'grant all on phplistdb.* to phplist@"%" identified by "phplist"'
           cp -fv tests/ci/behat.yml behat.yml
           cp -fv tests/ci/config.php public_html/lists/config/config.php
-          [[ ! -d public_html/lists/admin/ui/phplist-ui-bootlist ]] && { cd public_html/lists/admin/ui/ && wget https://github.com/phpList/phplist-ui-bootlist/archive/master.tar.gz && tar -xzf master.tar.gz && mv phplist-ui-bootlist-master phplist-ui-bootlist && rm master.tar.gz && cd ../../../../ }
           php -v
           sudo php -S 0.0.0.0:80 -t public_html > /dev/null 2>&1 &
           cd tests 
           make test
 
-          
+
