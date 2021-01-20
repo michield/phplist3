@@ -42,9 +42,9 @@ jobs:
           #  sudo apt install -y composer php-mbstring php-curl php-mysql mariadb-client mariadb-server php-xml php-zip
           composer install
           sudo systemctl start mysql.service
-          sudo mysql -e 'drop database if exists phplistdb'
-          sudo mysqladmin create phplistdb
-          sudo mysql -e 'grant all on phplistdb.* to phplist@"%" identified by "phplist"'
+          sudo mysql -proot  -e 'drop database if exists phplistdb'
+          sudo mysqladmin -proot create phplistdb
+          sudo mysql -proot -e 'grant all on phplistdb.* to phplist@"%" identified by "phplist"'
           cp -fv tests/ci/behat.yml behat.yml
           cp -fv tests/ci/config.php public_html/lists/config/config.php
           [[ ! -d public_html/lists/admin/ui/phplist-ui-bootlist ]] && { cd public_html/lists/admin/ui/ && wget https://github.com/phpList/phplist-ui-bootlist/archive/master.tar.gz && tar -xzf master.tar.gz && mv phplist-ui-bootlist-master phplist-ui-bootlist && rm master.tar.gz && cd ../../../../ }
