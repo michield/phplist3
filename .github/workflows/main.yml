@@ -20,12 +20,20 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-18.04
 
+    strategy:
+      matrix:
+        php-version: [7.0, 7.1, 7.2, 7.3, 7.4]
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a set of commands using the runners shell
+      - name: Set up PHP ${{ matrix.php-version }}
+        uses: actions/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+     # Runs a set of commands using the runners shell
       - name: Run tests
         run: |
           cd $GITHUB_WORKSPACE
