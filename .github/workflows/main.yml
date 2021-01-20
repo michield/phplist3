@@ -25,12 +25,20 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          cd $GITHUB_WORKSPACE
+          sudo apt update && sudo apt upgrade -y
+          sudo apt install -y composer php-mbstring php-curl php-mysql mariadb-client mariadb-server php-xml php-zip
+          composer install
+          sudo service mysqld start
+          sudo mysql -e 'drop database if exists phplistdb'
+          sudo mysqladmin create phplistdb
+          sudo mysql -e 'grant all on phplistdb.* to phplist@"%" identified by "phplist"'
+          cp -fv tests/ci/behat.yml behat.yml
+          cp -fv tests/ci/config.php public_html/lists/config/config.php
+          [[ ! -d public_html/lists/admin/ui/phplist-ui-bootlist ]] && { cd public_html/lists/admin/ui/ && wget https://github.com/phpList/phplist-ui-bootlist/archive/master.tar.gz && tar -xzf master.tar.gz && mv phplist-ui-bootlist-master phplist-ui-bootlist && rm master.tar.gz && cd ../../../../ }
+          sudo php -S 0.0.0.0:80 -t public_html &
+          cd tests 
+          make test
