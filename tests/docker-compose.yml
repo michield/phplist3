@@ -1,0 +1,38 @@
+version: '3.5'
+
+networks:
+  phplistnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.100.0.0/16
+
+services:
+  phplisttests:
+    container_name: tests
+    build: .
+    volumes:
+      - .:/var/tests
+#    command: vendor/bin/behat --tags=@startup
+    links:
+      - firefox-server
+    networks:
+      phplistnet:
+        ipv4_address: 172.100.0.100
+
+  firefox-server:
+    container_name: firefox-server
+    image: selenium/standalone-firefox-debug:2.53.1
+    #image: selenium/standalone-firefox:2.53.0
+    #image: selenium/standalone-firefox-debug:3
+    shm_size: 256M
+    ports:
+      - "127.0.0.1:4444:4444" #Selenium
+      - "127.0.0.1:5900:5900" #VNC
+    volumes:
+      - /dev/shm:/dev/shm
+    networks:
+      - phplistnet
+    extra_hosts:
+      - "test.phplist.com:${DOCKER_GATEWAY_HOST:-172.100.0.1}"
