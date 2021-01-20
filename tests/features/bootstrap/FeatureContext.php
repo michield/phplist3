@@ -5,6 +5,8 @@ use Behat\Behat\Context\Context;
 use Behat\Mink\Exception\ExpectationException;
 use Behat\MinkExtension\Context\MinkContext;
 #use Behat\MinkExtension\Context\RawMinkContext;
+use Behat\Mink\Driver\Selenium2Driver;
+use Behat\Behat\Hook\Scope\AfterStepScope;
 
 //
 // Require 3rd-party libraries here:
@@ -20,11 +22,6 @@ class FeatureContext extends MinkContext
 {
     private $params = array();
     private $data = array();
-
-    /**
-     * @var mysqli
-     */
-    private $db;
 
     /**
      * Null if user is not logged in
@@ -46,37 +43,6 @@ class FeatureContext extends MinkContext
      */
     public function __construct( $database = array(), $admin = array())
     {
-        // merge default database value into configured value
-        $database = array_merge(array(
-            'host'      => 'localhost',
-            'password'  => 'phplist',
-            'user'      => 'phplist',
-            'name'      => 'phplistdb'
-        ),$database);
-
-        // merge default admin user value into configured value
-        $admin = array_merge(array(
-            'username' => 'admin',
-            'password' => 'admin'
-        ),$admin);
-
-        $this->params = array(
-            'db_host' => $database['host'],
-            'db_user' => $database['user'],
-            'db_password' => $database['password'],
-            'db_name' => $database['name'],
-            'admin_username' => $admin['username'],
-            'admin_password' => $admin['password']
-        );
-        
-        $this->db = mysqli_init();
-        mysqli_real_connect(
-            $this->db,
-            $database['host'],
-            $database['user'],
-            $database['password'],
-            $database['name']
-        );
     }
 
     public function __call($method, $parameters)
@@ -126,6 +92,32 @@ class FeatureContext extends MinkContext
         }
     }
     
+  /**
+   * @AfterStep
+   */
+  public function takeScreenShotAfterFailedStep(afterStepScope $scope)
+  {
+    if (99 === $scope->getTestResult()->getResultCode()) {
+      $driver = $this->getSession()->getDriver();
+      if (!($driver instanceof Selenium2Driver)) {
+        return;
+      }
+      file_put_contents('output/failedstep.png', $this->getSession()->getDriver()->getScreenshot());
+    }
+  }
+
+    /**
+     * @Then I create a screenshot and save it as :arg1
+     */
+    public function iCreateAScreenshotAndSaveItAs($arg1)
+    {
+      $driver = $this->getSession()->getDriver();
+      if (!($driver instanceof Selenium2Driver)) {
+        return;
+      }
+      file_put_contents('output/'.$arg1.'.png', $this->getSession()->getDriver()->getScreenshot());
+    }
+
     // Output page contents in case of failure
     // TODO: extend docs
     protected function throwExpectationException($message)
@@ -176,8 +168,8 @@ class FeatureContext extends MinkContext
      */
     public function iAmAuthenticatedAsAdmin() {
         $this->visit('/lists/admin/');
-        $this->fillField('login', $this->params['admin_username']);
-        $this->fillField('password', $this->params['admin_password']);
+        $this->fillField('login', 'admin');
+        $this->fillField('password', 'Testing1234');
         $this->pressButton('Continue');
 
         if (null === $this->getSession ()->getPage ()->find ('named', array('content', 'Dashboard'))) {
@@ -188,7 +180,7 @@ class FeatureContext extends MinkContext
         $link = $this->getSession()->getPage()->findLink('dashboard');
         $href = $link->getAttribute('href');
         $this->token = substr($href,strpos($href,'tk=')+3);
-        $this->currentUser = $this->generateCurrentUserInfo($this->params['admin_username']);
+        $this->currentUser = $this->generateCurrentUserInfo('admin');
     }
 
     /**
@@ -198,17 +190,6 @@ class FeatureContext extends MinkContext
      */
     private function generateCurrentUserInfo($name)
     {
-        $db = $this->getMysqli();
-        $query = sprintf(
-            'SELECT * from %s where loginname="%s"',
-            'phplist_admin',
-            $name
-        );
-        $results = $db->query($query)->fetch_assoc();
-        if(!isset($results['id']) ){
-            throw new \Exception($db->error);
-        }
-        return $results;
     }
     /**
      * @return bool
@@ -238,15 +219,6 @@ class FeatureContext extends MinkContext
     {
         $this->isLoggedIn(true);
         return $this->token;
-    }
-
-    /**
-     * @When /^I recreate the database$/
-     */
-    public function iRecreateTheDatabase()
-    {
-        mysqli_query($this->db,'drop database if exists '.$this->params['db_name']);
-        mysqli_query($this->db,'create database '.$this->params['db_name']);
     }
     
     /**
@@ -283,41 +255,11 @@ class FeatureContext extends MinkContext
     }
 
     /**
-     * @Given /^No campaigns yet exist$/
-     */
-    public function iHaveNotYetCreatedCampaigns()
-    {
-        // Count the number of campaigns in phplist_message table
-        $result = mysqli_fetch_assoc(
-            mysqli_query(
-                $this->db,'
-                    select 
-                        count(*) as count 
-                    from 
-                        phplist_message;
-                ')
-        );
-        $campaignCount = $result['count'];
-
-        if ($campaignCount > 0) {
-            $this->throwExpectationException('One or more campagins already exist');
-        }
-    }
-
-    /**
      * @Given /^I have subscriber with email "([^"]*)"/
      */
     public function iHaveSubscriber($email)
     {
         $this->clickLink('S');
-    }
-
-    /**
-     * @return mysqli
-     */
-    public function getMysqli()
-    {
-        return $this->db;
     }
 
     /**
@@ -365,9 +307,9 @@ class FeatureContext extends MinkContext
     }
 
      /**
-     * @When I confirm the popup
+     * @When I confirm the pop up
      */
-    public function iConfirmPopup()
+    public function iConfirmThePopup()
     {  
         $this->getSession()->getDriver()->getWebDriverSession()->accept_alert();
     }

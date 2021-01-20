@@ -5,7 +5,6 @@ Feature: Setup
   I need to be able to init db
 
   Scenario: Go to dashboard
-    When I recreate the database
     Given I am on "/lists/admin/"
     Then I should see "Database has not been initialised. go to Initialise Database to continue"
 
@@ -19,6 +18,6 @@ Feature: Setup
     When I fill in "adminname" with "admin"
     And I fill in "orgname" with "phplist ltd"
     And I fill in "adminemail" with "admin@phplist.dev"
-    And I fill in "adminpassword" with a valid password
+    And I fill in "adminpassword" with "Testing1234"
     And I press "Continue"
     Then I should see "Success:"
