@@ -29,6 +29,7 @@ jobs:
       - name: Run tests
         run: |
           cd $GITHUB_WORKSPACE
+          sudo apt update
           sudo apt install -y composer php-mbstring php-curl php-mysql mariadb-client mariadb-server php-xml php-zip
           composer install
           sudo service mysqld start
