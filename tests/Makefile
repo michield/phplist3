@@ -1,8 +1,8 @@
 
 test:
 	composer install
-	docker-compose run --rm phplisttests ./features/ --tags=@first-run
-	docker-compose run --rm phplisttests ./features/ --tags=~@first-run
+	docker-compose run --rm phplisttests ./features/ --tags=@initialise 
+	docker-compose run --rm phplisttests ./features/ --tags="~@initialise && ~@wip"
 	
 test-wip: 
 	composer install
