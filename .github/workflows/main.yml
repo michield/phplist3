@@ -43,6 +43,6 @@ jobs:
           sudo php -S 0.0.0.0:80 -t public_html > /dev/null 2>&1 &
           cd tests 
           mkdir output
-          make test
+          ./vendor/bin/behat -n -fprogress -p chrome --strict --tags=@initialise
 
 
