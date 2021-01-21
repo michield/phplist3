@@ -60,6 +60,8 @@ jobs:
       - name: Syntax Check
         run: |
           cd $GITHUB_WORKSPACE
+          cd vendor/bin && ln -s ../njoannidi/php-lint-bash/phpLint 
+          cd $GITHUB_WORKSPACE
           ./vendor/bin/phpLint ./public_html
 
       - name: Run BDD Tests
