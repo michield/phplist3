@@ -50,9 +50,9 @@ jobs:
 
       - name: Run Tests
         run: |
-          mkdir output
           cd tests
-          ../vendor/bin/behat -n -fprogress -p chrome --strict --tags=@initialise
-          ../vendor/bin/behat -n -fprogress -p chrome --strict --tags="~@initialise && ~@wip"
+          mkdir output
+          ../vendor/bin/behat -n -fprogress -p chrome --strict --stop-on-failure --tags=@initialise
+          ../vendor/bin/behat -n -fprogress -p chrome --strict --stop-on-failure --tags="~@initialise && ~@wip"
 
 
