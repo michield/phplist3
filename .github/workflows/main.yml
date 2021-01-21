@@ -53,5 +53,6 @@ jobs:
           mkdir output
           cd tests
           ../vendor/bin/behat -n -fprogress -p chrome --strict --tags=@initialise
+          ../vendor/bin/behat -n -fprogress -p chrome --strict --tags="~@initialise && ~@wip"
 
 
