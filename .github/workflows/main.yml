@@ -40,9 +40,10 @@ jobs:
           sudo mysql -proot -e 'grant all on phplistdb.* to phplist@"%" identified by "phplist"'
           cp -fv tests/ci/config.php public_html/lists/config/config.php
           php -v
+          ./bin/start-selenium > /dev/null 2>&1 &
+          sleep 5
           sudo php -S 0.0.0.0:80 -t public_html > /dev/null 2>&1 &
-          cd tests 
           mkdir output
-          ./vendor/bin/behat -n -fprogress -p chrome --strict --tags=@initialise
+          ./vendor/bin/behat -c tests/behat.yml -n -fprogress -p chrome --strict --tags=@initialise
 
 
