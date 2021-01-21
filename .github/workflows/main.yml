@@ -68,7 +68,7 @@ jobs:
         run: |
           google-chrome --version
           php -v
-          chromedriver -v2
+          chromedriver -v
           geckodriver -V
           firefox -v
           vendor/bin/behat -V
