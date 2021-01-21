@@ -42,9 +42,9 @@ default:
                                     - "--lang=en"
                                     - "--no-sandbox"
 
-                default:
+                firefox:
                     selenium2:
-                        wd_host: http://firefox-server:4444/wd/hub
+                        wd_host: http://127.0.0.1:4444/wd/hub
                         capabilities:
                             browser: firefox
                             version: ""
@@ -52,7 +52,7 @@ default:
                 javascript:
                     selenium2:
                         browser: "firefox"
-                        wd_host: http://firefox-server:4444/wd/hub
+                        wd_host: http://127.0.0.1:4444/wd/hub
 
 goutte:
     extensions:
