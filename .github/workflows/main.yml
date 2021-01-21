@@ -57,9 +57,14 @@ jobs:
           sleep 5
           sudo php -S 0.0.0.0:80 -t public_html > /dev/null 2>&1 &
 
-      - name: Run Tests
+      - name: Syntax Check
         run: |
-          cd tests
+          cd $GITHUB_WORKSPACE
+          ./vendor/bin/phpLint ./public_html
+
+      - name: Run BDD Tests
+        run: |
+          cd $GITHUB_WORKSPACE/tests
           mkdir output
           mkdir -p build/mails
           ../vendor/bin/behat -n -fprogress -p chrome --strict --stop-on-failure --tags=@initialise
