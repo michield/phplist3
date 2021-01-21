@@ -3,12 +3,7 @@
 name: CI
 
 # Controls when the action will run. 
-on:
-  # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [push]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -46,11 +41,11 @@ jobs:
           sudo mysql -proot  -e 'drop database if exists phplistdb'
           sudo mysqladmin -proot create phplistdb
           sudo mysql -proot -e 'grant all on phplistdb.* to phplist@"%" identified by "phplist"'
-          cp -fv tests/ci/behat.yml ./tests/behat.yml
           cp -fv tests/ci/config.php public_html/lists/config/config.php
           php -v
           sudo php -S 0.0.0.0:80 -t public_html > /dev/null 2>&1 &
           cd tests 
+          mkdir output
           make test
 
 
