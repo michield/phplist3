@@ -71,9 +71,7 @@ jobs:
           cd $GITHUB_WORKSPACE/tests
           mkdir output
           mkdir -p build/mails
-          ../vendor/bin/behat -n -fprogress -p firefox --strict --stop-on-failure --tags=@initialise
+          ../vendor/bin/behat -n -fprogress -p chrome --strict --stop-on-failure --tags=@initialise
           ../vendor/bin/behat -n -fprogress -p chrome --strict --stop-on-failure --tags="~@initialise && ~@wip"
-          ../vendor/bin/behat -n -fprogress -p firefox --strict --stop-on-failure --tags="~@initialise && ~@wip"
-          ../vendor/bin/behat -n -fprogress -p goutte --strict --stop-on-failure --tags="~@initialise && ~@wip"
 
 
