@@ -52,7 +52,7 @@ jobs:
       - name: Syntax Check
         run: |
           cd $GITHUB_WORKSPACE
-          cd vendor/bin && ln -s ../njoannidi/php-lint-bash/phpLint 
+          cd vendor/bin && ln -s ../njoannidi/php-lint-bash/phpLint && ln -s /usr/bin/geckodriver
           cd $GITHUB_WORKSPACE
           ./vendor/bin/phpLint ./public_html
 
