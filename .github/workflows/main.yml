@@ -80,6 +80,7 @@ jobs:
           which chromedriver
           firefox -v
           vendor/bin/behat -V
+          cd vendor/bin/ && ln -s /usr/bin/chromedriver && ln -s /usr/bin/geckodriver
 
       - name: Run BDD Tests
         run: |
