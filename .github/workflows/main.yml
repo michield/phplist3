@@ -4,20 +4,32 @@ name: CI
 on: [push]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-18.04
+    continue-on-error: ${{ matrix.experimental }}
 
     strategy:
-      matrix:        
-        php-versions: ['7.1', '7.2', '7.3', '7.4']
+      fail-fast: false     
+      matrix:   
+        php-version: ['7.0', '7.1', '7.2', '7.3', '7.4']
+        experimental: [false]
+        include:
+        - php-version: '8.0'
+          experimental: true
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up PHP ${{ matrix.php-versions }}
+      - name: Set up PHP ${{ matrix.php-version }}
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php-version }}
+
+      - name: Cache composer 
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/composer/
 
       - name: Setup Packages
         run: |
