@@ -31,12 +31,8 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           sudo apt update
-
-      - name: Install dependencies
-        uses: php-actions/composer@v5
-        with:
-          dev: yes
-          args: --prefer-dist --no-interaction
+          rm -rf vendor
+          composer install --prefer-dist --no-interaction
 
       - name: Create Database
         run: |
