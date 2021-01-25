@@ -43,6 +43,28 @@ class FeatureContext extends MinkContext
      */
     public function __construct( $database = array(), $admin = array())
     {
+        // merge default database value into configured value
+        $database = array_merge(array(
+            'host'      => 'localhost',
+            'password'  => 'phplist',
+            'user'      => 'phplist',
+            'name'      => 'phplistdb'
+        ),$database);
+
+        // merge default admin user value into configured value
+        $admin = array_merge(array(
+            'username' => 'admin',
+            'password' => 'Mypassword123+'
+        ),$admin);
+
+        $this->params = array(
+            'db_host' => $database['host'],
+            'db_user' => $database['user'],
+            'db_password' => $database['password'],
+            'db_name' => $database['name'],
+            'admin_username' => $admin['username'],
+            'admin_password' => $admin['password']
+        );
     }
 
     public function __call($method, $parameters)
@@ -168,29 +190,11 @@ class FeatureContext extends MinkContext
      */
     public function iAmAuthenticatedAsAdmin() {
         $this->visit('/lists/admin/');
-        $this->fillField('login', 'admin');
-        $this->fillField('password', 'Testing1234');
+        $this->fillField('login', $this->params['admin_username']);
+        $this->fillField('password', $this->params['admin_password']);
         $this->pressButton('Continue');
-
-        if (null === $this->getSession ()->getPage ()->find ('named', array('content', 'Dashboard'))) {
-            $this->throwExpectationException('Login failed: Dashboard link not found');
-        }
-
-        // store current token
-        $link = $this->getSession()->getPage()->findLink('dashboard');
-        $href = $link->getAttribute('href');
-        $this->token = substr($href,strpos($href,'tk=')+3);
-        $this->currentUser = $this->generateCurrentUserInfo('admin');
     }
 
-    /**
-     * @param $name
-     * @return array
-     * @throws Exception
-     */
-    private function generateCurrentUserInfo($name)
-    {
-    }
     /**
      * @return bool
      */
@@ -220,7 +224,7 @@ class FeatureContext extends MinkContext
         $this->isLoggedIn(true);
         return $this->token;
     }
-    
+
     /**
      * @When I fill in :arg1 with a valid username
      */

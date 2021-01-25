@@ -1,3 +1,4 @@
+@wip
 Feature: Update plugin
     In order to user extra functions of phpList
     As an admin user
