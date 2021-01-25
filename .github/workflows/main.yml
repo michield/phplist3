@@ -31,8 +31,18 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           sudo apt update
-          rm -rf vendor
-          composer install --prefer-dist --no-interaction
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: /tmp/composer-cache
+          key: ${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
+
+      - name: Install dependencies
+        uses: php-actions/composer@v5
+        with:
+          dev: yes
+          args: --prefer-dist --no-interaction
 
       - name: Create Database
         run: |
@@ -53,7 +63,9 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           cp -fv tests/ci/config.php public_html/lists/config/config.php
-          ./bin/start-selenium > /dev/null 2>&1 &
+          mkdir -p output/screenshots
+          mkdir -p build/mails
+          ./bin/start-selenium > output/selenium.log 2>&1 &
           sleep 5
           sudo php -S 0.0.0.0:80 -t public_html > /dev/null 2>&1 &
 
@@ -77,9 +89,12 @@ jobs:
       - name: Run BDD Tests
         run: |
           cd $GITHUB_WORKSPACE/tests
-          mkdir output
-          mkdir -p build/mails
           ../vendor/bin/behat -n -fprogress -p chrome --strict --stop-on-failure --tags=@initialise
           ../vendor/bin/behat -n -fprogress -p chrome --strict --stop-on-failure --tags="~@initialise && ~@wip"
+
+      - name: Display output
+        run: |
+          cd $GITHUB_WORKSPACE
+          cat output/selenium.log
 
 
