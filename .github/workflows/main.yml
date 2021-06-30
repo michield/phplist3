@@ -108,6 +108,13 @@ jobs:
           secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         if: ${{ failure() }}
 
+      - name: Upload runner Workspace as artifact
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+            path: "."
+            name: "workspace"
+            
       - name: Upload the screenshots
         run: |
           cd $GITHUB_WORKSPACE/tests
