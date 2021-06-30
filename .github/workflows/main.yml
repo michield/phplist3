@@ -104,7 +104,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-            path: "tests/output"
+            path: "output"
             name: "behat output"
 
       - name: Display output
