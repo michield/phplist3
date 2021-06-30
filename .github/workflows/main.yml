@@ -100,13 +100,6 @@ jobs:
           ../vendor/bin/behat -p goutte --stop-on-failure --tags=@initialise
           ../vendor/bin/behat -p goutte --tags="~@initialise && ~@wip"
 
-      - name: Upload runner Workspace as artifact
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-            path: "."
-            name: "workspace"
-
       - name: Upload the screenshots
         if: always()
         uses: actions/upload-artifact@v2
