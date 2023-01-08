@@ -1,24 +1,26 @@
 
 name: CI
 
-on: [pull_request]
+on: [push]
 
 jobs:
   test:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     continue-on-error: ${{ matrix.experimental }}
 
     strategy:
       fail-fast: false     
       matrix:   
-        php-version: ['7.3', '7.4']
+        php-version: ['7.4', '8.0', ´8.1', '8.2']
         experimental: [false]
         include:
+          - php-version: 7.0
+            experimental: true
+          - php-version: 7.1
+            experimental: true
           - php-version: 7.2
             experimental: true
-          - php-version: 8.0
-            experimental: true
-          - php-version: 8.1
+          - php-version: 7.3
             experimental: true
 
     steps:
