@@ -42,7 +42,7 @@ jobs:
           which geckodriver
           which chromedriver
           firefox -v
-          vendor/bin/behat -V
+          mysql --version
 
       - name: Setup Packages
         run: |
